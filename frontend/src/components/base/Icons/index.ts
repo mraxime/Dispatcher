@@ -31,7 +31,7 @@ import {
 } from 'react-feather';
 
 /**
- * Centralized list of icons to use in the application.
+ * Common list of icons to use in the application.
  * Makes consistency and management easier.
  *
  * Example usage: `<Icons.user />`
