@@ -3,7 +3,7 @@ import { Button, Stack } from '@mui/material';
 import type { z } from 'zod';
 
 import useDisclosure from 'src/hooks/useDisclosure';
-import type { updateCallSchema } from 'src/lib/schemas/calls';
+import type { updateCallSchema } from 'src/lib/schemas/call.schema';
 import type { Call, Trailer, User } from 'src/lib/types/directus';
 import { isObject } from 'src/lib/utils';
 import DriverSelectorModal from '../DriverSelectorModal/DriverSelectorModal';

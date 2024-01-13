@@ -5,7 +5,7 @@ import useSWR from 'swr';
 
 import { api } from 'src/lib/api';
 import type { SUPER_USER_ROLES } from 'src/lib/constants/roles';
-import type { CreateRoleSchema, UpdateRoleSchema } from 'src/lib/schemas/roles';
+import type { CreateRoleSchema, UpdateRoleSchema } from 'src/lib/schemas/role.schema';
 import type { DirectusSchema, UserRole } from 'src/lib/types/directus';
 
 type Params = Query<DirectusSchema, UserRole>;

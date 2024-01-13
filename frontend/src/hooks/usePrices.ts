@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import useSWR from 'swr';
 
 import { api } from 'src/lib/api';
-import type { CreatePriceSchema, UpdatePriceSchema } from 'src/lib/schemas/prices';
+import type { CreatePriceSchema, UpdatePriceSchema } from 'src/lib/schemas/price.schema';
 import type { DirectusSchema, Price } from 'src/lib/types/directus';
 import { withCompanyIsolation } from './utils';
 

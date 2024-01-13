@@ -22,7 +22,7 @@ import { Controller, useFormContext } from 'react-hook-form';
 
 import { Icons } from 'src/components/base/Icons';
 import useDisclosure from 'src/hooks/useDisclosure';
-import type { NewUserForm } from 'src/lib/schemas/users';
+import type { NewUserForm } from 'src/lib/schemas/user.schema';
 import type { CustomPermission, UserRole } from 'src/lib/types/directus';
 import PermissionsEditor from '../PermissionsEditor/PermissionsEditor';
 

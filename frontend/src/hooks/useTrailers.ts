@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import useSWR from 'swr';
 
 import { api } from 'src/lib/api';
-import type { CreateTrailerSchema, UpdateTrailerSchema } from 'src/lib/schemas/trailers';
+import type { CreateTrailerSchema, UpdateTrailerSchema } from 'src/lib/schemas/trailer.schema';
 import type { DirectusSchema, Trailer } from 'src/lib/types/directus';
 import { withCompanyIsolation } from './utils';
 

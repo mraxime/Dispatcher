@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import useSWR from 'swr';
 
 import { api } from 'src/lib/api';
-import type { CreateMessageSchema, UpdateMessageSchema } from 'src/lib/schemas/messages';
+import type { CreateMessageSchema, UpdateMessageSchema } from 'src/lib/schemas/message.schema';
 import type { DirectusSchema, Message } from 'src/lib/types/directus';
 
 type Params = Query<DirectusSchema, Message>;

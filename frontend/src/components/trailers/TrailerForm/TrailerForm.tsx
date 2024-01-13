@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import { Box, Button, Grid, Stack } from '@mui/material';
 import { FormProvider, useForm, type DefaultValues } from 'react-hook-form';
 
-import { createTrailerSchema, updateTrailerSchema } from 'src/lib/schemas/trailers';
+import { createTrailerSchema, updateTrailerSchema } from 'src/lib/schemas/trailer.schema';
 import { zodResolverEnhanced } from 'src/lib/utils/zod';
 import TrailerFormMeasures from './TrailerFormMeasures';
 import TrailerFormOther from './TrailerFormOther';

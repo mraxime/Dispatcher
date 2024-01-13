@@ -18,7 +18,7 @@ import {
 	createServiceSchema,
 	updateServiceSchema,
 	type NewServiceForm,
-} from 'src/lib/schemas/services';
+} from 'src/lib/schemas/service.schema';
 import type { Price } from 'src/lib/types/directus';
 import { zodResolverEnhanced } from 'src/lib/utils/zod';
 import ServiceFormPrices from './ServiceFormPrices';

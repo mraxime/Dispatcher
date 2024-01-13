@@ -1,14 +1,14 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import type { FC } from 'react';
 import { Box, Container } from '@mui/material';
 
 import Header, { type BreadcrumbItem } from 'src/components/base/Header';
 import { Icons } from 'src/components/base/Icons';
-import CompanyForm from 'src/components/companies/CompanyForm';
+import CompanyForm, { type CompanySubmitData } from 'src/components/companies/CompanyForm';
 import { useCompanyActions } from 'src/hooks/useCompanies';
 import { ROUTES } from 'src/lib/constants/routes';
-import type { CreateCompanySchema } from 'src/lib/schemas/company.schema';
+import type { Company } from 'src/lib/types/directus';
 
 const breadcrumbs: BreadcrumbItem[] = [
 	{
@@ -19,32 +19,39 @@ const breadcrumbs: BreadcrumbItem[] = [
 		name: 'Entreprises',
 		href: ROUTES.CompaniesPage(),
 	},
-	{ name: 'Ajouter' },
+	{ name: 'Modifier' },
 ];
 
-const NewCompanyPage = () => {
-	const router = useRouter();
+type Props = {
+	company: Company;
+};
+
+const CompanyPageView: FC<Props> = ({ company }) => {
 	const companyActions = useCompanyActions();
 
-	const handleSubmit = async (data: CreateCompanySchema) => {
-		await companyActions.create(data);
-		router.push(ROUTES.CompaniesPage());
+	const handleSubmit = async (data: CompanySubmitData) => {
+		await companyActions.update(company.id, data);
 	};
 
 	return (
 		<Container maxWidth="xl">
 			<Header
-				title="Créer une entreprise"
+				title={company.name}
 				icon={<Icons.company />}
 				iconHref={ROUTES.CompaniesPage()}
 				breadcrumbItems={breadcrumbs}
 			/>
 
 			<Box mt={4}>
-				<CompanyForm mode="create" onSubmit={handleSubmit} />
+				<CompanyForm
+					mode="update"
+					/* @ts-expect-error - data.company is a number. */
+					defaultValues={company}
+					onSubmit={handleSubmit}
+				/>
 			</Box>
 		</Container>
 	);
 };
 
-export default NewCompanyPage;
+export default CompanyPageView;

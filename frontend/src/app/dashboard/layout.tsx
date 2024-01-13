@@ -56,7 +56,12 @@ const DashboardLayout: FC<Props> = ({ children }) => {
 	return (
 		<SessionProvider>
 			<Stack flexDirection="row">
-				<SideNav flexShrink={0} isOpen={isSideNavOpen} onClose={closeSideNav} />
+				<SideNav
+					isOpen={isSideNavOpen}
+					companies={/*FIXME*/ []}
+					flexShrink={0}
+					onClose={closeSideNav}
+				/>
 				<Main open={isSideNavOpen}>
 					<TopNav onMenuClick={toggleSideNav} />
 					<Box py={8}>{children}</Box>

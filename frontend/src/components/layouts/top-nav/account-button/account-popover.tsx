@@ -13,7 +13,7 @@ import Typography from '@mui/material/Typography';
 import { Icons } from 'src/components/base/Icons';
 import { ROUTES } from 'src/lib/constants/routes';
 import type { User } from 'src/lib/types/directus';
-import { userLogout } from 'src/server/actions/users';
+import { userLogout } from 'src/server/actions/user.action';
 
 type Props = {
 	user: User;

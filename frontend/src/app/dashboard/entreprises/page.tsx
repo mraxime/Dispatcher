@@ -1,71 +1,17 @@
-'use client';
-
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { Box, Button, Container, SvgIcon } from '@mui/material';
-
-import Header, { type BreadcrumbItem } from 'src/components/base/Header';
-import { Icons } from 'src/components/base/Icons';
-import CompaniesTable from 'src/components/companies/CompaniesTable';
-import { useCompanies } from 'src/hooks/useCompanies';
-import { ROUTES } from 'src/lib/constants/routes';
+import { companyParamsSchema } from 'src/lib/schemas/company.schema';
 import type { CompanyParams } from 'src/lib/types/directus';
+import { getCompanies } from 'src/server/actions/company.action';
+import CompaniesPageView from './view';
 
-const breadcrumbs: BreadcrumbItem[] = [
-	{
-		name: 'Dashboard',
-		href: ROUTES.DashboardPage(),
-	},
-	{ name: 'Entreprises' },
-];
-
-const CompaniesPage = () => {
+const CompaniesPage = async ({ searchParams }: { searchParams: Record<string, string> }) => {
 	const params: CompanyParams = {
-		page: 1,
-		limit: 10,
+		...companyParamsSchema.parseSearchParams(searchParams),
 		fields: ['*', { admin: ['*'] }],
-		filter: { active: { _eq: true } },
-		sort: '-date_created',
 	};
 
-	const companies = useCompanies(params);
-	const router = useRouter();
+	const companies = await getCompanies(params);
 
-	return (
-		<Container maxWidth="xl">
-			<Header
-				title="Liste des entreprises"
-				icon={<Icons.company />}
-				breadcrumbItems={breadcrumbs}
-				actionElement={
-					<Button
-						href={ROUTES.NewCompanyPage()}
-						LinkComponent={Link}
-						variant="contained"
-						startIcon={
-							<SvgIcon fontSize="small">
-								<Icons.add />
-							</SvgIcon>
-						}
-					>
-						Ajouter
-					</Button>
-				}
-			/>
-
-			<Box mt={4}>
-				<CompaniesTable
-					data={companies.data}
-					params={companies.params}
-					isLoading={companies.isLoading}
-					onRefresh={companies.revalidate}
-					onParamsChange={companies.setParams}
-					onEdit={(id) => router.push(ROUTES.CompanyPage(id))}
-					onDelete={companies.delete}
-				/>
-			</Box>
-		</Container>
-	);
+	return <CompaniesPageView companies={companies} params={params} />;
 };
 
 export default CompaniesPage;

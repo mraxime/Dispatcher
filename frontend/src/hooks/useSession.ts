@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import useSWR from 'swr';
 
 import { api } from 'src/lib/api';
-import type { UpdateUserSchema } from 'src/lib/schemas/users';
+import type { UpdateUserSchema } from 'src/lib/schemas/user.schema';
 import type { User } from 'src/lib/types/directus';
 
 const handleSession = async () => {

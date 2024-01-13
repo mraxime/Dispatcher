@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
 
-import { passwordUpdateSchema } from 'src/lib/schemas/users';
+import { passwordUpdateSchema } from 'src/lib/schemas/user.schema';
 import { zodResolverEnhanced } from 'src/lib/utils/zod';
 import type { UserPasswordSubmitData } from './types';
 

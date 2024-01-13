@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { createTowedVehicleSchema } from './towed-vehicles';
+import { createTowedVehicleSchema } from './towed-vehicle.schema';
 
 export const createCallSchema = z.object({
 	id: z.number().optional(),

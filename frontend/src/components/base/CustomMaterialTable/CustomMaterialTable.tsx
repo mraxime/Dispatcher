@@ -1,20 +1,24 @@
+import { useCallback } from 'react';
 import MaterialTable, { type MaterialTableProps } from '@material-table/core';
 
-const CustomMaterialTable = <T extends object>({ ...props }: MaterialTableProps<T>) => {
+import CustomMaterialTableToolbar from './CustomMaterialTableToolbar';
+
+const CustomMaterialTable = <T extends object>(
+	props: MaterialTableProps<T> & { onRefresh?: () => void },
+) => {
+	const Toolbar = useCallback(
+		() => (
+			<CustomMaterialTableToolbar
+				searchText={props.options?.searchText}
+				onSearch={props.onSearchChange}
+				onRefresh={props.onRefresh}
+			/>
+		),
+		[],
+	);
+
 	return (
 		<MaterialTable
-			options={{
-				actionsColumnIndex: -1,
-				actionsCellStyle: {
-					padding: '24px 16px',
-				},
-				pageSize: 10,
-				pageSizeOptions: [10, 20, 50],
-				maxBodyHeight: 480, // 540
-				showTitle: false,
-				draggable: false,
-				debounceInterval: 250,
-			}}
 			localization={{
 				body: {
 					emptyDataSourceMessage: 'Aucune donnée',
@@ -63,6 +67,24 @@ const CustomMaterialTable = <T extends object>({ ...props }: MaterialTableProps<
 				},
 			}}
 			{...props}
+			components={{
+				Toolbar,
+				...props.components,
+			}}
+			options={{
+				actionsColumnIndex: -1,
+				actionsCellStyle: {
+					padding: '24px 16px',
+				},
+				pageSize: 10,
+				pageSizeOptions: [10, 20, 50],
+				maxBodyHeight: 480, // 540
+				showTitle: false,
+				draggable: false,
+				debounceInterval: 250,
+				...props.options,
+				searchText: '', // Do not touch
+			}}
 		/>
 	);
 };

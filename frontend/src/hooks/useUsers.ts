@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import useSWR from 'swr';
 
 import { api } from 'src/lib/api';
-import type { CreateUserSchema, UpdateUserSchema } from 'src/lib/schemas/users';
+import type { CreateUserSchema, UpdateUserSchema } from 'src/lib/schemas/user.schema';
 import type { DirectusSchema, User } from 'src/lib/types/directus';
 import { withCompanyIsolation } from './utils';
 

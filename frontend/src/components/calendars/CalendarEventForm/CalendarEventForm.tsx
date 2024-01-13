@@ -20,7 +20,7 @@ import UserSearchInput from 'src/components/users/UserSearchInput';
 import {
 	createCalendarEventSchema,
 	updateCalendarEventSchema,
-} from 'src/lib/schemas/calendar-events';
+} from 'src/lib/schemas/calendar-event.schema';
 import type { Trailer, User } from 'src/lib/types/directus';
 import { zodResolverEnhanced } from 'src/lib/utils/zod';
 import type { CalendarEventSubmitData } from './types';

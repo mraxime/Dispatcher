@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import useSWR from 'swr';
 
 import { api } from 'src/lib/api';
-import type { CreateBillSchema, UpdateBillSchema } from 'src/lib/schemas/bills';
+import type { CreateBillSchema, UpdateBillSchema } from 'src/lib/schemas/bill.schema';
 import type { Bill, DirectusSchema } from 'src/lib/types/directus';
 import { withCompanyIsolation } from './utils';
 

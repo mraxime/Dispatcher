@@ -16,7 +16,7 @@ import { Controller, useForm, type DefaultValues } from 'react-hook-form';
 
 import { Icons } from 'src/components/base/Icons';
 import { CLIENT_STATUS_MAP } from 'src/lib/constants/clients';
-import { createClientSchema, updateClientSchema } from 'src/lib/schemas/clients';
+import { createClientSchema, updateClientSchema } from 'src/lib/schemas/client.schema';
 import { zodResolverEnhanced } from 'src/lib/utils/zod';
 import type { ClientSubmitData } from './types';
 

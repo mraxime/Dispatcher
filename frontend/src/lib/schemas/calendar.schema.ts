@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { createCalendarEventSchema } from './calendar-events';
+import { createCalendarEventSchema } from './calendar-event.schema';
 
 export const createCalendarSchema = z.object({
 	id: z.string().optional(),

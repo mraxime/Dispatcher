@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import { Button, Stack } from '@mui/material';
 import { FormProvider, useForm, type DefaultValues } from 'react-hook-form';
 
-import { createCallSchema, updateCallSchema } from 'src/lib/schemas/calls';
+import { createCallSchema, updateCallSchema } from 'src/lib/schemas/call.schema';
 import type { Client, Service, Trailer, User } from 'src/lib/types/directus';
 import { zodResolverEnhanced } from 'src/lib/utils/zod';
 import CallFormAdress from './CallFormAddress';

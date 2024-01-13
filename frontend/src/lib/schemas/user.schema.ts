@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
-import { createContactSchema } from './contact';
-import { createDriverLicenseSchema } from './driver-license';
+import { createContactSchema } from './contact.schema';
+import { createDriverLicenseSchema } from './driver-license.schema';
 
 export type NewUserForm = z.infer<typeof createUserSchema>;
 

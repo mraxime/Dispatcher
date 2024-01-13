@@ -16,7 +16,7 @@ import Cookies from 'js-cookie';
 import type { PaletteMode } from 'src/assets/theme';
 import { Icons } from 'src/components/base/Icons';
 import { MEASURE_TYPES_MAP, type MeasureType } from 'src/lib/constants/measures';
-import { setMeasure, setTheme } from 'src/server/actions/settings';
+import { setMeasure, setTheme } from 'src/server/actions/setting.action';
 
 const SettingsButton = () => {
 	const ref = useRef<HTMLButtonElement>(null);

@@ -4,7 +4,10 @@ import toast from 'react-hot-toast';
 import useSWR from 'swr';
 
 import { api } from 'src/lib/api';
-import type { CreatePermissionSchema, UpdatePermissionSchema } from 'src/lib/schemas/permissions';
+import type {
+	CreatePermissionSchema,
+	UpdatePermissionSchema,
+} from 'src/lib/schemas/permission.schema';
 import type { CustomPermission, DirectusSchema } from 'src/lib/types/directus';
 
 type Params = Query<DirectusSchema, CustomPermission>;

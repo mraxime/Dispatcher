@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import useSWR from 'swr';
 
 import { api } from 'src/lib/api';
-import type { CreateCalendarSchema, UpdateCalendarSchema } from 'src/lib/schemas/calendars';
+import type { CreateCalendarSchema, UpdateCalendarSchema } from 'src/lib/schemas/calendar.schema';
 import type { Calendar, DirectusSchema } from 'src/lib/types/directus';
 import { withCompanyIsolation } from './utils';
 

@@ -520,6 +520,7 @@ export type PriceParams = Query<DirectusSchema, Price>;
 export type ServiceParams = Query<DirectusSchema, Service>;
 export type TrailerParams = Query<DirectusSchema, Trailer>;
 export type UserParams = Query<DirectusSchema, User>;
+export type UserPermissionParams = Query<DirectusSchema, CustomPermission>;
 
 export type DirectusSchema = {
 	companies: Company[];

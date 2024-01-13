@@ -7,7 +7,7 @@ import { api } from 'src/lib/api';
 import type {
 	CreateCalendarEventSchema,
 	UpdateCalendarEventSchema,
-} from 'src/lib/schemas/calendar-events';
+} from 'src/lib/schemas/calendar-event.schema';
 import type { CalendarEvent, DirectusSchema } from 'src/lib/types/directus';
 
 type Params = Query<DirectusSchema, CalendarEvent>;

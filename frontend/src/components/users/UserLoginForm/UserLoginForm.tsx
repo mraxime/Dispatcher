@@ -16,7 +16,7 @@ import {
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
 
-import { loginSchema } from 'src/lib/schemas/users';
+import { loginSchema } from 'src/lib/schemas/user.schema';
 import { zodResolverEnhanced } from 'src/lib/utils/zod';
 import type { UserLoginSubmitData } from './types';
 

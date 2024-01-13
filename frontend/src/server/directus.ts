@@ -11,6 +11,9 @@ import {
 import { ROUTES } from 'src/lib/constants/routes';
 import type { DirectusSchema } from 'src/lib/types/directus';
 
+/**
+ * Creates a client REST API that can communicate with directus (database).
+ */
 export const createDirectusServerClient = () => {
 	const directus = createDirectus<DirectusSchema>(process.env.NEXT_PUBLIC_DIRECTUS_URL ?? '')
 		.with(authentication('json', { storage: directusAuthStorageHandler() }))

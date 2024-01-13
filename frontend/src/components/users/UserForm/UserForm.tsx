@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import { Box, Button, Grid, Stack } from '@mui/material';
 import { FormProvider, useForm, type DefaultValues } from 'react-hook-form';
 
-import { createUserSchema, updateUserSchema } from 'src/lib/schemas/users';
+import { createUserSchema, updateUserSchema } from 'src/lib/schemas/user.schema';
 import type { CustomPermission, UserRole } from 'src/lib/types/directus';
 import { zodResolverEnhanced } from 'src/lib/utils/zod';
 import type { UserSubmitData } from './types';

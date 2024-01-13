@@ -16,7 +16,7 @@ import {
 import { Controller, FormProvider, useForm, type DefaultValues } from 'react-hook-form';
 
 import { Icons } from 'src/components/base/Icons';
-import { createCompanySchema, updateCompanySchema } from 'src/lib/schemas/companies';
+import { createCompanySchema, updateCompanySchema } from 'src/lib/schemas/company.schema';
 import { zodResolverEnhanced } from 'src/lib/utils/zod';
 import CompanyFormAdmin from './CompanyFormAdmin';
 import type { CompanySubmitData } from './types';

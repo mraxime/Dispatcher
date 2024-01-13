@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import useSWR from 'swr';
 
 import { api } from 'src/lib/api';
-import type { CreateServiceSchema, UpdateServiceSchema } from 'src/lib/schemas/services';
+import type { CreateServiceSchema, UpdateServiceSchema } from 'src/lib/schemas/service.schema';
 import type { DirectusSchema, Service } from 'src/lib/types/directus';
 import { withCompanyIsolation } from './utils';
 

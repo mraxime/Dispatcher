@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { createPriceConditionSchema, priceConditionRefineHandler } from './price-conditions';
+import { createPriceConditionSchema, priceConditionRefineHandler } from './price-condition.schema';
 
 export const createPriceSchema = z.object({
 	id: z.number().optional(),

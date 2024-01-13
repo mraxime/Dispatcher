@@ -21,7 +21,7 @@ import { Controller, FormProvider, useForm, type DefaultValues } from 'react-hoo
 import { Icons } from 'src/components/base/Icons';
 import useDisclosure from 'src/hooks/useDisclosure';
 import { PRICE_STATUS_MAP, PRICE_TYPES_MAP } from 'src/lib/constants/prices';
-import { createPriceSchema, updatePriceSchema } from 'src/lib/schemas/prices';
+import { createPriceSchema, updatePriceSchema } from 'src/lib/schemas/price.schema';
 import { getPriceCurrency } from 'src/lib/utils';
 import { zodResolverEnhanced } from 'src/lib/utils/zod';
 import PriceFormConditions from './PriceFormConditions';

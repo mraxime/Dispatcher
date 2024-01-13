@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import useSWR from 'swr';
 
 import { api } from 'src/lib/api';
-import type { CreateCallSchema, UpdateCallSchema } from 'src/lib/schemas/calls';
+import type { CreateCallSchema, UpdateCallSchema } from 'src/lib/schemas/call.schema';
 import type { Call, DirectusSchema } from 'src/lib/types/directus';
 import { withCompanyIsolation } from './utils';
 
