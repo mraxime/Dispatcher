@@ -47,15 +47,12 @@ const CompanySearchInput: FC<Props> = ({
 					{...params}
 					InputLabelProps={{
 						...params.InputLabelProps,
-						sx: {
-							color: (theme) => theme.palette.primary.alpha50,
-						},
 					}}
 					InputProps={{
 						...params.InputProps,
 						sx: {
 							color: (theme) => theme.palette.neutral[50],
-							borderColor: (theme) => theme.palette.primary.alpha50,
+							borderColor: (theme) => theme.palette.neutral[600],
 						},
 					}}
 				/>

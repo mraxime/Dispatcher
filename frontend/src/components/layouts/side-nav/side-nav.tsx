@@ -2,7 +2,7 @@
 
 import { type FC } from 'react';
 import { usePathname } from 'next/navigation';
-import { Box, Divider, Drawer, Stack, Typography, useMediaQuery } from '@mui/material';
+import { Box, Drawer, Stack, Typography, useMediaQuery } from '@mui/material';
 import type { SxProps, Theme } from '@mui/material/styles';
 import Cookies from 'js-cookie';
 
@@ -67,12 +67,6 @@ const SideNav: FC<Props> = ({ isOpen, companies, onClose, ...restProps }) => {
 				{isSuperAdmin && (
 					<>
 						<SideNavMenu menu={NAV_MENU_ADMIN} />
-						<Box my={2}>
-							<Divider
-								sx={{ bgcolor: (theme) => theme.palette.neutral[600] }}
-								style={{ border: 'none', height: 1, margin: 0 }}
-							/>
-						</Box>
 						<CompanySearchInput
 							sx={{ width: '100%', my: 3 }}
 							items={companies}
@@ -84,16 +78,9 @@ const SideNav: FC<Props> = ({ isOpen, companies, onClose, ...restProps }) => {
 
 				<Box flexGrow={1}>{Boolean(companyId) && <SideNavMenu menu={NAV_MENU(permissions)} />}</Box>
 
-				<Box my={2}>
-					<Divider
-						sx={{ bgcolor: (theme) => theme.palette.neutral[600] }}
-						style={{ border: 'none', height: 1, margin: 0 }}
-					/>
-				</Box>
-
-				<Box p={2}>
-					<Typography variant="caption" color="neutral.50">
-						&copy; Répartition Quebec
+				<Box textAlign="center">
+					<Typography variant="caption" color="neutral.500">
+						{new Date().getFullYear()} &copy; Répartition Québec
 					</Typography>
 				</Box>
 			</Stack>
