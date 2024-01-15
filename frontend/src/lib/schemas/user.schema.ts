@@ -1,5 +1,6 @@
 import { z } from 'zod';
 
+import { UserParams } from '../types/directus';
 import { createContactSchema } from './contact.schema';
 import { createDriverLicenseSchema } from './driver-license.schema';
 
@@ -81,3 +82,28 @@ export const updateUserProfileSchema = z
 export type CreateUserSchema = z.infer<typeof createUserSchema>;
 export type UpdateUserSchema = z.infer<typeof updateUserSchema>;
 export type UpdateUserProfileSchema = z.infer<typeof updateUserSchema>;
+
+export const userParamsSchema = (() => {
+	return {
+		/** Translates a flatten URL searchParams object into `UserParams`. */
+		parseSearchParams: (params: Record<string, string>): UserParams => {
+			const result = {
+				page: Number(params.page ?? 1),
+				limit: Number(params.limit ?? 10),
+				search: params.search ?? '',
+				filter: { status: { _eq: params.status as 'active' | 'draft' } },
+			};
+			return result;
+		},
+
+		/** Translates `UserParams` into a flatten URL searchParams object. */
+		createSearchParams: (params: UserParams): Record<string, string> => {
+			const result: Record<string, string> = {};
+			if (params.page && params.page !== 1) result.page = String(params.page);
+			if (params.limit && params.limit !== 10) result.limit = String(params.limit);
+			if (params.search) result.search = params.search;
+			if (params.filter?.status?._eq !== 'active') result.status = 'draft';
+			return result;
+		},
+	};
+})();
