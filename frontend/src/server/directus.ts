@@ -1,43 +1,29 @@
+import type { ResponseCookie } from 'next/dist/compiled/@edge-runtime/cookies';
 import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
-import {
-	authentication,
-	createDirectus,
-	readMe,
-	rest,
-	type AuthenticationStorage,
-} from '@directus/sdk';
+import { authentication, createDirectus, rest, type AuthenticationStorage } from '@directus/sdk';
 
-import { ROUTES } from 'src/lib/constants/routes';
 import type { DirectusSchema } from 'src/lib/types/directus';
 
 /**
- * Creates a client REST API that can communicate with directus (database).
+ * Creates a client that can communicate with our database (Directus REST API).
+ * Note: It uses Next.js `cookies()` as it's storage so this only work in Server Components.
  */
 export const createDirectusServerClient = () => {
 	const directus = createDirectus<DirectusSchema>(process.env.NEXT_PUBLIC_DIRECTUS_URL ?? '')
 		.with(authentication('json', { storage: directusAuthStorageHandler() }))
 		.with(rest({ credentials: 'include' }));
 
-	const extraActions = {
-		async getSession() {
-			try {
-				const me = await directus.request(readMe({ fields: ['*', '*.*', '*.*.*'] }));
-				return me;
-			} catch {
-				redirect(ROUTES.LoginPage());
-			}
-		},
-	};
-
-	return { ...directus, ...extraActions };
+	return directus;
 };
 
 /**
  * Custom Auth Storage for Directus SDK to work correctly with Next.js cookies.
+ * Without this, default behavious would save tokens in current environment storage,
+ * but that would causes issues with nextjs ssr and hydration.
  */
 const directusAuthStorageHandler = (): AuthenticationStorage => {
 	const cookiesStore = cookies();
+
 	return {
 		get() {
 			const access_token = cookiesStore.get('access_token')?.value ?? null;
@@ -54,33 +40,33 @@ const directusAuthStorageHandler = (): AuthenticationStorage => {
 		},
 
 		set(data) {
-			const opts = {
+			const cookieOptions: Partial<ResponseCookie> = {
 				path: '/',
 				httpOnly: false,
 				sameSite: 'none', // TODO: investigate why 'Lax' seems to cause issues
 				// secure: true, // TODO: activate this when pushed online for chrome to work with sameSite=None
-			} as const;
+			};
 
 			if (data?.access_token) {
-				cookiesStore.set('access_token', data.access_token, opts);
+				cookiesStore.set('access_token', data.access_token, cookieOptions);
 			} else if (data?.access_token === null) {
 				cookiesStore.delete('access_token');
 			}
 
 			if (data?.refresh_token) {
-				cookiesStore.set('refresh_token', data.refresh_token, opts);
+				cookiesStore.set('refresh_token', data.refresh_token, cookieOptions);
 			} else if (data?.refresh_token === null) {
 				cookiesStore.delete('refresh_token');
 			}
 
 			if (data?.expires_at) {
-				cookiesStore.set('expires_at', String(data.expires_at), opts);
+				cookiesStore.set('expires_at', String(data.expires_at), cookieOptions);
 			} else if (data?.refresh_token === null) {
 				cookiesStore.delete('expires_at');
 			}
 
 			if (data?.expires) {
-				cookiesStore.set('expires', String(data.expires), opts);
+				cookiesStore.set('expires', String(data.expires), cookieOptions);
 			} else if (data?.refresh_token === null) {
 				cookiesStore.delete('expires');
 			}

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { UserParams } from '../types/directus';
+import type { UserParams } from '../types/directus';
 import { createContactSchema } from './contact.schema';
 import { createDriverLicenseSchema } from './driver-license.schema';
 
@@ -91,7 +91,7 @@ export const userParamsSchema = (() => {
 				page: Number(params.page ?? 1),
 				limit: Number(params.limit ?? 10),
 				search: params.search ?? '',
-				filter: { status: { _eq: params.status as 'active' | 'draft' } },
+				filter: { status: { _eq: (params.status as 'active' | 'draft') ?? 'active' } },
 			};
 			return result;
 		},

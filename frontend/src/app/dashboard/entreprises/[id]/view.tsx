@@ -1,32 +1,19 @@
 'use client';
 
 import type { FC } from 'react';
-import { Box, Container } from '@mui/material';
+import { Box } from '@mui/material';
+import type { SxProps } from '@mui/material/styles';
 
-import Header, { type BreadcrumbItem } from 'src/components/base/Header';
-import { Icons } from 'src/components/base/Icons';
 import CompanyForm, { type CompanySubmitData } from 'src/components/companies/CompanyForm';
 import { useCompanyActions } from 'src/hooks/useCompanies';
-import { ROUTES } from 'src/lib/constants/routes';
 import type { Company } from 'src/lib/types/directus';
-
-const breadcrumbs: BreadcrumbItem[] = [
-	{
-		name: 'Dashboard',
-		href: ROUTES.DashboardPage(),
-	},
-	{
-		name: 'Entreprises',
-		href: ROUTES.CompaniesPage(),
-	},
-	{ name: 'Modifier' },
-];
 
 type Props = {
 	company: Company;
+	sx: SxProps;
 };
 
-const CompanyPageView: FC<Props> = ({ company }) => {
+const CompanyPageView: FC<Props> = ({ company, sx }) => {
 	const companyActions = useCompanyActions();
 
 	const handleSubmit = async (data: CompanySubmitData) => {
@@ -34,23 +21,14 @@ const CompanyPageView: FC<Props> = ({ company }) => {
 	};
 
 	return (
-		<Container maxWidth="xl">
-			<Header
-				title={company.name}
-				icon={<Icons.company />}
-				iconHref={ROUTES.CompaniesPage()}
-				breadcrumbItems={breadcrumbs}
+		<Box sx={sx}>
+			<CompanyForm
+				mode="update"
+				/* @ts-expect-error - data.company is a number. */
+				defaultValues={company}
+				onSubmit={handleSubmit}
 			/>
-
-			<Box mt={4}>
-				<CompanyForm
-					mode="update"
-					/* @ts-expect-error - data.company is a number. */
-					defaultValues={company}
-					onSubmit={handleSubmit}
-				/>
-			</Box>
-		</Container>
+		</Box>
 	);
 };
 

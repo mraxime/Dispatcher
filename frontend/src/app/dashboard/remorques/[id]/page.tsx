@@ -1,13 +1,10 @@
-'use client';
+import { Container } from '@mui/material';
 
-import { Box, Container } from '@mui/material';
-
-import Header, { type BreadcrumbItem } from 'src/components/base/Header';
 import { Icons } from 'src/components/base/Icons';
-import PageLoading from 'src/components/base/PageLoading';
-import TrailerForm, { type TrailerSubmitData } from 'src/components/trailers/TrailerForm';
-import { useTrailer } from 'src/hooks/useTrailers';
+import PageHeader, { type BreadcrumbItem } from 'src/components/base/PageHeader';
 import { ROUTES } from 'src/lib/constants/routes';
+import { getTrailer } from 'src/server/actions/trailer.action';
+import TrailerPageView from './view';
 
 const breadcrumbs: BreadcrumbItem[] = [
 	{
@@ -21,27 +18,18 @@ const breadcrumbs: BreadcrumbItem[] = [
 	{ name: 'Modifier' },
 ];
 
-const TrailerPage = ({ params }: { params: { id: number } }) => {
-	const trailer = useTrailer(params.id);
-	if (!trailer.data) return <PageLoading />;
-
-	const handleSubmit = async (data: TrailerSubmitData) => {
-		await trailer.update(data);
-	};
+const TrailerPage = async ({ params }: { params: { id: string } }) => {
+	const trailer = await getTrailer(Number(params.id));
 
 	return (
 		<Container maxWidth="xl">
-			<Header
-				title={trailer.data.name}
+			<PageHeader
+				title={trailer.name}
 				icon={<Icons.trailer />}
 				iconHref={ROUTES.TrailersPage()}
 				breadcrumbItems={breadcrumbs}
 			/>
-
-			<Box mt={4}>
-				{/* @ts-expect-error - data.company is a number. */}
-				<TrailerForm mode="update" defaultValues={trailer.data} onSubmit={handleSubmit} />
-			</Box>
+			<TrailerPageView sx={{ mt: 4 }} trailer={trailer} />
 		</Container>
 	);
 };

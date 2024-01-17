@@ -1,93 +1,62 @@
-import { useMemo, useState } from 'react';
-import { createItem, deleteItem, readItems, updateItem, type Query } from '@directus/sdk';
-import Cookies from 'js-cookie';
+import { useMemo } from 'react';
+import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
-import useSWR from 'swr';
 
-import { api } from 'src/lib/api';
-import type { CreateClientSchema, UpdateClientSchema } from 'src/lib/schemas/client.schema';
-import type { Client, DirectusSchema } from 'src/lib/types/directus';
-import { withCompanyIsolation } from './utils';
-
-type Params = Query<DirectusSchema, Client>;
+import {
+	clientParamsSchema,
+	type CreateClientSchema,
+	type UpdateClientSchema,
+} from 'src/lib/schemas/client.schema';
+import type { ClientParams } from 'src/lib/types/directus';
+import { createClient, deleteClient, updateClient } from 'src/server/actions/client.action';
+import { useCustomSearchParams } from './useCustomSearchParams';
 
 /**
- * Hook to provide clients data and actions.
- * It allows components using this hook to access the same cache, avoiding unnecessary fetches.
+ * Provides useful client actions.
  */
-export const useClients = (initialParams?: Params) => {
-	const [params, setParams] = useState(initialParams);
-
-	const clientsCache = useSWR(['clients', params, Cookies.get('company')], ([, params]) =>
-		api.request(readItems('clients', withCompanyIsolation(params))),
-	);
+export const useClientActions = () => {
+	const router = useRouter();
+	const searchParams = useCustomSearchParams();
 
 	const clientActions = useMemo(
 		() => ({
-			setParams,
-			revalidate: () => clientsCache.mutate(),
+			setParams: (params: ClientParams) => {
+				const newValue = clientParamsSchema.createSearchParams(params);
+				searchParams.reset(newValue);
+			},
+
+			revalidate: () => {
+				router.refresh();
+			},
 
 			create: async (payload: CreateClientSchema) => {
-				const result = await api.request(createItem('clients', payload));
-				await clientsCache.mutate();
-
+				const result = await createClient(payload);
 				toast.success('Client créé !');
 				return result;
 			},
 
 			update: async (id: number, payload: UpdateClientSchema) => {
-				const result = await api.request(updateItem('clients', id, payload));
-				await clientsCache.mutate();
-
+				const result = await updateClient(id, payload);
 				toast.success('Client mis à jour !');
 				return result;
 			},
 
 			delete: async (id: number) => {
 				if (
-					!window.confirm(
-						`Êtes-vous sûr de vouloir supprimer ce client ?\nLes données seront supprimées de manière permanente.`,
-					)
+					!window.confirm(`
+            Êtes-vous sûr de vouloir supprimer ce client ?\n
+            Les données seront supprimées de manière permanente.
+          `)
 				) {
 					return;
 				}
 
-				const result = await api.request(deleteItem('clients', id));
-				await clientsCache.mutate();
-
+				await deleteClient(id);
 				toast.success('Client supprimé !');
-				return result;
 			},
 		}),
 		[],
 	);
 
-	return {
-		data: clientsCache.data ?? [],
-		params,
-		isLoading: clientsCache.isLoading,
-		...clientActions,
-	};
-};
-
-/**
- * Same as `useClients` but for single data.
- */
-export const useClient = (id: number, params?: Params) => {
-	const newParams = { ...params, filter: { ...params?.filter, id: { _eq: id } }, limit: 1 };
-	const clients = useClients(newParams);
-
-	const actions = useMemo(
-		() => ({
-			update: async (payload: UpdateClientSchema) => clients.update(id, payload),
-			delete: async () => clients.delete(id),
-		}),
-		[id],
-	);
-
-	return {
-		data: clients.data[0],
-		isLoading: clients.isLoading,
-		...actions,
-	};
+	return clientActions;
 };

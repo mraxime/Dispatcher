@@ -12,7 +12,7 @@ import { createUser, deleteUser, updateUser } from 'src/server/actions/user.acti
 import { useCustomSearchParams } from './useCustomSearchParams';
 
 /**
- * Hook to provide useful user actions.
+ * Provides useful user actions.
  */
 export const useUserActions = () => {
 	const router = useRouter();

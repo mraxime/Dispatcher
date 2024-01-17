@@ -4,15 +4,15 @@ import {
 	type PermissionAction,
 	type PermissionGroup,
 } from 'src/lib/constants/permissions';
-import type { CustomPermission } from 'src/lib/types/directus';
+import type { Permission } from 'src/lib/types/directus';
 
-type GroupedPermissions = Record<PermissionGroup, Record<PermissionAction, CustomPermission>>;
+type GroupedPermissions = Record<PermissionGroup, Record<PermissionAction, Permission>>;
 
 /**
  * Function that restructures an array of permissions into an organized object.
  * This allows for efficient retrieval of specific permissions using their group and action as identifiers.
  */
-export const groupPermissionsByGroup = (permissions: CustomPermission[]): GroupedPermissions => {
+export const groupPermissionsByGroup = (permissions: Permission[]): GroupedPermissions => {
 	const result = createInitialStructure();
 	for (const permission of permissions) {
 		if (!permission.group || !permission.action) {

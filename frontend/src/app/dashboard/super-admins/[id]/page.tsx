@@ -1,18 +1,11 @@
-'use client';
+import { Container } from '@mui/material';
 
-import { Box, Container } from '@mui/material';
-
-import Header, { type BreadcrumbItem } from 'src/components/base/Header';
 import { Icons } from 'src/components/base/Icons';
-import PageLoading from 'src/components/base/PageLoading';
-import UserForm, { type UserSubmitData } from 'src/components/users/UserForm';
-import { useSession } from 'src/contexts/session-context';
-import { usePermissions } from 'src/hooks/usePermissions';
-import { useRoles } from 'src/hooks/useRoles';
-import { useUser } from 'src/hooks/useUsers';
+import PageHeader, { type BreadcrumbItem } from 'src/components/base/PageHeader';
 import { SUPER_USER_ROLES } from 'src/lib/constants/roles';
 import { ROUTES } from 'src/lib/constants/routes';
-import type { JunctionUserCustomPermission } from 'src/lib/types/directus';
+import { getPermissions, getRoles, getUser } from 'src/server/actions/user.action';
+import SuperAdminPageView from './view';
 
 const breadcrumbs: BreadcrumbItem[] = [
 	{
@@ -26,58 +19,41 @@ const breadcrumbs: BreadcrumbItem[] = [
 	{ name: 'Modifier' },
 ];
 
-const SuperAdminPage = ({ params }: { params: { id: string } }) => {
-	const session = useSession();
-	const superAdmin = useUser(
-		params.id,
-		{
-			fields: [
-				'*',
-				{
-					driver_license: ['*'],
-					emergency_contact: ['*'],
-					permissions: ['custom_permissions_id'],
-				},
-			],
-		},
-		false,
-	);
-
-	const roles = useRoles({ fields: ['*'], filter: { name: { _eq: SUPER_USER_ROLES[0] } } });
-	const permissions = usePermissions({ fields: ['*'], sort: 'group' });
-
-	if (!superAdmin.data || roles.isLoading || permissions.isLoading) return <PageLoading />;
-
-	const handleSubmit = async (data: UserSubmitData) => {
-		await superAdmin.update(data);
-		if (data.email === session.data.email) await session.revalidate();
-	};
-
-	// Get the actual permission ids from the junctions
-	const permissionIds = (superAdmin.data.permissions as JunctionUserCustomPermission[]).map(
-		({ custom_permissions_id }) => custom_permissions_id as number,
-	);
+const SuperAdminPage = async ({ params }: { params: { id: string } }) => {
+	const [superAdmin, roles, permissions] = await Promise.all([
+		getUser(
+			params.id,
+			{
+				fields: [
+					'*',
+					{
+						driver_license: ['*'],
+						emergency_contact: ['*'],
+						permissions: ['custom_permissions_id'],
+					},
+				],
+			},
+			false,
+		),
+		getRoles({ fields: ['*'], filter: { name: { _eq: SUPER_USER_ROLES[0] } } }),
+		getPermissions({ fields: ['*'], sort: 'group' }),
+	]);
 
 	return (
 		<Container maxWidth="xl">
-			<Header
-				title={`${superAdmin.data.first_name} ${superAdmin.data.last_name}`}
+			<PageHeader
+				title={`${superAdmin.first_name} ${superAdmin.last_name}`}
 				icon={<Icons.user />}
 				iconHref={ROUTES.SuperAdminsPage()}
 				breadcrumbItems={breadcrumbs}
 			/>
-
-			<Box mt={4}>
-				<UserForm
-					mode="update"
-					// @ts-expect-error - anoying typescript :)
-					defaultValues={{ ...superAdmin.data, permissions: permissionIds }}
-					// @ts-expect-error - anoying typescript :)
-					roles={roles.data}
-					permissions={permissions.data}
-					onSubmit={handleSubmit}
-				/>
-			</Box>
+			<SuperAdminPageView
+				sx={{ mt: 4 }}
+				superAdmin={superAdmin}
+				roles={roles}
+				permissions={permissions}
+			/>
+			;
 		</Container>
 	);
 };

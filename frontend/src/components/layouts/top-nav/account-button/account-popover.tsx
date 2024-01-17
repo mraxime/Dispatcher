@@ -11,9 +11,9 @@ import SvgIcon from '@mui/material/SvgIcon';
 import Typography from '@mui/material/Typography';
 
 import { Icons } from 'src/components/base/Icons';
+import { useSessionActions } from 'src/hooks/useSession';
 import { ROUTES } from 'src/lib/constants/routes';
 import type { User } from 'src/lib/types/directus';
-import { userLogout } from 'src/server/actions/user.action';
 
 type Props = {
 	user: User;
@@ -23,6 +23,7 @@ type Props = {
 };
 
 const AccountPopover: FC<Props> = ({ user, anchorEl, onClose, open = false }) => {
+	const sessionActions = useSessionActions();
 	return (
 		<Popover
 			anchorEl={anchorEl}
@@ -71,7 +72,7 @@ const AccountPopover: FC<Props> = ({ user, anchorEl, onClose, open = false }) =>
 					justifyContent: 'center',
 				}}
 			>
-				<form action={userLogout}>
+				<form action={sessionActions.logout}>
 					<Button type="submit" color="error" size="small">
 						Se déconnecter
 					</Button>

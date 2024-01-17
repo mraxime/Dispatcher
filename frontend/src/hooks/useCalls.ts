@@ -1,93 +1,62 @@
-import { useMemo, useState } from 'react';
-import { createItem, deleteItem, readItems, updateItem, type Query } from '@directus/sdk';
-import Cookies from 'js-cookie';
+import { useMemo } from 'react';
+import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
-import useSWR from 'swr';
 
-import { api } from 'src/lib/api';
-import type { CreateCallSchema, UpdateCallSchema } from 'src/lib/schemas/call.schema';
-import type { Call, DirectusSchema } from 'src/lib/types/directus';
-import { withCompanyIsolation } from './utils';
-
-type Params = Query<DirectusSchema, Call>;
+import {
+	callParamsSchema,
+	type CreateCallSchema,
+	type UpdateCallSchema,
+} from 'src/lib/schemas/call.schema';
+import type { CallParams } from 'src/lib/types/directus';
+import { createCall, deleteCall, updateCall } from 'src/server/actions/call.action';
+import { useCustomSearchParams } from './useCustomSearchParams';
 
 /**
- * Hook to provide calls data and actions.
- * It allows components using this hook to access the same cache, avoiding unnecessary fetches.
+ * Provides useful call actions.
  */
-export const useCalls = (initialParams?: Params) => {
-	const [params, setParams] = useState(initialParams);
-
-	const callsCache = useSWR(['calls', params, Cookies.get('company')], ([, params]) =>
-		api.request(readItems('calls', withCompanyIsolation(params))),
-	);
+export const useCallActions = () => {
+	const router = useRouter();
+	const searchParams = useCustomSearchParams();
 
 	const callActions = useMemo(
 		() => ({
-			setParams,
-			revalidate: () => callsCache.mutate(),
+			setParams: (params: CallParams) => {
+				const newValue = callParamsSchema.createSearchParams(params);
+				searchParams.reset(newValue);
+			},
+
+			revalidate: () => {
+				router.refresh();
+			},
 
 			create: async (payload: CreateCallSchema) => {
-				const result = await api.request(createItem('calls', payload));
-				await callsCache.mutate();
-
+				const result = await createCall(payload);
 				toast.success("Formulaire d'appel créé !");
 				return result;
 			},
 
 			update: async (id: number, payload: UpdateCallSchema) => {
-				const result = await api.request(updateItem('calls', id, payload));
-				await callsCache.mutate();
-
+				const result = await updateCall(id, payload);
 				toast.success("Formulaire d'appel mis à jour !");
 				return result;
 			},
 
 			delete: async (id: number) => {
 				if (
-					!window.confirm(
-						`Êtes-vous sûr de vouloir supprimer cet appel ?\nLes données seront supprimées de manière permanente.`,
-					)
+					!window.confirm(`
+            Êtes-vous sûr de vouloir supprimer ce formulaire d'appel ?\n
+            Les données seront supprimées de manière permanente.
+          `)
 				) {
 					return;
 				}
 
-				const result = await api.request(deleteItem('calls', id));
-				await callsCache.mutate();
-
+				await deleteCall(id);
 				toast.success("Formulaire d'appel supprimé !");
-				return result;
 			},
 		}),
 		[],
 	);
 
-	return {
-		data: callsCache.data ?? [],
-		params,
-		isLoading: callsCache.isLoading,
-		...callActions,
-	};
-};
-
-/**
- * Same as `useCalls` but for single data.
- */
-export const useCall = (id: number, params?: Params) => {
-	const newParams = { ...params, filter: { ...params?.filter, id: { _eq: id } }, limit: 1 };
-	const calls = useCalls(newParams);
-
-	const actions = useMemo(
-		() => ({
-			update: async (payload: UpdateCallSchema) => calls.update(id, payload),
-			delete: async () => calls.delete(id),
-		}),
-		[id],
-	);
-
-	return {
-		data: calls.data[0],
-		isLoading: calls.isLoading,
-		...actions,
-	};
+	return callActions;
 };

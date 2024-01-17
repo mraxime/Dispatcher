@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+import type { TrailerParams } from '../types/directus';
+
 export const createTrailerSchema = z.object({
 	id: z.number().optional(),
 	company: z.number(), // company.id
@@ -40,3 +42,28 @@ export const updateTrailerSchema = createTrailerSchema.deepPartial();
 
 export type CreateTrailerSchema = z.infer<typeof createTrailerSchema>;
 export type UpdateTrailerSchema = z.infer<typeof updateTrailerSchema>;
+
+export const trailerParamsSchema = (() => {
+	return {
+		/** Translates a flatten URL searchParams object into `TrailerParams`. */
+		parseSearchParams: (params: Record<string, string>): TrailerParams => {
+			const result = {
+				page: Number(params.page ?? 1),
+				limit: Number(params.limit ?? 10),
+				search: params.search ?? '',
+				filter: { in_service: { _eq: params.in_service !== 'false' } },
+			};
+			return result;
+		},
+
+		/** Translates `TrailerParams` into a flatten URL searchParams object. */
+		createSearchParams: (params: TrailerParams): Record<string, string> => {
+			const result: Record<string, string> = {};
+			if (params.page && params.page !== 1) result.page = String(params.page);
+			if (params.limit && params.limit !== 10) result.limit = String(params.limit);
+			if (params.search) result.search = params.search;
+			if (params.filter?.in_service?._eq !== true) result.in_service = 'false';
+			return result;
+		},
+	};
+})();

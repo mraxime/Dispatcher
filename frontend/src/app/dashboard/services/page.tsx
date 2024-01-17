@@ -1,15 +1,13 @@
-'use client';
-
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { Box, Button, Container, SvgIcon } from '@mui/material';
+import { Button, Container, SvgIcon } from '@mui/material';
 
-import Header, { type BreadcrumbItem } from 'src/components/base/Header';
 import { Icons } from 'src/components/base/Icons';
-import ServicesTable from 'src/components/services/ServicesTable';
-import { useServices } from 'src/hooks/useServices';
+import PageHeader, { type BreadcrumbItem } from 'src/components/base/PageHeader';
 import { ROUTES } from 'src/lib/constants/routes';
-import type { ServiceParams } from 'src/lib/types/directus';
+import { serviceParamsSchema } from 'src/lib/schemas/service.schema';
+import { deepMerge } from 'src/lib/utils';
+import { getServices } from 'src/server/actions/service.action';
+import ServicesPageView from './view';
 
 const breadcrumbs: BreadcrumbItem[] = [
 	{
@@ -21,21 +19,20 @@ const breadcrumbs: BreadcrumbItem[] = [
 	},
 ];
 
-const ServicesPage = () => {
-	const params: ServiceParams = {
+const ServicesPage = async ({ searchParams }: { searchParams: Record<string, string> }) => {
+	const params = deepMerge(serviceParamsSchema.parseSearchParams(searchParams), {
 		page: 1,
 		limit: 10,
 		fields: ['*'],
 		filter: { status: { _eq: 'ACTIVE' } },
 		sort: '-date_created',
-	};
+	});
 
-	const services = useServices(params);
-	const router = useRouter();
+	const services = await getServices(params);
 
 	return (
 		<Container maxWidth="xl">
-			<Header
+			<PageHeader
 				title="Liste des services"
 				icon={<Icons.service />}
 				breadcrumbItems={breadcrumbs}
@@ -54,18 +51,7 @@ const ServicesPage = () => {
 					</Button>
 				}
 			/>
-
-			<Box mt={4}>
-				<ServicesTable
-					data={services.data}
-					params={services.params}
-					isLoading={services.isLoading}
-					onRefresh={services.revalidate}
-					onParamsChange={services.setParams}
-					onEdit={(id) => router.push(ROUTES.ServicePage(id))}
-					onDelete={services.delete}
-				/>
-			</Box>
+			<ServicesPageView sx={{ mt: 4 }} services={services} params={params} />
 		</Container>
 	);
 };

@@ -1,12 +1,9 @@
-'use client';
-
 import { Box, Container } from '@mui/material';
 
-import Header, { type BreadcrumbItem } from 'src/components/base/Header';
 import { Icons } from 'src/components/base/Icons';
-import PageLoading from 'src/components/base/PageLoading';
-import { useBill } from 'src/hooks/useBills';
+import PageHeader, { type BreadcrumbItem } from 'src/components/base/PageHeader';
 import { ROUTES } from 'src/lib/constants/routes';
+import { getBill } from 'src/server/actions/bill.action';
 
 const breadcrumbs: BreadcrumbItem[] = [
 	{
@@ -20,19 +17,17 @@ const breadcrumbs: BreadcrumbItem[] = [
 	{ name: 'Modifier' },
 ];
 
-const BillPage = ({ params }: { params: { id: number } }) => {
-	const bill = useBill(params.id);
-	if (!bill.data) return <PageLoading />;
+const BillPage = async ({ params }: { params: { id: string } }) => {
+	const bill = await getBill(Number(params.id));
 
 	return (
 		<Container maxWidth="xl">
-			<Header
-				title={`Facture #${bill.data.id}`}
+			<PageHeader
+				title={`Facture #${bill.id}`}
 				icon={<Icons.bill />}
 				iconHref={ROUTES.BillsPage()}
 				breadcrumbItems={breadcrumbs}
 			/>
-
 			<Box mt={4}>En développement...</Box>
 		</Container>
 	);

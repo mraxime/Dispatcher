@@ -10,38 +10,33 @@ import { ROUTES } from 'src/lib/constants/routes';
 import { isCompanyPath } from 'src/lib/utils/navigation';
 
 export const setCompany = async (id: number | null, pathname: string) => {
-	const cookiesStore = cookies();
-
 	if (id) {
-		cookiesStore.set('company', String(id), {
+		cookies().set('company', String(id), {
 			path: '/',
 			httpOnly: false,
 			maxAge: 34560000, // 400 days
 		});
 	} else {
-		cookiesStore.delete('company');
+		cookies().delete('company');
 		if (isCompanyPath(pathname)) redirect(ROUTES.DashboardPage());
 	}
-
 	revalidatePath('/', 'layout');
 };
 
 export const setTheme = (mode: PaletteMode) => {
-	const cookiesStore = cookies();
-
-	cookiesStore.set('theme', mode, {
+	cookies().set('theme', mode, {
 		path: '/',
 		httpOnly: false,
-		maxAge: 34560000, // 400 days
+		maxAge: 34560000, // 400 days (maximum)
 	});
+	revalidatePath('/', 'layout');
 };
 
 export const setMeasure = (measure: MeasureType) => {
-	const cookiesStore = cookies();
-
-	cookiesStore.set('measure-type', measure, {
+	cookies().set('measure-type', measure, {
 		path: '/',
 		httpOnly: false,
-		maxAge: 34560000, // 400 days
+		maxAge: 34560000, // 400 days (maximum)
 	});
+	revalidatePath('/', 'layout');
 };

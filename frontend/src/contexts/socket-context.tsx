@@ -13,6 +13,10 @@ import { io, type Socket } from 'socket.io-client';
 import { useOptionalSession } from 'src/hooks/useSession';
 
 /**
+ * TODO: Finish up this unfinished file.
+ */
+
+/**
  * Possible events for the socket.io instance
  */
 type SocketEvents = {

@@ -49,7 +49,7 @@ export type Contrast = 'normal' | 'high';
 
 export type Direction = 'ltr' | 'rtl';
 
-export type PaletteMode = 'dark' | 'light';
+export type PaletteMode = 'light' | 'dark';
 
 export type ThemeConfig = {
 	colorPreset?: ColorPreset;

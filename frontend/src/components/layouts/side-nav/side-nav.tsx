@@ -7,13 +7,8 @@ import type { SxProps, Theme } from '@mui/material/styles';
 import Cookies from 'js-cookie';
 
 import CompanySearchInput from 'src/components/companies/CompanySearchInput';
-import { useSession } from 'src/contexts/session-context';
 import { NAV_MENU, NAV_MENU_ADMIN } from 'src/lib/constants/navigation';
-import type {
-	Company,
-	CustomPermission,
-	JunctionUserCustomPermission,
-} from 'src/lib/types/directus';
+import type { Company, JunctionUserPermission, Permission, User } from 'src/lib/types/directus';
 import { isObject } from 'src/lib/utils';
 import { setCompany } from 'src/server/actions/setting.action';
 import SideNavMenu from './side-nav-menu';
@@ -21,24 +16,24 @@ import SideNavProfile from './side-nav-profile';
 
 type Props = {
 	isOpen: boolean;
+	session: User;
 	companies: Company[];
 	onClose: () => void;
 } & SxProps;
 
 export const DRAWER_WIDTH = '275px';
 
-const SideNav: FC<Props> = ({ isOpen, companies, onClose, ...restProps }) => {
+const SideNav: FC<Props> = ({ isOpen, session, companies, onClose, ...restProps }) => {
 	const pathname = usePathname();
 	const isDesktop = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
-	const session = useSession();
 	const companyId = Cookies.get('company');
 
 	// Retreive real permissions from junction data
-	const permissions = (session.data.permissions as JunctionUserCustomPermission[]).map(
-		(value) => value.custom_permissions_id as CustomPermission,
+	const permissions = (session.permissions as JunctionUserPermission[]).map(
+		(value) => value.custom_permissions_id as Permission,
 	);
 
-	const isSuperAdmin = isObject(session.data.role) && session.data.role.name === 'Super Admin';
+	const isSuperAdmin = isObject(session.role) && session.role.name === 'Super Admin';
 
 	return (
 		<Drawer
@@ -61,7 +56,7 @@ const SideNav: FC<Props> = ({ isOpen, companies, onClose, ...restProps }) => {
 				},
 			}}
 		>
-			<SideNavProfile user={session.data} sx={{ mt: 5 }} />
+			<SideNavProfile user={session} sx={{ mt: 5 }} />
 
 			<Stack mt={3} py={1} px={2} flexGrow={1}>
 				{isSuperAdmin && (

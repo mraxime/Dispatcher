@@ -3,17 +3,16 @@
 import { revalidatePath } from 'next/cache';
 import { createItem, deleteItem, readItem, readItems, updateItem, updateUser } from '@directus/sdk';
 
-import { createDirectusPublicClient } from 'src/lib/api';
 import type { CreateCompanySchema, UpdateCompanySchema } from 'src/lib/schemas/company.schema';
 import type { CompanyParams } from 'src/lib/types/directus';
+import { createDirectusServerClient } from '../directus';
 import { getPermissions, getRoleByName } from './user.action';
-
-const api = createDirectusPublicClient();
 
 /**
  * Get many companies. Can apply filters.
  */
 export const getCompanies = async (params?: CompanyParams) => {
+	const api = createDirectusServerClient();
 	const result = await api.request(readItems('companies', params));
 	return result;
 };
@@ -21,7 +20,8 @@ export const getCompanies = async (params?: CompanyParams) => {
 /**
  * Get a single company by ID.
  */
-export const getCompany = async (id: number, params: CompanyParams) => {
+export const getCompany = async (id: number, params?: CompanyParams) => {
+	const api = createDirectusServerClient();
 	const result = await api.request(readItem('companies', id, params));
 	return result;
 };
@@ -30,6 +30,8 @@ export const getCompany = async (id: number, params: CompanyParams) => {
  * Create a company.
  */
 export const createCompany = async (payload: CreateCompanySchema) => {
+	const api = createDirectusServerClient();
+
 	// New company admin handler
 	const superAdminRole = await getRoleByName('Super Admin');
 	const permissions = await getPermissions();
@@ -66,7 +68,7 @@ export const createCompany = async (payload: CreateCompanySchema) => {
 		await api.request(updateUser(result.admin as string, { company: result.id }));
 	}
 
-	revalidatePath('/');
+	revalidatePath('/', 'layout');
 	return result;
 };
 
@@ -74,6 +76,8 @@ export const createCompany = async (payload: CreateCompanySchema) => {
  * Update a company by ID.
  */
 export const updateCompany = async (id: number, payload: UpdateCompanySchema) => {
+	const api = createDirectusServerClient();
+
 	// New company admin handler
 	const superAdminRole = await getRoleByName('Super Admin');
 	const permissions = await getPermissions();
@@ -110,7 +114,7 @@ export const updateCompany = async (id: number, payload: UpdateCompanySchema) =>
 		await api.request(updateUser(result.admin as string, { company: result.id }));
 	}
 
-	revalidatePath('/');
+	revalidatePath('/', 'layout');
 	return result;
 };
 
@@ -118,6 +122,7 @@ export const updateCompany = async (id: number, payload: UpdateCompanySchema) =>
  * Delete a company by ID.
  */
 export const deleteCompany = async (id: number) => {
+	const api = createDirectusServerClient();
 	await api.request(deleteItem('companies', id));
-	revalidatePath('/');
+	revalidatePath('/', 'layout');
 };

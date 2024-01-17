@@ -4,10 +4,10 @@ import { useRouter } from 'next/navigation';
 import { Box, Container } from '@mui/material';
 import Cookies from 'js-cookie';
 
-import Header, { type BreadcrumbItem } from 'src/components/base/Header';
 import { Icons } from 'src/components/base/Icons';
+import PageHeader, { type BreadcrumbItem } from 'src/components/base/PageHeader';
 import TrailerForm, { type TrailerSubmitData } from 'src/components/trailers/TrailerForm';
-import { useTrailers } from 'src/hooks/useTrailers';
+import { useTrailerActions } from 'src/hooks/useTrailers';
 import { ROUTES } from 'src/lib/constants/routes';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -24,23 +24,22 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 const NewTrailerPage = () => {
 	const router = useRouter();
-	const trailers = useTrailers();
+	const trailerActions = useTrailerActions();
 	const companyCookie = Cookies.get('company');
 
 	const handleSubmit = async (data: TrailerSubmitData) => {
-		await trailers.create(data);
+		await trailerActions.create(data);
 		router.push(ROUTES.TrailersPage());
 	};
 
 	return (
 		<Container maxWidth="xl">
-			<Header
+			<PageHeader
 				title="Créer une remorque"
 				icon={<Icons.trailer />}
 				iconHref={ROUTES.TrailersPage()}
 				breadcrumbItems={breadcrumbs}
 			/>
-
 			<Box mt={4}>
 				<TrailerForm
 					mode="create"

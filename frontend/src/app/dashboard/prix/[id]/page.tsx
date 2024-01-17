@@ -1,13 +1,10 @@
-'use client';
+import { Container } from '@mui/material';
 
-import { Box, Container } from '@mui/material';
-
-import Header, { type BreadcrumbItem } from 'src/components/base/Header';
 import { Icons } from 'src/components/base/Icons';
-import PageLoading from 'src/components/base/PageLoading';
-import PriceForm, { type PriceSubmitData } from 'src/components/prices/PriceForm';
-import { usePrice } from 'src/hooks/usePrices';
+import PageHeader, { type BreadcrumbItem } from 'src/components/base/PageHeader';
 import { ROUTES } from 'src/lib/constants/routes';
+import { getPrice } from 'src/server/actions/price.action';
+import PricePageView from './view';
 
 const breadcrumbs: BreadcrumbItem[] = [
 	{
@@ -21,27 +18,18 @@ const breadcrumbs: BreadcrumbItem[] = [
 	{ name: 'Modifier' },
 ];
 
-const PricePage = ({ params }: { params: { id: number } }) => {
-	const price = usePrice(params.id, { fields: ['*', { conditions: ['*'] }] });
-	if (!price.data) return <PageLoading />;
-
-	const handleSubmit = async (data: PriceSubmitData) => {
-		await price.update(data);
-	};
+const PricePage = async ({ params }: { params: { id: string } }) => {
+	const price = await getPrice(Number(params.id), { fields: ['*', { conditions: ['*'] }] });
 
 	return (
 		<Container maxWidth="md">
-			<Header
-				title={price.data.name}
+			<PageHeader
+				title={price.name}
 				icon={<Icons.price />}
 				iconHref={ROUTES.PricesPage()}
 				breadcrumbItems={breadcrumbs}
 			/>
-
-			<Box mt={4}>
-				{/* @ts-expect-error - data.company is a number. */}
-				<PriceForm mode="update" defaultValues={price.data} onSubmit={handleSubmit} />
-			</Box>
+			<PricePageView sx={{ mt: 4 }} price={price} />
 		</Container>
 	);
 };

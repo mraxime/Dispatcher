@@ -2,7 +2,6 @@
 
 import type { FC } from 'react';
 import Link from 'next/link';
-import type { Query } from '@directus/sdk';
 import type { Action, Column } from '@material-table/core';
 import {
 	Avatar,
@@ -19,12 +18,143 @@ import {
 } from '@mui/material';
 import { format } from 'date-fns';
 
+import ConditionalWrapper from 'src/components/base/ConditionalWrapper';
 import CustomMaterialTable from 'src/components/base/CustomMaterialTable';
 import { Icons } from 'src/components/base/Icons';
 import { CALL_STATUS_MAP, type CallStatus } from 'src/lib/constants/calls';
 import { ROUTES } from 'src/lib/constants/routes';
-import type { Call, DirectusSchema } from 'src/lib/types/directus';
+import type { Call, CallParams } from 'src/lib/types/directus';
 import { isObject } from 'src/lib/utils';
+
+type Props = {
+	data: Call[];
+	params?: CallParams;
+	totalCount?: number;
+	isLoading?: boolean;
+	enabledTabs?: Array<CallStatus>;
+	onRefresh?: () => void;
+	onEdit?: (id: number) => void;
+	onSelect?: (id: number) => void;
+	onDelete?: (id: number) => void;
+	onParamsChange?: (params: CallParams) => void;
+};
+
+const CallsTable: FC<Props> = ({
+	data,
+	params = { page: 1, limit: 10, search: '', filter: { status: { _eq: 'PENDING' } } },
+	isLoading,
+	totalCount,
+	enabledTabs = [],
+	onRefresh,
+	onEdit,
+	onSelect,
+	onDelete,
+	onParamsChange,
+}) => {
+	const actions: (Action<Call> | ((rowData: Call) => Action<Call>))[] = [
+		(rowData) => ({
+			tooltip: 'Modifier',
+			icon: () => (
+				<ConditionalWrapper
+					condition={!onEdit}
+					wrapper={(children) => <Link href={ROUTES.CallPage(rowData.id)}>{children}</Link>}
+				>
+					<SvgIcon fontSize="small" color="action">
+						<Icons.edit />
+					</SvgIcon>
+				</ConditionalWrapper>
+			),
+			onClick: () => {
+				if (onEdit) onEdit(rowData.id);
+			},
+		}),
+		(rowData) => ({
+			tooltip: 'Voir',
+			hidden: !onSelect,
+			icon: () => (
+				<SvgIcon fontSize="small" color="action">
+					<Icons.goto />
+				</SvgIcon>
+			),
+			onClick: () => {
+				if (onSelect) onSelect(rowData.id);
+			},
+		}),
+		(rowData) => ({
+			tooltip: 'Supprimer',
+			hidden: !onDelete,
+			icon: () => (
+				<SvgIcon fontSize="small" color="action">
+					<Icons.delete />
+				</SvgIcon>
+			),
+			onClick: () => {
+				if (onDelete) onDelete(rowData.id);
+			},
+		}),
+	];
+
+	const handleSearch = (search: string) => {
+		if (onParamsChange) onParamsChange({ ...params, search });
+	};
+
+	const handlePageChange = (page: number) => {
+		if (onParamsChange) onParamsChange({ ...params, page });
+	};
+
+	const handlePageLimitChange = (limit: number) => {
+		if (onParamsChange) onParamsChange({ ...params, limit });
+	};
+
+	const handleStatusChange = (status: CallStatus) => {
+		if (onParamsChange) {
+			onParamsChange({ ...params, filter: { ...params.filter, status: { _eq: status } } });
+		}
+	};
+
+	return (
+		<Card>
+			<Tabs
+				onChange={(_, value: CallStatus) => handleStatusChange(value)}
+				scrollButtons="auto"
+				value={params.filter?.status?._eq}
+				variant="scrollable"
+			>
+				{Object.values(CALL_STATUS_MAP)
+					.filter(({ value }) => enabledTabs?.includes(value) ?? true)
+					.map(({ title, value }) => {
+						const isPending = value === 'PENDING';
+						return (
+							<Tab
+								key={value}
+								value={value}
+								label={
+									/* calls count here */
+									<Badge color="primary" badgeContent={isPending ? 0 : undefined}>
+										<Box>{title}</Box>
+									</Badge>
+								}
+							/>
+						);
+					})}
+			</Tabs>
+			<Divider />
+			<CustomMaterialTable
+				columns={COLUMNS}
+				actions={actions}
+				data={data}
+				page={params.page}
+				totalCount={totalCount}
+				isLoading={isLoading}
+				options={{ pageSize: params.limit, searchText: params.search }}
+				onRefresh={onRefresh}
+				onSearchChange={handleSearch}
+				onPageChange={handlePageChange}
+				onRowsPerPageChange={handlePageLimitChange}
+			/>
+		</Card>
+	);
+};
 
 const COLUMNS: Column<Call>[] = [
 	{
@@ -193,139 +323,5 @@ const COLUMNS: Column<Call>[] = [
 		),
 	},
 ];
-
-type Props = {
-	data: Call[];
-	params?: Params;
-	totalCount?: number;
-	isLoading?: boolean;
-	enabledTabs?: Array<CallStatus>;
-	onRefresh?: () => void;
-	onEdit?: (id: number) => void;
-	onSelect?: (id: number) => void;
-	onDelete?: (id: number) => void;
-	onParamsChange?: (params: Params) => void;
-};
-
-type Params = Query<DirectusSchema, Call>;
-
-const CallsTable: FC<Props> = ({
-	data,
-	params = { page: 1, limit: 10, search: '', filter: { status: { _eq: 'PENDING' } } },
-	isLoading,
-	totalCount,
-	enabledTabs = [],
-	onRefresh,
-	onEdit,
-	onSelect,
-	onDelete,
-	onParamsChange,
-}) => {
-	const actions: (Action<Call> | ((rowData: Call) => Action<Call>))[] = [
-		{
-			icon: Icons.refresh,
-			tooltip: 'Mettre a jour',
-			isFreeAction: true,
-			onClick: () => {
-				if (onRefresh) onRefresh;
-			},
-		},
-		(rowData) => ({
-			icon: () => (
-				<SvgIcon fontSize="small" color="action">
-					<Icons.edit />
-				</SvgIcon>
-			),
-			tooltip: 'Modifier',
-			hidden: !onEdit,
-			onClick: () => {
-				if (onEdit) onEdit(rowData.id);
-			},
-		}),
-		(rowData) => ({
-			icon: () => (
-				<SvgIcon fontSize="small" color="action">
-					<Icons.goto />
-				</SvgIcon>
-			),
-			tooltip: 'Voir',
-			hidden: !onSelect,
-			onClick: () => {
-				if (onSelect) onSelect(rowData.id);
-			},
-		}),
-		(rowData) => ({
-			icon: () => (
-				<SvgIcon fontSize="small" color="action">
-					<Icons.delete />
-				</SvgIcon>
-			),
-			tooltip: 'Supprimer',
-			hidden: !onDelete,
-			onClick: () => {
-				if (onDelete) onDelete(rowData.id);
-			},
-		}),
-	];
-
-	const handleSearch = (search: string) => {
-		if (onParamsChange) onParamsChange({ ...params, search });
-	};
-
-	const handlePageChange = (page: number) => {
-		if (onParamsChange) onParamsChange({ ...params, page });
-	};
-
-	const handlePageLimitChange = (limit: number) => {
-		if (onParamsChange) onParamsChange({ ...params, limit });
-	};
-
-	const handleStatusChange = (status: CallStatus) => {
-		if (onParamsChange) {
-			onParamsChange({ ...params, filter: { ...params.filter, status: { _eq: status } } });
-		}
-	};
-
-	return (
-		<Card>
-			<Tabs
-				onChange={(_, value: CallStatus) => handleStatusChange(value)}
-				scrollButtons="auto"
-				value={params.filter?.status?._eq}
-				variant="scrollable"
-			>
-				{Object.values(CALL_STATUS_MAP)
-					.filter(({ value }) => enabledTabs?.includes(value) ?? true)
-					.map(({ title, value }) => {
-						const isPending = value === 'PENDING';
-						return (
-							<Tab
-								key={value}
-								value={value}
-								label={
-									/* calls count here */
-									<Badge color="primary" badgeContent={isPending ? 0 : undefined}>
-										<Box>{title}</Box>
-									</Badge>
-								}
-							/>
-						);
-					})}
-			</Tabs>
-			<Divider />
-			<CustomMaterialTable
-				columns={COLUMNS}
-				actions={actions}
-				data={data}
-				page={params.page}
-				totalCount={totalCount}
-				isLoading={isLoading}
-				onSearchChange={handleSearch}
-				onPageChange={handlePageChange}
-				onRowsPerPageChange={handlePageLimitChange}
-			/>
-		</Card>
-	);
-};
 
 export default CallsTable;

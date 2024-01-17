@@ -1,13 +1,10 @@
-'use client';
+import { Container } from '@mui/material';
 
-import { Box, Container } from '@mui/material';
-
-import Header, { type BreadcrumbItem } from 'src/components/base/Header';
 import { Icons } from 'src/components/base/Icons';
-import PageLoading from 'src/components/base/PageLoading';
-import ClientForm, { type ClientSubmitData } from 'src/components/clients/ClientForm';
-import { useClient } from 'src/hooks/useClients';
+import PageHeader, { type BreadcrumbItem } from 'src/components/base/PageHeader';
 import { ROUTES } from 'src/lib/constants/routes';
+import { getClient } from 'src/server/actions/client.action';
+import ClientPageView from './view';
 
 const breadcrumbs: BreadcrumbItem[] = [
 	{
@@ -21,27 +18,18 @@ const breadcrumbs: BreadcrumbItem[] = [
 	{ name: 'Modifier' },
 ];
 
-const ClientPage = ({ params }: { params: { id: number } }) => {
-	const client = useClient(params.id);
-	if (!client.data) return <PageLoading />;
-
-	const handleSubmit = async (data: ClientSubmitData) => {
-		await client.update(data);
-	};
+const ClientPage = async ({ params }: { params: { id: string } }) => {
+	const client = await getClient(Number(params.id));
 
 	return (
 		<Container maxWidth="md">
-			<Header
-				title={client.data.name}
+			<PageHeader
+				title={client.name}
 				icon={<Icons.client />}
 				iconHref={ROUTES.ClientsPage()}
 				breadcrumbItems={breadcrumbs}
 			/>
-
-			<Box mt={4}>
-				{/* @ts-expect-error - data.company is a number. */}
-				<ClientForm mode="update" defaultValues={client.data} onSubmit={handleSubmit} />
-			</Box>
+			<ClientPageView sx={{ mt: 4 }} client={client} />
 		</Container>
 	);
 };

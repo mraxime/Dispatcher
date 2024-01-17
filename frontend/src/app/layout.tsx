@@ -1,14 +1,11 @@
 import type { FC, ReactNode } from 'react';
-import CssBaseline from '@mui/material/CssBaseline';
-import { NextAppDirEmotionCacheProvider } from 'tss-react/next/appDir';
 
+import ForceClient from 'src/components/base/ForceClient';
 import Providers from 'src/components/base/Providers';
+import Toaster from 'src/components/base/Toaster';
 import TopLoader from 'src/components/base/TopLoader';
-import { ThemeProvider } from 'src/contexts/theme-context';
 
 import 'src/assets/main.css';
-
-import Toaster from 'src/components/base/Toaster';
 
 type Props = {
 	children: ReactNode;
@@ -22,14 +19,11 @@ const RootLayout: FC<Props> = ({ children }) => {
 				<link rel="shortcut icon" href="/favicon.ico" />
 			</head>
 			<body>
-				<NextAppDirEmotionCacheProvider options={{ key: 'mui' }}>
-					<ThemeProvider>
-						<CssBaseline />
-						<TopLoader />
-						<Providers>{children}</Providers>
-						<Toaster />
-					</ThemeProvider>
-				</NextAppDirEmotionCacheProvider>
+				<Providers>
+					<Toaster />
+					<TopLoader />
+					<ForceClient>{children}</ForceClient>
+				</Providers>
 			</body>
 		</html>
 	);

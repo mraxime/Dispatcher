@@ -2,7 +2,6 @@
 
 import { useMemo, type FC } from 'react';
 import Link from 'next/link';
-import type { Query } from '@directus/sdk';
 import type { Action, Column } from '@material-table/core';
 import {
 	Avatar,
@@ -17,16 +16,17 @@ import {
 } from '@mui/material';
 import { format } from 'date-fns';
 
+import ConditionalWrapper from 'src/components/base/ConditionalWrapper';
 import CustomMaterialTable from 'src/components/base/CustomMaterialTable';
 import { Icons } from 'src/components/base/Icons';
 import { USER_ROLES } from 'src/lib/constants/roles';
 import { ROUTES } from 'src/lib/constants/routes';
-import type { DirectusSchema, User } from 'src/lib/types/directus';
+import type { User, UserParams } from 'src/lib/types/directus';
 import { isObject } from 'src/lib/utils';
 
 type Props = {
 	data: User[];
-	params?: Params;
+	params?: UserParams;
 	basePath?: string;
 	tabs?: string[];
 	totalCount?: number;
@@ -35,10 +35,8 @@ type Props = {
 	onEdit?: (id: string) => void;
 	onSelect?: (id: string) => void;
 	onDelete?: (id: string) => void;
-	onParamsChange?: (params: Params) => void;
+	onParamsChange?: (params: UserParams) => void;
 };
-
-type Params = Query<DirectusSchema, User>;
 
 const UsersTable: FC<Props> = ({
 	data,
@@ -127,46 +125,42 @@ const UsersTable: FC<Props> = ({
 	);
 
 	const actions: (Action<User> | ((rowData: User) => Action<User>))[] = [
-		{
-			icon: Icons.refresh,
-			tooltip: 'Mettre a jour',
-			isFreeAction: true,
-			onClick: () => {
-				if (onRefresh) onRefresh;
-			},
-		},
 		(rowData) => ({
-			icon: () => (
-				<SvgIcon fontSize="small" color="action">
-					<Icons.edit />
-				</SvgIcon>
-			),
 			tooltip: 'Modifier',
-			hidden: !onEdit,
+			icon: () => (
+				<ConditionalWrapper
+					condition={!onEdit}
+					wrapper={(children) => <Link href={`${basePath}/${rowData.id}`}>{children}</Link>}
+				>
+					<SvgIcon fontSize="small" color="action">
+						<Icons.edit />
+					</SvgIcon>
+				</ConditionalWrapper>
+			),
 			onClick: () => {
 				if (onEdit) onEdit(rowData.id);
 			},
 		}),
 		(rowData) => ({
+			tooltip: 'Voir',
+			hidden: !onSelect,
 			icon: () => (
 				<SvgIcon fontSize="small" color="action">
 					<Icons.goto />
 				</SvgIcon>
 			),
-			tooltip: 'Voir',
-			hidden: !onSelect,
 			onClick: () => {
 				if (onSelect) onSelect(rowData.id);
 			},
 		}),
 		(rowData) => ({
+			tooltip: 'Supprimer',
+			hidden: !onDelete,
 			icon: () => (
 				<SvgIcon fontSize="small" color="action">
 					<Icons.delete />
 				</SvgIcon>
 			),
-			tooltip: 'Supprimer',
-			hidden: !onDelete,
 			onClick: () => {
 				if (onDelete) onDelete(rowData.id);
 			},
@@ -174,8 +168,7 @@ const UsersTable: FC<Props> = ({
 	];
 
 	const handleSearch = (search: string) => {
-		if (!onParamsChange) return;
-		return { ...params, search };
+		if (onParamsChange) onParamsChange({ ...params, search });
 	};
 
 	const handlePageChange = (page: number) => {
@@ -215,6 +208,8 @@ const UsersTable: FC<Props> = ({
 				page={params.page}
 				totalCount={totalCount}
 				isLoading={isLoading}
+				options={{ pageSize: params.limit, searchText: params.search }}
+				onRefresh={onRefresh}
 				onSearchChange={handleSearch}
 				onPageChange={handlePageChange}
 				onRowsPerPageChange={handlePageLimitChange}

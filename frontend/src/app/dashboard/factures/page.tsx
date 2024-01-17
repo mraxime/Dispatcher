@@ -1,15 +1,14 @@
-'use client';
-
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { Box, Button, Container, SvgIcon } from '@mui/material';
+import { Button, Container, SvgIcon } from '@mui/material';
 
-import Header, { type BreadcrumbItem } from 'src/components/base/Header';
 import { Icons } from 'src/components/base/Icons';
-import BillsTable from 'src/components/bills/BillsTable';
-import { useBills } from 'src/hooks/useBills';
+import PageHeader, { type BreadcrumbItem } from 'src/components/base/PageHeader';
 import { ROUTES } from 'src/lib/constants/routes';
+import { billParamsSchema } from 'src/lib/schemas/bill.schema';
 import type { BillParams } from 'src/lib/types/directus';
+import { deepMerge } from 'src/lib/utils';
+import { getBills } from 'src/server/actions/bill.action';
+import BillsPageView from './view';
 
 const breadcrumbs: BreadcrumbItem[] = [
 	{
@@ -21,21 +20,20 @@ const breadcrumbs: BreadcrumbItem[] = [
 	},
 ];
 
-const BillsPage = () => {
-	const params: BillParams = {
+const BillsPage = async ({ searchParams }: { searchParams: Record<string, string> }) => {
+	const params = deepMerge<BillParams>(billParamsSchema.parseSearchParams(searchParams), {
 		page: 1,
 		limit: 10,
 		fields: ['*', { call: ['*'], client: ['*', { company: ['*'] }], price: ['*'] }],
 		filter: { status: { _eq: 'PAID' } },
 		sort: '-date_created',
-	};
+	});
 
-	const bills = useBills(params);
-	const router = useRouter();
+	const bills = await getBills(params);
 
 	return (
 		<Container maxWidth="xl">
-			<Header
+			<PageHeader
 				title="Liste des factures"
 				icon={<Icons.bill />}
 				breadcrumbItems={breadcrumbs}
@@ -54,18 +52,7 @@ const BillsPage = () => {
 					</Button>
 				}
 			/>
-
-			<Box mt={4}>
-				<BillsTable
-					data={bills.data}
-					params={bills.params}
-					isLoading={bills.isLoading}
-					onRefresh={bills.revalidate}
-					onParamsChange={bills.setParams}
-					onEdit={(id) => router.push(ROUTES.BillPage(id))}
-					onDelete={bills.delete}
-				/>
-			</Box>
+			<BillsPageView sx={{ mt: 4 }} bills={bills} params={params} />
 		</Container>
 	);
 };

@@ -31,7 +31,7 @@ type Props = {
 	caption?: string;
 } & BoxProps;
 
-const Header: FC<Props> = ({
+const PageHeader: FC<Props> = ({
 	title,
 	actionElement,
 	icon,
@@ -118,4 +118,4 @@ const Header: FC<Props> = ({
 	);
 };
 
-export default Header;
+export default PageHeader;

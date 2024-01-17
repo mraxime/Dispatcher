@@ -1,15 +1,14 @@
-'use client';
-
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { Box, Button, Container, SvgIcon } from '@mui/material';
+import { Button, Container, SvgIcon } from '@mui/material';
 
-import Header, { type BreadcrumbItem } from 'src/components/base/Header';
 import { Icons } from 'src/components/base/Icons';
-import PricesTable from 'src/components/prices/PricesTable';
-import { usePrices } from 'src/hooks/usePrices';
+import PageHeader, { type BreadcrumbItem } from 'src/components/base/PageHeader';
 import { ROUTES } from 'src/lib/constants/routes';
+import { priceParamsSchema } from 'src/lib/schemas/price.schema';
 import type { PriceParams } from 'src/lib/types/directus';
+import { deepMerge } from 'src/lib/utils';
+import { getPrices } from 'src/server/actions/price.action';
+import PricesPageView from './view';
 
 const breadcrumbs: BreadcrumbItem[] = [
 	{
@@ -21,21 +20,20 @@ const breadcrumbs: BreadcrumbItem[] = [
 	},
 ];
 
-const PricesPage = () => {
-	const params: PriceParams = {
+const PricesPage = async ({ searchParams }: { searchParams: Record<string, string> }) => {
+	const params = deepMerge<PriceParams>(priceParamsSchema.parseSearchParams(searchParams), {
 		page: 1,
 		limit: 10,
 		fields: ['*'],
 		filter: { status: { _eq: 'ACTIVE' } },
 		sort: '-date_created',
-	};
+	});
 
-	const prices = usePrices(params);
-	const router = useRouter();
+	const prices = await getPrices(params);
 
 	return (
 		<Container maxWidth="xl">
-			<Header
+			<PageHeader
 				title="Liste des prix"
 				icon={<Icons.price />}
 				breadcrumbItems={breadcrumbs}
@@ -54,18 +52,7 @@ const PricesPage = () => {
 					</Button>
 				}
 			/>
-
-			<Box mt={4}>
-				<PricesTable
-					data={prices.data}
-					params={prices.params}
-					isLoading={prices.isLoading}
-					onRefresh={prices.revalidate}
-					onParamsChange={prices.setParams}
-					onEdit={(id) => router.push(ROUTES.PricePage(id))}
-					onDelete={prices.delete}
-				/>
-			</Box>
+			<PricesPageView sx={{ mt: 4 }} prices={prices} params={params} />
 		</Container>
 	);
 };

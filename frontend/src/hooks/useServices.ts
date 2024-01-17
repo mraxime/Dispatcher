@@ -1,111 +1,62 @@
-import { useMemo, useState } from 'react';
-import { createItem, deleteItem, readItems, updateItem, type Query } from '@directus/sdk';
-import Cookies from 'js-cookie';
+import { useMemo } from 'react';
+import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
-import useSWR from 'swr';
 
-import { api } from 'src/lib/api';
-import type { CreateServiceSchema, UpdateServiceSchema } from 'src/lib/schemas/service.schema';
-import type { DirectusSchema, Service } from 'src/lib/types/directus';
-import { withCompanyIsolation } from './utils';
-
-type Params = Query<DirectusSchema, Service>;
+import {
+	serviceParamsSchema,
+	type CreateServiceSchema,
+	type UpdateServiceSchema,
+} from 'src/lib/schemas/service.schema';
+import type { ServiceParams } from 'src/lib/types/directus';
+import { createService, deleteService, updateService } from 'src/server/actions/service.action';
+import { useCustomSearchParams } from './useCustomSearchParams';
 
 /**
- * Hook to provide services data and actions.
- * It allows components using this hook to access the same cache, avoiding unnecessary fetches.
+ * Provides useful service actions.
  */
-export const useServices = (initialParams?: Params) => {
-	const [params, setParams] = useState(initialParams);
-
-	const servicesCache = useSWR(['services', params, Cookies.get('company')], ([, params]) =>
-		api.request(readItems('services', withCompanyIsolation(params))),
-	);
+export const useServiceActions = () => {
+	const router = useRouter();
+	const searchParams = useCustomSearchParams();
 
 	const serviceActions = useMemo(
 		() => ({
-			setParams,
-			revalidate: () => servicesCache.mutate(),
+			setParams: (params: ServiceParams) => {
+				const newValue = serviceParamsSchema.createSearchParams(params);
+				searchParams.reset(newValue);
+			},
+
+			revalidate: () => {
+				router.refresh();
+			},
 
 			create: async (payload: CreateServiceSchema) => {
-				// fix wrong prices format for junction
-				if (payload.prices) {
-					const pricesFormat = payload.prices.map((id) => ({
-						price_id: id,
-					}));
-					// @ts-expect-error - API permissions takes this junction format
-					payload = { ...payload, prices: pricesFormat };
-				}
-
-				const result = await api.request(createItem('services', payload));
-				await servicesCache.mutate();
-
+				const result = await createService(payload);
 				toast.success('Service créé !');
 				return result;
 			},
 
 			update: async (id: number, payload: UpdateServiceSchema) => {
-				// fix wrong prices format for junction
-				if (payload.prices) {
-					const pricesFormat = payload.prices.map((id) => ({
-						price_id: id,
-					}));
-					// @ts-expect-error - API permissions takes this junction format
-					payload = { ...payload, prices: pricesFormat };
-				}
-
-				const result = await api.request(updateItem('services', id, payload));
-				await servicesCache.mutate();
-
+				const result = await updateService(id, payload);
 				toast.success('Service mis à jour !');
 				return result;
 			},
 
 			delete: async (id: number) => {
 				if (
-					!window.confirm(
-						`Êtes-vous sûr de vouloir supprimer ce service ?\nLes données seront supprimées de manière permanente.`,
-					)
+					!window.confirm(`
+            Êtes-vous sûr de vouloir supprimer ce service ?\n
+            Les données seront supprimées de manière permanente.
+          `)
 				) {
 					return;
 				}
 
-				const result = await api.request(deleteItem('services', id));
-				await servicesCache.mutate();
-
+				await deleteService(id);
 				toast.success('Service supprimé !');
-				return result;
 			},
 		}),
 		[],
 	);
 
-	return {
-		data: servicesCache.data ?? [],
-		params,
-		isLoading: servicesCache.isLoading,
-		...serviceActions,
-	};
-};
-
-/**
- * Same as `useServices` but for single data.
- */
-export const useService = (id: number, params?: Params) => {
-	const newParams = { ...params, filter: { ...params?.filter, id: { _eq: id } }, limit: 1 };
-	const services = useServices(newParams);
-
-	const actions = useMemo(
-		() => ({
-			update: async (payload: UpdateServiceSchema) => services.update(id, payload),
-			delete: async () => services.delete(id),
-		}),
-		[id],
-	);
-
-	return {
-		data: services.data[0],
-		isLoading: services.isLoading,
-		...actions,
-	};
+	return serviceActions;
 };

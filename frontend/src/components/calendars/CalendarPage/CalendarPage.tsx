@@ -1,13 +1,13 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, type FC } from 'react';
 import type { DateSelectArg, EventClickArg, EventDropArg } from '@fullcalendar/core';
 import frLocale from '@fullcalendar/core/locales/fr-ca';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import type { EventResizeDoneArg } from '@fullcalendar/interaction';
 import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
-import Calendar from '@fullcalendar/react';
+import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import timelinePlugin from '@fullcalendar/timeline';
 import { Dialog } from '@mui/material';
@@ -17,13 +17,10 @@ import { useTheme } from '@mui/material/styles';
 import type { Theme } from '@mui/material/styles/createTheme';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { getHours, getMinutes } from 'date-fns';
-import Cookies from 'js-cookie';
 
-import { useCalendarEvent, useCalendarEvents } from 'src/hooks/useCalendarEvents';
-import { useCalendars } from 'src/hooks/useCalendars';
+import { useCalendarEvent, useCalendarEventActions } from 'src/hooks/useCalendarEvents';
 import useDisclosure from 'src/hooks/useDisclosure';
-import { useTrailers } from 'src/hooks/useTrailers';
-import { useUsers } from 'src/hooks/useUsers';
+import type { Calendar, CalendarEvent, Trailer, User } from 'src/lib/types/directus';
 import CalendarContainer from '../CalendarContainer';
 import CalendarEventForm, { type CalendarEventSubmitData } from '../CalendarEventForm';
 import CalendarToolbar from '../CalendarToolbar';
@@ -39,57 +36,33 @@ const getPaletteColor = (theme: Theme, value: string) => {
 	return theme.palette.info.main;
 };
 
-const CalendarPage = () => {
-	const company = Cookies.get('company');
-	const calendars = useCalendars({ filter: { company: { _eq: company } } });
-	const calendar = calendars.data[0];
+type Props = {
+	calendar: Calendar;
+	calendarEvents: CalendarEvent[];
+	users: User[];
+	trailers: Trailer[];
+};
 
-	const calendarRef = useRef<Calendar | null>(null);
-	const calendarEvents = useCalendarEvents({ filter: { calendar: { _eq: undefined } } });
-	const currentEvent = useCalendarEvent('');
+const CalendarPage: FC<Props> = ({ calendar, calendarEvents, users, trailers }) => {
+	const calendarRef = useRef<FullCalendar | null>(null);
 
-	useEffect(() => {
-		if (company) {
-			calendars.setParams((current) => ({
-				...current,
-				filter: {
-					...current?.filter,
-					company: { _eq: company },
-				},
-			}));
-		}
-	}, [company]);
+	const [currentEventId, setCurrentEventId] = useState<string | undefined>();
+	const currentEvent = useCalendarEvent(currentEventId);
+	const calendarEventActions = useCalendarEventActions();
 
-	// Let's cleanup this mess someday :)
-	useEffect(() => {
-		if (calendar?.id) {
-			console.log('calid:', calendar.id);
-			calendarEvents.setParams((current) => ({
-				...current,
-				filter: {
-					...current?.filter,
-					calendar: { _eq: calendar.id },
-				},
-			}));
-		}
-	}, [calendar?.id]);
-
-	const users = useUsers();
-	const trailers = useTrailers();
-
+	const theme = useTheme();
 	const mdUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'));
+
 	const [date, setDate] = useState<Date>(new Date());
 	const [view, setView] = useState<CalendarView>(mdUp ? 'timeGridDay' : 'dayGridMonth');
-
-	const formDisclosure = useDisclosure();
 	const [range, setRange] = useState<{ start: number; end: number } | undefined>();
+	const formDisclosure = useDisclosure();
 
 	const isNew = !currentEvent.data?.id;
-	const theme = useTheme();
 
 	// format the `calendarEvents` data in a way that react `Fullcalendar` understands.
 	const formattedCalendarEvents = useMemo(() => {
-		return calendarEvents.data.map((calendarEvent) => {
+		return calendarEvents.map((calendarEvent) => {
 			const isAllDayEvent = () => {
 				const startHours = getHours(new Date(calendarEvent.start));
 				const startMinutes = getMinutes(new Date(calendarEvent.start));
@@ -108,7 +81,7 @@ const CalendarPage = () => {
 				allDay: isAllDayEvent(),
 			};
 		});
-	}, [calendarEvents.data]);
+	}, [calendarEvents]);
 
 	useEffect(() => {
 		const handleScreenResize = () => {
@@ -124,8 +97,7 @@ const CalendarPage = () => {
 		handleScreenResize();
 	}, [mdUp]);
 
-	// TODO: useMemo
-	const calendarActions = useMemo(
+	const calendarMethods = useMemo(
 		() => ({
 			changeView: (view: CalendarView) => {
 				const calendarEl = calendarRef.current;
@@ -183,31 +155,27 @@ const CalendarPage = () => {
 			},
 
 			selectEvent: (arg: EventClickArg) => {
-				currentEvent.setId(arg.event.id);
+				setCurrentEventId(arg.event.id);
 			},
 
 			dropEvent: async (arg: EventDropArg) => {
 				const { event } = arg;
 
-				await currentEvent.revalidate();
-				await calendarEvents.update(event.id, {
+				await calendarEventActions.update(event.id, {
 					allDay: event.allDay,
 					start: event.start ?? undefined,
 					end: event.end ?? undefined,
 				});
-				await currentEvent.revalidate();
 			},
 
 			resizeEvent: async (arg: EventResizeDoneArg) => {
 				const { event } = arg;
 
-				await currentEvent.revalidate();
-				await calendarEvents.update(event.id, {
+				await calendarEventActions.update(event.id, {
 					allDay: event.allDay,
 					start: event.start ?? undefined,
 					end: event.end ?? undefined,
 				});
-				await currentEvent.revalidate();
 			},
 		}),
 		[],
@@ -221,24 +189,24 @@ const CalendarPage = () => {
 
 	const handleSubmit = async ({ id: _id, ...values }: CalendarEventSubmitData) => {
 		if (isNew) {
-			await calendarEvents.create(values);
+			await calendarEventActions.create(values);
 		} else if (currentEvent.data?.id) {
-			await calendarEvents.update(currentEvent.data.id, values);
-			await currentEvent.revalidate();
+			await calendarEventActions.update(currentEvent.data.id, values);
 		}
 		handleFormClose();
 	};
 
 	const handleDelete = async () => {
-		const eventId = currentEvent.data?.id;
-		if (!eventId) return;
-		await calendarEvents.delete(eventId);
+		console.log('tamer');
+		if (!currentEvent.data?.id) return;
+		console.log('wtf');
+		await calendarEventActions.delete(currentEvent.data.id);
 		handleFormClose();
 	};
 
 	const handleFormClose = () => {
 		setRange(undefined);
-		currentEvent.setId('');
+		setCurrentEventId(undefined);
 		formDisclosure.close();
 	};
 
@@ -247,27 +215,27 @@ const CalendarPage = () => {
 			<Stack spacing={3}>
 				<CalendarToolbar
 					date={date}
-					onAddClick={calendarActions.addNewEvent}
-					onDateNext={calendarActions.gotoNext}
-					onDatePrev={calendarActions.gotoPrevious}
-					onDateToday={calendarActions.setDateToNow}
-					onViewChange={calendarActions.changeView}
+					onAddClick={calendarMethods.addNewEvent}
+					onDateNext={calendarMethods.gotoNext}
+					onDatePrev={calendarMethods.gotoPrevious}
+					onDateToday={calendarMethods.setDateToNow}
+					onViewChange={calendarMethods.changeView}
 					view={view}
 				/>
 				<Card>
 					<CalendarContainer>
-						<Calendar
+						<FullCalendar
 							locale={frLocale}
 							allDayMaintainDuration
 							allDayText="Tt la journée"
 							dayMaxEventRows={3}
 							droppable
 							editable
-							eventClick={calendarActions.selectEvent}
+							eventClick={calendarMethods.selectEvent}
 							eventDisplay="block"
-							eventDrop={calendarActions.dropEvent}
+							eventDrop={calendarMethods.dropEvent}
 							eventResizableFromStart
-							eventResize={calendarActions.resizeEvent}
+							eventResize={calendarMethods.resizeEvent}
 							events={formattedCalendarEvents}
 							headerToolbar={false}
 							height={800}
@@ -275,7 +243,7 @@ const CalendarPage = () => {
 							initialView={view}
 							ref={calendarRef}
 							rerenderDelay={10}
-							select={calendarActions.selectRange}
+							select={calendarMethods.selectRange}
 							selectable
 							weekends
 							navLinks
@@ -285,7 +253,7 @@ const CalendarPage = () => {
 
 								const calendarApi = calendarEl.getApi();
 								calendarApi.gotoDate(date);
-								calendarActions.changeView('timeGridDay');
+								calendarMethods.changeView('timeGridDay');
 							}}
 							plugins={[
 								dayGridPlugin,
@@ -313,8 +281,8 @@ const CalendarPage = () => {
 					mode={isNew ? 'create' : 'update'}
 					range={range}
 					defaultValues={{ calendar: calendar?.id, ...currentEvent.data }}
-					users={users.data}
-					trailers={trailers.data}
+					users={users}
+					trailers={trailers}
 					onSubmit={handleSubmit}
 					onCancel={handleFormClose}
 					onDelete={handleDelete}

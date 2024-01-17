@@ -1,93 +1,62 @@
-import { useMemo, useState } from 'react';
-import { createItem, deleteItem, readItems, updateItem, type Query } from '@directus/sdk';
-import Cookies from 'js-cookie';
+import { useMemo } from 'react';
+import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
-import useSWR from 'swr';
 
-import { api } from 'src/lib/api';
-import type { CreateBillSchema, UpdateBillSchema } from 'src/lib/schemas/bill.schema';
-import type { Bill, DirectusSchema } from 'src/lib/types/directus';
-import { withCompanyIsolation } from './utils';
-
-type Params = Query<DirectusSchema, Bill>;
+import {
+	billParamsSchema,
+	type CreateBillSchema,
+	type UpdateBillSchema,
+} from 'src/lib/schemas/bill.schema';
+import type { BillParams } from 'src/lib/types/directus';
+import { createBill, deleteBill, updateBill } from 'src/server/actions/bill.action';
+import { useCustomSearchParams } from './useCustomSearchParams';
 
 /**
- * Hook to provide bills data and actions.
- * It allows components using this hook to access the same cache, avoiding unnecessary fetches.
+ * Provides useful bill actions.
  */
-export const useBills = (initialParams?: Params) => {
-	const [params, setParams] = useState(initialParams);
-
-	const billsCache = useSWR(['bills', params, Cookies.get('company')], ([, params]) =>
-		api.request(readItems('bills', withCompanyIsolation(params))),
-	);
+export const useBillActions = () => {
+	const router = useRouter();
+	const searchParams = useCustomSearchParams();
 
 	const billActions = useMemo(
 		() => ({
-			setParams,
-			revalidate: () => billsCache.mutate(),
+			setParams: (params: BillParams) => {
+				const newValue = billParamsSchema.createSearchParams(params);
+				searchParams.reset(newValue);
+			},
+
+			revalidate: () => {
+				router.refresh();
+			},
 
 			create: async (payload: CreateBillSchema) => {
-				const result = await api.request(createItem('bills', payload));
-				await billsCache.mutate();
-
+				const result = await createBill(payload);
 				toast.success('Facture créée !');
 				return result;
 			},
 
 			update: async (id: number, payload: UpdateBillSchema) => {
-				const result = await api.request(updateItem('bills', id, payload));
-				await billsCache.mutate();
-
+				const result = await updateBill(id, payload);
 				toast.success('Facture mise à jour !');
 				return result;
 			},
 
 			delete: async (id: number) => {
 				if (
-					!window.confirm(
-						`Êtes-vous sûr de vouloir supprimer cette facture ?\nLes données seront supprimées de manière permanente.`,
-					)
+					!window.confirm(`
+            Êtes-vous sûr de vouloir supprimer cette facture ?\n
+            Les données seront supprimées de manière permanente.
+          `)
 				) {
 					return;
 				}
 
-				const result = await api.request(deleteItem('bills', id));
-				await billsCache.mutate();
-
+				await deleteBill(id);
 				toast.success('Facture supprimée !');
-				return result;
 			},
 		}),
 		[],
 	);
 
-	return {
-		data: billsCache.data ?? [],
-		params,
-		isLoading: billsCache.isLoading,
-		...billActions,
-	};
-};
-
-/**
- * Same as `useBills` but for single data.
- */
-export const useBill = (id: number, params?: Params) => {
-	const newParams = { ...params, filter: { ...params?.filter, id: { _eq: id } }, limit: 1 };
-	const bills = useBills(newParams);
-
-	const actions = useMemo(
-		() => ({
-			update: async (payload: UpdateBillSchema) => bills.update(id, payload),
-			delete: async () => bills.delete(id),
-		}),
-		[id],
-	);
-
-	return {
-		data: bills.data[0],
-		isLoading: bills.isLoading,
-		...actions,
-	};
+	return billActions;
 };

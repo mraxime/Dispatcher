@@ -1,15 +1,14 @@
-'use client';
-
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { Box, Button, Container, SvgIcon } from '@mui/material';
+import { Button, Container, SvgIcon } from '@mui/material';
 
-import Header, { type BreadcrumbItem } from 'src/components/base/Header';
 import { Icons } from 'src/components/base/Icons';
-import ClientsTable from 'src/components/clients/ClientsTable';
-import { useClients } from 'src/hooks/useClients';
+import PageHeader, { type BreadcrumbItem } from 'src/components/base/PageHeader';
 import { ROUTES } from 'src/lib/constants/routes';
+import { clientParamsSchema } from 'src/lib/schemas/client.schema';
 import type { ClientParams } from 'src/lib/types/directus';
+import { deepMerge } from 'src/lib/utils';
+import { getClients } from 'src/server/actions/client.action';
+import ClientsPageView from './view';
 
 const breadcrumbs: BreadcrumbItem[] = [
 	{
@@ -19,21 +18,20 @@ const breadcrumbs: BreadcrumbItem[] = [
 	{ name: 'Clients' },
 ];
 
-const ClientsPage = () => {
-	const params: ClientParams = {
+const ClientsPage = async ({ searchParams }: { searchParams: Record<string, string> }) => {
+	const params = deepMerge<ClientParams>(clientParamsSchema.parseSearchParams(searchParams), {
 		page: 1,
 		limit: 10,
 		fields: ['*'],
 		filter: { status: { _eq: 'ACTIVE' } },
 		sort: '-date_created',
-	};
+	});
 
-	const clients = useClients(params);
-	const router = useRouter();
+	const clients = await getClients(params);
 
 	return (
 		<Container maxWidth="xl">
-			<Header
+			<PageHeader
 				title="Liste des clients"
 				icon={<Icons.client />}
 				breadcrumbItems={breadcrumbs}
@@ -52,18 +50,7 @@ const ClientsPage = () => {
 					</Button>
 				}
 			/>
-
-			<Box mt={4}>
-				<ClientsTable
-					data={clients.data}
-					params={clients.params}
-					isLoading={clients.isLoading}
-					onRefresh={clients.revalidate}
-					onParamsChange={clients.setParams}
-					onEdit={(id) => router.push(ROUTES.ClientPage(id))}
-					onDelete={clients.delete}
-				/>
-			</Box>
+			<ClientsPageView sx={{ mt: 4 }} clients={clients} params={params} />
 		</Container>
 	);
 };

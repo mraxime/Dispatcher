@@ -1,24 +1,17 @@
-'use client';
-
 import { Container } from '@mui/material';
 
-import Header from 'src/components/base/Header';
 import { Icons } from 'src/components/base/Icons';
-import UserAccountManager from 'src/components/users/UserAccountManager';
-import type { UserProfileSubmitData } from 'src/components/users/UserProfileForm';
-import { useSession } from 'src/contexts/session-context';
+import PageHeader from 'src/components/base/PageHeader';
+import { getSession } from 'src/server/actions/user.action';
+import ProfilePageView from './view';
 
-const ProfilePage = () => {
-	const session = useSession();
-
-	const handleSubmit = async (data: UserProfileSubmitData) => {
-		await session.update(data);
-	};
+const ProfilePage = async () => {
+	const session = await getSession();
 
 	return (
 		<Container maxWidth="xl">
-			<Header title="Mon profil" icon={<Icons.user />} />
-			<UserAccountManager sx={{ mt: 4 }} data={session.data} onSubmit={handleSubmit} />
+			<PageHeader title="Mon profil" icon={<Icons.user />} />
+			<ProfilePageView sx={{ mt: 4 }} session={session} />
 		</Container>
 	);
 };

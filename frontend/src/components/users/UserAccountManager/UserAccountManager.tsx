@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, type FC } from 'react';
-import { Box, Divider, Grid, Stack, Tab, Tabs, type SxProps } from '@mui/material';
+import { Box, Divider, Grid, Stack, Tab, Tabs } from '@mui/material';
+import type { SxProps } from '@mui/material/styles';
 
 import UserPasswordForm from 'src/components/users/UserPasswordForm';
 import UserProfileForm, { type UserProfileSubmitData } from 'src/components/users/UserProfileForm';

@@ -3,7 +3,7 @@ import { Box, Button, Grid, Stack } from '@mui/material';
 import { FormProvider, useForm, type DefaultValues } from 'react-hook-form';
 
 import { createUserSchema, updateUserSchema } from 'src/lib/schemas/user.schema';
-import type { CustomPermission, UserRole } from 'src/lib/types/directus';
+import type { Permission, Role } from 'src/lib/types/directus';
 import { zodResolverEnhanced } from 'src/lib/utils/zod';
 import type { UserSubmitData } from './types';
 import UserFormContact from './UserFormContact';
@@ -13,8 +13,8 @@ import UserFormUser from './UserFormUser';
 type Props = {
 	mode: 'create' | 'update';
 	defaultValues?: DefaultValues<UserSubmitData>;
-	roles?: UserRole[];
-	permissions?: CustomPermission[];
+	roles?: Role[];
+	permissions?: Permission[];
 	onSubmit?: (formValues: UserSubmitData) => Promise<void>;
 	onCancel?: () => void;
 };

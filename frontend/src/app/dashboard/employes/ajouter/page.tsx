@@ -1,18 +1,11 @@
-'use client';
+import { Container } from '@mui/material';
 
-import { useRouter } from 'next/navigation';
-import { Box, Container } from '@mui/material';
-import Cookies from 'js-cookie';
-
-import Header, { type BreadcrumbItem } from 'src/components/base/Header';
 import { Icons } from 'src/components/base/Icons';
-import PageLoading from 'src/components/base/PageLoading';
-import UserForm, { type UserSubmitData } from 'src/components/users/UserForm';
-import { usePermissions } from 'src/hooks/usePermissions';
-import { useRoles } from 'src/hooks/useRoles';
-import { useUsers } from 'src/hooks/useUsers';
+import PageHeader, { type BreadcrumbItem } from 'src/components/base/PageHeader';
 import { USER_ROLES } from 'src/lib/constants/roles';
 import { ROUTES } from 'src/lib/constants/routes';
+import { getPermissions, getRoles } from 'src/server/actions/user.action';
+import NewEmployeePageView from './view';
 
 const breadcrumbs: BreadcrumbItem[] = [
 	{
@@ -26,41 +19,21 @@ const breadcrumbs: BreadcrumbItem[] = [
 	{ name: 'Ajouter' },
 ];
 
-const NewEmployeePage = () => {
-	const router = useRouter();
-	const users = useUsers();
-
-	const roles = useRoles({ fields: ['*'], sort: 'name', filter: { name: { _in: USER_ROLES } } });
-	const permissions = usePermissions({ fields: ['*'], sort: 'group' });
-
-	if (roles.isLoading || permissions.isLoading) return <PageLoading />;
-
-	const companyCookie = Cookies.get('company');
-
-	const handleSubmit = async (data: UserSubmitData) => {
-		await users.create(data);
-		router.push(ROUTES.EmployeesPage());
-	};
+const NewEmployeePage = async () => {
+	const [roles, permissions] = await Promise.all([
+		getRoles({ fields: ['*'], sort: 'name', filter: { name: { _in: USER_ROLES } } }),
+		getPermissions({ fields: ['*'], sort: 'group' }),
+	]);
 
 	return (
 		<Container maxWidth="xl">
-			<Header
+			<PageHeader
 				title="Créer un employé"
 				icon={<Icons.user />}
 				iconHref={ROUTES.EmployeesPage()}
 				breadcrumbItems={breadcrumbs}
 			/>
-
-			<Box mt={4}>
-				<UserForm
-					mode="create"
-					defaultValues={{ company: Number(companyCookie) }}
-					// @ts-expect-error - anoying typescript :)
-					roles={roles.data}
-					permissions={permissions.data}
-					onSubmit={handleSubmit}
-				/>
-			</Box>
+			<NewEmployeePageView sx={{ mt: 4 }} roles={roles} permissions={permissions} />
 		</Container>
 	);
 };

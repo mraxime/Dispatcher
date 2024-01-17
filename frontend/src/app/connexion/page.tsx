@@ -1,22 +1,18 @@
 'use client';
 
 import type { NextPage } from 'next';
-import { useRouter } from 'next/navigation';
 import { Container } from '@mui/material';
 import toast from 'react-hot-toast';
 
 import UserLoginForm, { type UserLoginSubmitData } from 'src/components/users/UserLoginForm';
-import { useOptionalSession } from 'src/hooks/useSession';
-import { ROUTES } from 'src/lib/constants/routes';
+import { useSessionActions } from 'src/hooks/useSession';
 
 const LoginPage: NextPage = () => {
-	const session = useOptionalSession();
-	const router = useRouter();
+	const session = useSessionActions();
 
 	const handleSubmit = async (values: UserLoginSubmitData) => {
 		try {
 			await session.login(values.email, values.password);
-			router.replace(ROUTES.ProfilePage());
 		} catch {
 			toast.error('Identifiant ou mot de passe incorrectes');
 		}

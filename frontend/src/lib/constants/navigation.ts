@@ -2,7 +2,7 @@ import type { ComponentType } from 'react';
 import LinkIcon from '@mui/icons-material/Link';
 
 import { Icons } from 'src/components/base/Icons';
-import type { CustomPermission } from 'src/lib/types/directus';
+import type { Permission } from 'src/lib/types/directus';
 import { hasPermission } from 'src/lib/utils/permissions';
 import { ROUTES } from './routes';
 
@@ -41,7 +41,7 @@ export const NAV_MENU_ADMIN: NavMenu = {
 /**
  * Main navigation menu.
  */
-export const NAV_MENU = (permissions: CustomPermission[]): NavMenu => ({
+export const NAV_MENU = (permissions: Permission[]): NavMenu => ({
 	Appels: [
 		{
 			title: "Formulaires d'appel",

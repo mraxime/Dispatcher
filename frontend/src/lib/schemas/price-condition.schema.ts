@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+import type { PriceConditionParams } from '../types/directus';
+
 const priceConditionSchema = z.object({
 	id: z.number().optional(),
 	price: z.number(), // price.id
@@ -52,3 +54,26 @@ export const updatePriceConditionSchema = priceConditionSchema
 
 export type CreatePriceConditionSchema = z.infer<typeof createPriceConditionSchema>;
 export type UpdatePriceConditionSchema = z.infer<typeof updatePriceConditionSchema>;
+
+export const priceConditionParamsSchema = (() => {
+	return {
+		/** Translates a flatten URL searchParams object into `PriceConditionParams`. */
+		parseSearchParams: (params: Record<string, string>): PriceConditionParams => {
+			const result = {
+				page: Number(params.page ?? 1),
+				limit: Number(params.limit ?? 10),
+				search: params.search ?? '',
+			};
+			return result;
+		},
+
+		/** Translates `PriceConditionParams` into a flatten URL searchParams object. */
+		createSearchParams: (params: PriceConditionParams): Record<string, string> => {
+			const result: Record<string, string> = {};
+			if (params.page && params.page !== 1) result.page = String(params.page);
+			if (params.limit && params.limit !== 10) result.limit = String(params.limit);
+			if (params.search) result.search = params.search;
+			return result;
+		},
+	};
+})();

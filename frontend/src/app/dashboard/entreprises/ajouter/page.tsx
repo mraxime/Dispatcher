@@ -3,8 +3,8 @@
 import { useRouter } from 'next/navigation';
 import { Box, Container } from '@mui/material';
 
-import Header, { type BreadcrumbItem } from 'src/components/base/Header';
 import { Icons } from 'src/components/base/Icons';
+import PageHeader, { type BreadcrumbItem } from 'src/components/base/PageHeader';
 import CompanyForm from 'src/components/companies/CompanyForm';
 import { useCompanyActions } from 'src/hooks/useCompanies';
 import { ROUTES } from 'src/lib/constants/routes';
@@ -33,7 +33,7 @@ const NewCompanyPage = () => {
 
 	return (
 		<Container maxWidth="xl">
-			<Header
+			<PageHeader
 				title="Créer une entreprise"
 				icon={<Icons.company />}
 				iconHref={ROUTES.CompaniesPage()}

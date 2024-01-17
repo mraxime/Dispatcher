@@ -1,16 +1,14 @@
-'use client';
-
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { Box, Button, Container, SvgIcon } from '@mui/material';
+import { Button, Container, SvgIcon } from '@mui/material';
 
-import Header, { type BreadcrumbItem } from 'src/components/base/Header';
 import { Icons } from 'src/components/base/Icons';
-import UsersTable from 'src/components/users/UsersTable';
-import { useUsers } from 'src/hooks/useUsers';
-import { SUPER_USER_ROLES } from 'src/lib/constants/roles';
+import PageHeader, { type BreadcrumbItem } from 'src/components/base/PageHeader';
 import { ROUTES } from 'src/lib/constants/routes';
+import { userParamsSchema } from 'src/lib/schemas/user.schema';
 import type { UserParams } from 'src/lib/types/directus';
+import { deepMerge } from 'src/lib/utils';
+import { getUsers } from 'src/server/actions/user.action';
+import SuperAdminsPageView from './view';
 
 const breadcrumbs: BreadcrumbItem[] = [
 	{
@@ -20,21 +18,20 @@ const breadcrumbs: BreadcrumbItem[] = [
 	{ name: 'Super Admins' },
 ];
 
-const SuperAdminsPage = () => {
-	const params: UserParams = {
+const SuperAdminsPage = async ({ searchParams }: { searchParams: Record<string, string> }) => {
+	const params = deepMerge<UserParams>(userParamsSchema.parseSearchParams(searchParams), {
 		page: 1,
 		limit: 10,
 		fields: ['*', { role: ['*'] }],
 		filter: { role: { name: { _eq: 'Super Admin' } } },
 		sort: ['role.name', '-date_created'],
-	};
+	});
 
-	const superAdmins = useUsers(params, false);
-	const router = useRouter();
+	const superAdmins = await getUsers(params, false);
 
 	return (
 		<Container maxWidth="xl">
-			<Header
+			<PageHeader
 				title="Liste des super admins"
 				icon={<Icons.user />}
 				breadcrumbItems={breadcrumbs}
@@ -53,20 +50,7 @@ const SuperAdminsPage = () => {
 					</Button>
 				}
 			/>
-
-			<Box mt={4}>
-				<UsersTable
-					data={superAdmins.data}
-					params={superAdmins.params}
-					basePath={ROUTES.SuperAdminsPage()}
-					tabs={SUPER_USER_ROLES}
-					isLoading={superAdmins.isLoading}
-					onRefresh={superAdmins.revalidate}
-					onParamsChange={superAdmins.setParams}
-					onEdit={(id) => router.push(ROUTES.SuperAdminPage(id))}
-					onDelete={superAdmins.delete}
-				/>
-			</Box>
+			<SuperAdminsPageView sx={{ mt: 4 }} superAdmins={superAdmins} params={params} />
 		</Container>
 	);
 };

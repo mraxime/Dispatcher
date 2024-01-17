@@ -23,13 +23,13 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { Icons } from 'src/components/base/Icons';
 import useDisclosure from 'src/hooks/useDisclosure';
 import type { NewUserForm } from 'src/lib/schemas/user.schema';
-import type { CustomPermission, UserRole } from 'src/lib/types/directus';
+import type { Permission, Role } from 'src/lib/types/directus';
 import PermissionsEditor from '../PermissionsEditor/PermissionsEditor';
 
 type Props = {
 	isNew: boolean;
-	roles?: UserRole[];
-	permissions?: CustomPermission[];
+	roles?: Role[];
+	permissions?: Permission[];
 };
 
 const UserFormUser: FC<Props> = ({ isNew, roles = [], permissions = [] }) => {

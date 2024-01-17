@@ -12,7 +12,7 @@ import { createCompany, deleteCompany, updateCompany } from 'src/server/actions/
 import { useCustomSearchParams } from './useCustomSearchParams';
 
 /**
- * Hook to provide useful company actions.
+ * Provides useful company actions.
  */
 export const useCompanyActions = () => {
 	const router = useRouter();

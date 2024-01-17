@@ -1,16 +1,15 @@
-'use client';
-
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { Box, Button, Container, SvgIcon } from '@mui/material';
+import { Button, Container, SvgIcon } from '@mui/material';
 
-import Header, { type BreadcrumbItem } from 'src/components/base/Header';
 import { Icons } from 'src/components/base/Icons';
-import UsersTable from 'src/components/users/UsersTable';
-import { useUsers } from 'src/hooks/useUsers';
+import PageHeader, { type BreadcrumbItem } from 'src/components/base/PageHeader';
 import { USER_ROLES } from 'src/lib/constants/roles';
 import { ROUTES } from 'src/lib/constants/routes';
+import { userParamsSchema } from 'src/lib/schemas/user.schema';
 import type { UserParams } from 'src/lib/types/directus';
+import { deepMerge } from 'src/lib/utils';
+import { getUsers } from 'src/server/actions/user.action';
+import EmployeesPageView from './view';
 
 const breadcrumbs: BreadcrumbItem[] = [
 	{
@@ -20,21 +19,20 @@ const breadcrumbs: BreadcrumbItem[] = [
 	{ name: 'Employés' },
 ];
 
-const EmployeesPage = () => {
-	const params: UserParams = {
+const EmployeesPage = async ({ searchParams }: { searchParams: Record<string, string> }) => {
+	const params = deepMerge<UserParams>(userParamsSchema.parseSearchParams(searchParams), {
 		page: 1,
 		limit: 10,
 		fields: ['*', { role: ['*'] }],
 		filter: { role: { name: { _in: USER_ROLES } } },
 		sort: ['role.name', '-date_created'],
-	};
+	});
 
-	const employees = useUsers(params);
-	const router = useRouter();
+	const employees = await getUsers(params);
 
 	return (
 		<Container maxWidth="xl">
-			<Header
+			<PageHeader
 				title="Liste des employés"
 				icon={<Icons.user />}
 				breadcrumbItems={breadcrumbs}
@@ -53,18 +51,7 @@ const EmployeesPage = () => {
 					</Button>
 				}
 			/>
-
-			<Box mt={4}>
-				<UsersTable
-					data={employees.data}
-					params={employees.params}
-					isLoading={employees.isLoading}
-					onRefresh={employees.revalidate}
-					onParamsChange={employees.setParams}
-					onEdit={(id) => router.push(ROUTES.EmployeePage(id))}
-					onDelete={employees.delete}
-				/>
-			</Box>
+			<EmployeesPageView sx={{ mt: 4 }} employees={employees} params={params} />
 		</Container>
 	);
 };

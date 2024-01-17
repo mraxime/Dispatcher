@@ -10,6 +10,7 @@ type Props = {
 
 /**
  * Forces children to be rendered in client side.
+ * Using this on root layout seems to fix Mui rendering issues with ssr.
  */
 const ForceClient: FC<Props> = ({ children }) => {
 	const [showLoader, setShowLoader] = useState(true);
@@ -21,7 +22,6 @@ const ForceClient: FC<Props> = ({ children }) => {
 	}, []);
 
 	if (showLoader) return <PageLoading />;
-
 	return children;
 };
 

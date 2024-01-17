@@ -190,7 +190,7 @@ export type Call = {
 
 export type Message = {
 	id: number;
-	sort?: number | null;
+	company: number | Company;
 	content: string;
 	sender: string | User;
 	receiver: string | User;
@@ -408,7 +408,7 @@ export type User = {
 	 * @description Unique identifier of the role of this user.
 	 * @example 2f24211d-d928-469a-aea3-3c8f53d4e426
 	 */
-	role: string | UserRole;
+	role: string | Role;
 	/** @description Static token for the user. */
 	token?: string | null;
 	/** Format: timestamp */
@@ -438,13 +438,13 @@ export type User = {
 	theme_light?: string | null;
 	theme_light_overrides?: Record<string, unknown> | null;
 	theme_dark_overrides?: Record<string, unknown> | null;
-	permissions: JunctionUserCustomPermission[] | number[];
+	permissions: JunctionUserPermission[] | number[];
 
 	/** Format: timestamp */
 	date_created: string;
 };
 
-export type UserRole = {
+export type Role = {
 	/**
 	 * @description Unique identifier for the role.
 	 * @example 2f24211d-d928-469a-aea3-3c8f53d4e426
@@ -488,7 +488,7 @@ export type UserRole = {
 	users?: (string | User)[] | null;
 };
 
-export type CustomPermission = {
+export type Permission = {
 	id: number;
 	action: 'CREATE' | 'READ' | 'UPDATE' | 'DELETE';
 	group:
@@ -504,23 +504,29 @@ export type CustomPermission = {
 	description?: string | null;
 };
 
-export type JunctionUserCustomPermission = {
+export type JunctionUserPermission = {
 	id: number;
 	directus_users_id: string | User;
-	custom_permissions_id: number | CustomPermission;
+	custom_permissions_id: number | Permission;
 };
 
 export type BillParams = Query<DirectusSchema, Bill>;
 export type CalendarParams = Query<DirectusSchema, Calendar>;
+export type CalendarEventParams = Query<DirectusSchema, CalendarEvent>;
 export type CallParams = Query<DirectusSchema, Call>;
 export type ClientParams = Query<DirectusSchema, Client>;
+export type ContactParams = Query<DirectusSchema, Contact>;
 export type CompanyParams = Query<DirectusSchema, Company>;
+export type DriverLicenseParams = Query<DirectusSchema, DriverLicense>;
 export type MessageParams = Query<DirectusSchema, Message>;
+export type PriceConditionParams = Query<DirectusSchema, PriceCondition>;
 export type PriceParams = Query<DirectusSchema, Price>;
 export type ServiceParams = Query<DirectusSchema, Service>;
+export type TowedVehicleParams = Query<DirectusSchema, TowedVehicle>;
 export type TrailerParams = Query<DirectusSchema, Trailer>;
 export type UserParams = Query<DirectusSchema, User>;
-export type UserPermissionParams = Query<DirectusSchema, CustomPermission>;
+export type PermissionParams = Query<DirectusSchema, Permission>;
+export type RoleParams = Query<DirectusSchema, Role>;
 
 export type DirectusSchema = {
 	companies: Company[];
@@ -537,7 +543,7 @@ export type DirectusSchema = {
 	towed_vehicles: TowedVehicle[];
 	driver_licenses: DriverLicense;
 	users_emergency_contacts: Contact[];
-	custom_permissions: CustomPermission[];
+	custom_permissions: Permission[];
 
-	junction_directus_users_custom_permissions: JunctionUserCustomPermission[];
+	junction_directus_users_custom_permissions: JunctionUserPermission[];
 };

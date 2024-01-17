@@ -1,14 +1,11 @@
-'use client';
+import { Container } from '@mui/material';
 
-import { Box, Container } from '@mui/material';
-
-import Header, { type BreadcrumbItem } from 'src/components/base/Header';
 import { Icons } from 'src/components/base/Icons';
-import PageLoading from 'src/components/base/PageLoading';
-import ServiceForm, { type ServiceSubmitData } from 'src/components/services/ServiceForm';
-import { usePrices } from 'src/hooks/usePrices';
-import { useService } from 'src/hooks/useServices';
+import PageHeader, { type BreadcrumbItem } from 'src/components/base/PageHeader';
 import { ROUTES } from 'src/lib/constants/routes';
+import { getPrices } from 'src/server/actions/price.action';
+import { getService } from 'src/server/actions/service.action';
+import ServicePageView from './view';
 
 const breadcrumbs: BreadcrumbItem[] = [
 	{
@@ -22,34 +19,18 @@ const breadcrumbs: BreadcrumbItem[] = [
 	{ name: 'Modifier' },
 ];
 
-const ServicePage = ({ params }: { params: { id: number } }) => {
-	const service = useService(params.id);
-	const prices = usePrices();
-
-	if (!service.data || prices.isLoading) return <PageLoading />;
-
-	const handleSubmit = async (data: ServiceSubmitData) => {
-		await service.update(data);
-	};
+const ServicePage = async ({ params }: { params: { id: string } }) => {
+	const [service, prices] = await Promise.all([getService(Number(params.id)), getPrices()]);
 
 	return (
 		<Container maxWidth="md">
-			<Header
-				title={service.data.name}
+			<PageHeader
+				title={service.name}
 				icon={<Icons.service />}
 				iconHref={ROUTES.ServicesPage()}
 				breadcrumbItems={breadcrumbs}
 			/>
-
-			<Box mt={4}>
-				<ServiceForm
-					mode="update"
-					/* @ts-expect-error - data.company is a number. */
-					defaultValues={service.data}
-					prices={prices.data}
-					onSubmit={handleSubmit}
-				/>
-			</Box>
+			<ServicePageView sx={{ mt: 4 }} service={service} prices={prices} />
 		</Container>
 	);
 };

@@ -1,9 +1,7 @@
-'use client';
-
 import { Box, Container } from '@mui/material';
 
-import Header, { type BreadcrumbItem } from 'src/components/base/Header';
 import { Icons } from 'src/components/base/Icons';
+import PageHeader, { type BreadcrumbItem } from 'src/components/base/PageHeader';
 import { ROUTES } from 'src/lib/constants/routes';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -21,13 +19,12 @@ const breadcrumbs: BreadcrumbItem[] = [
 const NewBillPage = () => {
 	return (
 		<Container maxWidth="xl">
-			<Header
+			<PageHeader
 				title="Créer une facture"
 				icon={<Icons.bill />}
 				iconHref={ROUTES.BillsPage()}
 				breadcrumbItems={breadcrumbs}
 			/>
-
 			<Box mt={4}>En développement...</Box>
 		</Container>
 	);

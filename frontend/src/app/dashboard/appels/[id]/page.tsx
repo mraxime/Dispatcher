@@ -1,23 +1,14 @@
-'use client';
+import { Container } from '@mui/material';
 
-import { useRouter } from 'next/navigation';
-import { Box, Container, Grid, Stack } from '@mui/material';
-
-import Header, { type BreadcrumbItem } from 'src/components/base/Header';
 import { Icons } from 'src/components/base/Icons';
-import PageLoading from 'src/components/base/PageLoading';
-import CallDispatcher from 'src/components/calls/CallDispatcher';
-import CallForm, { type CallSubmitData } from 'src/components/calls/CallForm';
-import CallPriceCard from 'src/components/calls/CallPriceCard';
-import CallTrajectCard from 'src/components/calls/CallTrajectCard';
-import { useCall } from 'src/hooks/useCalls';
-import { useClients } from 'src/hooks/useClients';
-import { useServices } from 'src/hooks/useServices';
-import { useTrailers } from 'src/hooks/useTrailers';
-import { useUsers } from 'src/hooks/useUsers';
-import type { CallStatus } from 'src/lib/constants/calls';
+import PageHeader, { type BreadcrumbItem } from 'src/components/base/PageHeader';
 import { ROUTES } from 'src/lib/constants/routes';
-import type { Trailer, User } from 'src/lib/types/directus';
+import { getCall } from 'src/server/actions/call.action';
+import { getClients } from 'src/server/actions/client.action';
+import { getServices } from 'src/server/actions/service.action';
+import { getTrailers } from 'src/server/actions/trailer.action';
+import { getUsers } from 'src/server/actions/user.action';
+import CallPageView from './view';
 
 const breadcrumbs: BreadcrumbItem[] = [
 	{
@@ -28,76 +19,33 @@ const breadcrumbs: BreadcrumbItem[] = [
 	{ name: 'Modifier' },
 ];
 
-const CallPage = ({ params }: { params: { id: number } }) => {
-	const router = useRouter();
-	const call = useCall(params.id, { fields: ['*', { vehicle: ['*'] }] });
-	const services = useServices();
-	const trailers = useTrailers();
-	const clients = useClients();
-	const drivers = useUsers({
-		filter: { role: { name: { _eq: 'Chauffeur' } } },
-	});
-
-	if (
-		!call.data ||
-		services.isLoading ||
-		trailers.isLoading ||
-		clients.isLoading ||
-		drivers.isLoading
-	) {
-		return <PageLoading />;
-	}
-
-	const handleSubmit = async (data: CallSubmitData) => {
-		await call.update(data);
-	};
-
-	const handleDispatch = async (data: { status: CallStatus; driver?: User; trailer?: Trailer }) => {
-		await call.update({
-			status: data.status,
-			driver: data.driver?.id,
-			driver_truck: data.trailer?.id,
-		});
-		router.push(ROUTES.CallsPage());
-	};
+const CallPage = async ({ params }: { params: { id: number } }) => {
+	const [call, clients, drivers, services, trailers] = await Promise.all([
+		getCall(params.id, { fields: ['*', { vehicle: ['*'] }] }),
+		getClients(),
+		getUsers({
+			filter: { role: { name: { _eq: 'Chauffeur' } } },
+		}),
+		getServices(),
+		getTrailers(),
+	]);
 
 	return (
 		<Container maxWidth="xl">
-			<Header
-				title={`Formulaire d'appel: ${call.data.name}`}
+			<PageHeader
+				title={`Formulaire d'appel: ${call.name}`}
 				icon={<Icons.call />}
 				iconHref={ROUTES.CallsPage()}
 				breadcrumbItems={breadcrumbs}
 			/>
-
-			<Box mt={4}>
-				<Grid container spacing={4}>
-					<Grid item xs={12} md={9}>
-						<CallForm
-							mode="update"
-							// @ts-expect-error - data.company is a number because relation is not included.
-							defaultValues={call.data}
-							services={services.data}
-							trailers={trailers.data}
-							clients={clients.data}
-							drivers={drivers.data}
-							onSubmit={handleSubmit}
-						/>
-					</Grid>
-					<Grid item xs={12} md={3}>
-						<Stack spacing={4}>
-							<CallDispatcher
-								data={call.data}
-								drivers={drivers.data}
-								trailers={trailers.data}
-								onSubmit={handleDispatch}
-							/>
-							<CallTrajectCard data={call.data} />
-							<CallPriceCard data={call.data} />
-						</Stack>
-					</Grid>
-				</Grid>
-			</Box>
+			<CallPageView
+				sx={{ mt: 4 }}
+				call={call}
+				clients={clients}
+				drivers={drivers}
+				services={services}
+				trailers={trailers}
+			/>
 		</Container>
 	);
 };

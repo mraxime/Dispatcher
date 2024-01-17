@@ -6,7 +6,7 @@ import { alpha } from '@mui/material/styles';
 import SvgIcon from '@mui/material/SvgIcon';
 
 import { Icons } from 'src/components/base/Icons';
-import { useSession } from 'src/contexts/session-context';
+import type { User } from 'src/lib/types/directus';
 import AccountButton from './account-button/account-button';
 import NotificationsButton from './notifications-button/notifications-button';
 import SettingsButton from './settings-button/settings-button';
@@ -14,12 +14,11 @@ import SettingsButton from './settings-button/settings-button';
 const TOP_NAV_HEIGHT = 64;
 
 type Props = {
+	session: User;
 	onMenuClick?: () => void;
 };
 
-const TopNav: FC<Props> = ({ onMenuClick: onMenuClick }) => {
-	const session = useSession();
-
+const TopNav: FC<Props> = ({ session, onMenuClick: onMenuClick }) => {
 	return (
 		<Box
 			component="header"
@@ -53,7 +52,7 @@ const TopNav: FC<Props> = ({ onMenuClick: onMenuClick }) => {
 				<Stack alignItems="center" direction="row" spacing={2}>
 					<NotificationsButton />
 					<SettingsButton />
-					<AccountButton user={session.data} />
+					<AccountButton user={session} />
 				</Stack>
 			</Stack>
 		</Box>

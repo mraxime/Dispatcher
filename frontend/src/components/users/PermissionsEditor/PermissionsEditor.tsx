@@ -13,14 +13,14 @@ import {
 } from '@mui/material';
 
 import { PERMISSION_ACTIONS_MAP, PERMISSION_GROUPS_MAP } from 'src/lib/constants/permissions';
-import type { CustomPermission } from 'src/lib/types/directus';
+import type { Permission } from 'src/lib/types/directus';
 import { groupPermissionsByGroup } from './utils';
 
 const permissionActions = Object.values(PERMISSION_ACTIONS_MAP);
 const permissionGroups = Object.values(PERMISSION_GROUPS_MAP);
 
 type Props = {
-	data: CustomPermission[];
+	data: Permission[];
 	selected: number[];
 	onChange: (selectedPermissions: number[]) => void;
 };

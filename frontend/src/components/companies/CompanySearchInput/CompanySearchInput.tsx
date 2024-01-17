@@ -1,5 +1,6 @@
 import type { FC } from 'react';
-import { Autocomplete, TextField, type SxProps } from '@mui/material';
+import { Autocomplete, TextField } from '@mui/material';
+import type { SxProps } from '@mui/material/styles';
 
 import type { Company } from 'src/lib/types/directus';
 

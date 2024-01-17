@@ -1,19 +1,13 @@
-'use client';
+import { Container } from '@mui/material';
 
-import { useRouter } from 'next/navigation';
-import { Box, Container } from '@mui/material';
-import Cookies from 'js-cookie';
-
-import Header, { type BreadcrumbItem } from 'src/components/base/Header';
 import { Icons } from 'src/components/base/Icons';
-import PageLoading from 'src/components/base/PageLoading';
-import CallForm, { type CallSubmitData } from 'src/components/calls/CallForm';
-import { useCalls } from 'src/hooks/useCalls';
-import { useClients } from 'src/hooks/useClients';
-import { useServices } from 'src/hooks/useServices';
-import { useTrailers } from 'src/hooks/useTrailers';
-import { useUsers } from 'src/hooks/useUsers';
+import PageHeader, { type BreadcrumbItem } from 'src/components/base/PageHeader';
 import { ROUTES } from 'src/lib/constants/routes';
+import { getClients } from 'src/server/actions/client.action';
+import { getServices } from 'src/server/actions/service.action';
+import { getTrailers } from 'src/server/actions/trailer.action';
+import { getUsers } from 'src/server/actions/user.action';
+import NewCallPageView from './view';
 
 const breadcrumbs: BreadcrumbItem[] = [
 	{
@@ -24,47 +18,29 @@ const breadcrumbs: BreadcrumbItem[] = [
 	{ name: 'Ajouter' },
 ];
 
-const NewCallPage = () => {
-	const router = useRouter();
-	const calls = useCalls();
-	const services = useServices();
-	const trailers = useTrailers();
-	const clients = useClients();
-	const drivers = useUsers({
-		filter: { role: { name: { _eq: 'Chauffeur' } } },
-	});
-
-	if (services.isLoading || trailers.isLoading || clients.isLoading || drivers.isLoading) {
-		return <PageLoading />;
-	}
-
-	const companyCookie = Cookies.get('company');
-
-	const handleSubmit = async (data: CallSubmitData) => {
-		await calls.create(data);
-		router.push(ROUTES.CallsPage());
-	};
+const NewCallPage = async () => {
+	const [clients, drivers, services, trailers] = await Promise.all([
+		getClients(),
+		getUsers({ filter: { role: { name: { _eq: 'Chauffeur' } } } }),
+		getServices(),
+		getTrailers(),
+	]);
 
 	return (
 		<Container maxWidth="md">
-			<Header
+			<PageHeader
 				title="Créer un formulaire d'appel"
 				icon={<Icons.call />}
 				iconHref={ROUTES.CallsPage()}
 				breadcrumbItems={breadcrumbs}
 			/>
-
-			<Box mt={4}>
-				<CallForm
-					mode="create"
-					defaultValues={{ company: Number(companyCookie) }}
-					services={services.data}
-					trailers={trailers.data}
-					clients={clients.data}
-					drivers={drivers.data}
-					onSubmit={handleSubmit}
-				/>
-			</Box>
+			<NewCallPageView
+				sx={{ mt: 4 }}
+				services={services}
+				trailers={trailers}
+				clients={clients}
+				drivers={drivers}
+			/>
 		</Container>
 	);
 };

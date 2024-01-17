@@ -1,6 +1,7 @@
 import type { FC } from 'react';
 import Link from 'next/link';
-import { Avatar, Box, Stack, Typography, type SxProps } from '@mui/material';
+import { Avatar, Box, Stack, Typography } from '@mui/material';
+import type { SxProps } from '@mui/material/styles';
 
 import { Icons } from 'src/components/base/Icons';
 import { ROUTES } from 'src/lib/constants/routes';
@@ -15,7 +16,7 @@ type Props = {
 const SideNavProfile: FC<Props> = ({ user, sx }) => {
 	return (
 		<Box sx={sx}>
-			<Stack flexDirection="row" justifyContent="center">
+			<Stack flexDirection="column" gap={2} alignItems="center" justifyContent="start" px={2}>
 				<Avatar
 					href={ROUTES.ProfilePage()}
 					component={Link}
@@ -24,14 +25,14 @@ const SideNavProfile: FC<Props> = ({ user, sx }) => {
 				>
 					<Icons.user size={36} />
 				</Avatar>
-			</Stack>
-			<Stack alignItems="center" mt={2}>
-				<Typography variant="h6" color="neutral.50">
-					{`${user.first_name} ${user.last_name}`}
-				</Typography>
-				<Typography variant="subtitle2" color="neutral.400">
-					{isObject(user.role) ? user.role.name : 'N/A'}
-				</Typography>
+				<Stack alignItems="center">
+					<Typography variant="h6" color="neutral.50">
+						{`${user.first_name} ${user.last_name}`}
+					</Typography>
+					<Typography variant="subtitle2" color="neutral.400">
+						{isObject(user.role) ? user.role.name : 'N/A'}
+					</Typography>
+				</Stack>
 			</Stack>
 		</Box>
 	);

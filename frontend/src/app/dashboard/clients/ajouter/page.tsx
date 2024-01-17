@@ -4,10 +4,10 @@ import { useRouter } from 'next/navigation';
 import { Box, Container } from '@mui/material';
 import Cookies from 'js-cookie';
 
-import Header, { type BreadcrumbItem } from 'src/components/base/Header';
 import { Icons } from 'src/components/base/Icons';
+import PageHeader, { type BreadcrumbItem } from 'src/components/base/PageHeader';
 import ClientForm, { type ClientSubmitData } from 'src/components/clients/ClientForm';
-import { useClients } from 'src/hooks/useClients';
+import { useClientActions } from 'src/hooks/useClients';
 import { ROUTES } from 'src/lib/constants/routes';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -24,18 +24,18 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 const NewClientPage = () => {
 	const router = useRouter();
-	const clients = useClients();
+	const clientActions = useClientActions();
 
 	const companyCookie = Cookies.get('company');
 
 	const handleSubmit = async (data: ClientSubmitData) => {
-		await clients.create(data);
+		await clientActions.create(data);
 		router.push(ROUTES.ClientsPage());
 	};
 
 	return (
 		<Container maxWidth="md">
-			<Header
+			<PageHeader
 				title="Créer un client"
 				icon={<Icons.client />}
 				iconHref={ROUTES.ClientsPage()}
