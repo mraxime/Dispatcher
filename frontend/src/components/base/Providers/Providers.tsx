@@ -4,7 +4,7 @@ import { useMemo, type FC, type ReactNode } from 'react';
 import Head from 'next/head';
 import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { fr } from 'date-fns/locale';
