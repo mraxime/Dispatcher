@@ -1,19 +1,19 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { createItem, deleteItem, readItem, readItems, updateItem } from '@directus/sdk';
 
 import type { CreateTrailerSchema, UpdateTrailerSchema } from 'src/lib/schemas/trailer.schema';
 import type { TrailerParams } from 'src/lib/types/directus';
-import { createDirectusServerClient } from '../directus';
+import { TrailerService } from '../services/trailer.service';
 import { withCompanyIsolation } from './utils';
+
+const trailerService = new TrailerService();
 
 /**
  * Get many trailers. Can apply filters.
  */
 export const getTrailers = async (params?: TrailerParams) => {
-	const api = createDirectusServerClient();
-	const result = await api.request(readItems('trailers', withCompanyIsolation(params)));
+	const result = await trailerService.getMany(withCompanyIsolation(params));
 	return result;
 };
 
@@ -21,8 +21,7 @@ export const getTrailers = async (params?: TrailerParams) => {
  * Get a single trailer by ID.
  */
 export const getTrailer = async (id: number, params?: TrailerParams) => {
-	const api = createDirectusServerClient();
-	const result = await api.request(readItem('trailers', id, withCompanyIsolation(params)));
+	const result = await trailerService.getOne(id, withCompanyIsolation(params));
 	return result;
 };
 
@@ -30,8 +29,7 @@ export const getTrailer = async (id: number, params?: TrailerParams) => {
  * Create a trailer.
  */
 export const createTrailer = async (payload: CreateTrailerSchema) => {
-	const api = createDirectusServerClient();
-	const result = await api.request(createItem('trailers', payload));
+	const result = await trailerService.create(payload);
 	revalidatePath('/', 'layout');
 	return result;
 };
@@ -40,8 +38,7 @@ export const createTrailer = async (payload: CreateTrailerSchema) => {
  * Update a trailer by ID.
  */
 export const updateTrailer = async (id: number, payload: UpdateTrailerSchema) => {
-	const api = createDirectusServerClient();
-	const result = await api.request(updateItem('trailers', id, payload));
+	const result = await trailerService.update(id, payload);
 	revalidatePath('/', 'layout');
 	return result;
 };
@@ -50,7 +47,6 @@ export const updateTrailer = async (id: number, payload: UpdateTrailerSchema) =>
  * Delete a trailer by ID.
  */
 export const deleteTrailer = async (id: number) => {
-	const api = createDirectusServerClient();
-	await api.request(deleteItem('trailers', id));
+	await trailerService.delete(id);
 	revalidatePath('/', 'layout');
 };

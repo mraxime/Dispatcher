@@ -1,19 +1,19 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { createItem, deleteItem, readItem, readItems, updateItem } from '@directus/sdk';
 
 import type { CreatePriceSchema, UpdatePriceSchema } from 'src/lib/schemas/price.schema';
 import type { PriceParams } from 'src/lib/types/directus';
-import { createDirectusServerClient } from '../directus';
+import { PriceService } from '../services/price.service';
 import { withCompanyIsolation } from './utils';
+
+const priceService = new PriceService();
 
 /**
  * Get many prices. Can apply filters.
  */
 export const getPrices = async (params?: PriceParams) => {
-	const api = createDirectusServerClient();
-	const result = await api.request(readItems('prices', withCompanyIsolation(params)));
+	const result = await priceService.getMany(withCompanyIsolation(params));
 	return result;
 };
 
@@ -21,8 +21,7 @@ export const getPrices = async (params?: PriceParams) => {
  * Get a single price by ID.
  */
 export const getPrice = async (id: number, params?: PriceParams) => {
-	const api = createDirectusServerClient();
-	const result = await api.request(readItem('prices', id, withCompanyIsolation(params)));
+	const result = await priceService.getOne(id, withCompanyIsolation(params));
 	return result;
 };
 
@@ -30,8 +29,7 @@ export const getPrice = async (id: number, params?: PriceParams) => {
  * Create a price.
  */
 export const createPrice = async (payload: CreatePriceSchema) => {
-	const api = createDirectusServerClient();
-	const result = await api.request(createItem('prices', payload));
+	const result = await priceService.create(payload);
 	revalidatePath('/', 'layout');
 	return result;
 };
@@ -40,8 +38,7 @@ export const createPrice = async (payload: CreatePriceSchema) => {
  * Update a price by ID.
  */
 export const updatePrice = async (id: number, payload: UpdatePriceSchema) => {
-	const api = createDirectusServerClient();
-	const result = await api.request(updateItem('prices', id, payload));
+	const result = await priceService.update(id, payload);
 	revalidatePath('/', 'layout');
 	return result;
 };
@@ -50,7 +47,6 @@ export const updatePrice = async (id: number, payload: UpdatePriceSchema) => {
  * Delete a price by ID.
  */
 export const deletePrice = async (id: number) => {
-	const api = createDirectusServerClient();
-	await api.request(deleteItem('prices', id));
+	await priceService.delete(id);
 	revalidatePath('/', 'layout');
 };

@@ -1,19 +1,19 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { createItem, deleteItem, readItem, readItems, updateItem } from '@directus/sdk';
 
 import type { CreateBillSchema, UpdateBillSchema } from 'src/lib/schemas/bill.schema';
 import type { BillParams } from 'src/lib/types/directus';
-import { createDirectusServerClient } from '../directus';
+import { BillService } from '../services/bill.service';
 import { withCompanyIsolation } from './utils';
+
+const billService = new BillService();
 
 /**
  * Get many bills. Can apply filters.
  */
 export const getBills = async (params?: BillParams) => {
-	const api = createDirectusServerClient();
-	const result = await api.request(readItems('bills', withCompanyIsolation(params)));
+	const result = await billService.getMany(withCompanyIsolation(params));
 	return result;
 };
 
@@ -21,8 +21,7 @@ export const getBills = async (params?: BillParams) => {
  * Get a single bill by ID.
  */
 export const getBill = async (id: number, params?: BillParams) => {
-	const api = createDirectusServerClient();
-	const result = await api.request(readItem('bills', id, withCompanyIsolation(params)));
+	const result = await billService.getOne(id, withCompanyIsolation(params));
 	return result;
 };
 
@@ -30,8 +29,7 @@ export const getBill = async (id: number, params?: BillParams) => {
  * Create a bill.
  */
 export const createBill = async (payload: CreateBillSchema) => {
-	const api = createDirectusServerClient();
-	const result = await api.request(createItem('bills', payload));
+	const result = await billService.create(payload);
 	revalidatePath('/', 'layout');
 	return result;
 };
@@ -40,8 +38,7 @@ export const createBill = async (payload: CreateBillSchema) => {
  * Update a bill by ID.
  */
 export const updateBill = async (id: number, payload: UpdateBillSchema) => {
-	const api = createDirectusServerClient();
-	const result = await api.request(updateItem('bills', id, payload));
+	const result = await billService.update(id, payload);
 	revalidatePath('/', 'layout');
 	return result;
 };
@@ -50,7 +47,6 @@ export const updateBill = async (id: number, payload: UpdateBillSchema) => {
  * Delete a bill by ID.
  */
 export const deleteBill = async (id: number) => {
-	const api = createDirectusServerClient();
-	await api.request(deleteItem('bills', id));
+	await billService.delete(id);
 	revalidatePath('/', 'layout');
 };

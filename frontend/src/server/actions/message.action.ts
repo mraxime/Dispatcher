@@ -1,21 +1,19 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { createItem, deleteItem, readItem, readItems, updateItem } from '@directus/sdk';
 
 import type { CreateMessageSchema, UpdateMessageSchema } from 'src/lib/schemas/message.schema';
 import type { MessageParams } from 'src/lib/types/directus';
-import { createDirectusServerClient } from '../directus';
+import { MessageService } from '../services/message.service';
 import { withCompanyIsolation } from './utils';
 
-// TODO: add "company" relation to messages in directus
+const messageService = new MessageService();
 
 /**
  * Get many messages. Can apply filters.
  */
 export const getMessages = async (params?: MessageParams) => {
-	const api = createDirectusServerClient();
-	const result = await api.request(readItems('messages', withCompanyIsolation(params)));
+	const result = await messageService.getMany(withCompanyIsolation(params));
 	return result;
 };
 
@@ -23,8 +21,7 @@ export const getMessages = async (params?: MessageParams) => {
  * Get a single message by ID.
  */
 export const getMessage = async (id: number, params?: MessageParams) => {
-	const api = createDirectusServerClient();
-	const result = await api.request(readItem('messages', id, withCompanyIsolation(params)));
+	const result = await messageService.getOne(id, withCompanyIsolation(params));
 	return result;
 };
 
@@ -32,8 +29,7 @@ export const getMessage = async (id: number, params?: MessageParams) => {
  * Create a message.
  */
 export const createMessage = async (payload: CreateMessageSchema) => {
-	const api = createDirectusServerClient();
-	const result = await api.request(createItem('messages', payload));
+	const result = await messageService.create(payload);
 	revalidatePath('/', 'layout');
 	return result;
 };
@@ -42,8 +38,7 @@ export const createMessage = async (payload: CreateMessageSchema) => {
  * Update a message by ID.
  */
 export const updateMessage = async (id: number, payload: UpdateMessageSchema) => {
-	const api = createDirectusServerClient();
-	const result = await api.request(updateItem('messages', id, payload));
+	const result = await messageService.update(id, payload);
 	revalidatePath('/', 'layout');
 	return result;
 };
@@ -52,7 +47,6 @@ export const updateMessage = async (id: number, payload: UpdateMessageSchema) =>
  * Delete a message by ID.
  */
 export const deleteMessage = async (id: number) => {
-	const api = createDirectusServerClient();
-	await api.request(deleteItem('messages', id));
+	await messageService.delete(id);
 	revalidatePath('/', 'layout');
 };

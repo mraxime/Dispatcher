@@ -2,7 +2,7 @@ import { Container } from '@mui/material';
 
 import { Icons } from 'src/components/base/Icons';
 import PageHeader from 'src/components/base/PageHeader';
-import { getSession } from 'src/server/actions/user.action';
+import { getSession } from 'src/server/actions/auth.action';
 import ProfilePageView from './view';
 
 const ProfilePage = async () => {

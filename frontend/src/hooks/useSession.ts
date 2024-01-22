@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import toast from 'react-hot-toast';
 
 import type { UpdateUserSchema } from 'src/lib/schemas/user.schema';
-import { updateSession, userLogin, userLogout } from 'src/server/actions/user.action';
+import { updateSession, userLogin, userLogout } from 'src/server/actions/auth.action';
 
 export const useSessionActions = () => {
 	const sessionActions = useMemo(

@@ -1,19 +1,19 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { createItem, deleteItem, readItem, readItems, updateItem } from '@directus/sdk';
 
 import type { CreateCalendarSchema, UpdateCalendarSchema } from 'src/lib/schemas/calendar.schema';
 import type { CalendarParams } from 'src/lib/types/directus';
-import { createDirectusServerClient } from '../directus';
+import { CalendarService } from '../services/calendar.service';
 import { withCompanyIsolation } from './utils';
+
+const calendarService = new CalendarService();
 
 /**
  * Get many calendars. Can apply filters.
  */
 export const getCalendars = async (params?: CalendarParams) => {
-	const api = createDirectusServerClient();
-	const result = await api.request(readItems('calendars', withCompanyIsolation(params)));
+	const result = await calendarService.getMany(withCompanyIsolation(params));
 	return result;
 };
 
@@ -21,8 +21,7 @@ export const getCalendars = async (params?: CalendarParams) => {
  * Get a single calendar by ID.
  */
 export const getCalendar = async (id: string, params?: CalendarParams) => {
-	const api = createDirectusServerClient();
-	const result = await api.request(readItem('calendars', id, withCompanyIsolation(params)));
+	const result = await calendarService.getOne(id, withCompanyIsolation(params));
 	return result;
 };
 
@@ -30,8 +29,7 @@ export const getCalendar = async (id: string, params?: CalendarParams) => {
  * Create a calendar.
  */
 export const createCalendar = async (payload: CreateCalendarSchema) => {
-	const api = createDirectusServerClient();
-	const result = await api.request(createItem('calendars', payload));
+	const result = await calendarService.create(payload);
 	revalidatePath('/', 'layout');
 	return result;
 };
@@ -40,8 +38,7 @@ export const createCalendar = async (payload: CreateCalendarSchema) => {
  * Update a calendar by ID.
  */
 export const updateCalendar = async (id: string, payload: UpdateCalendarSchema) => {
-	const api = createDirectusServerClient();
-	const result = await api.request(updateItem('calendars', id, payload));
+	const result = await calendarService.update(id, payload);
 	revalidatePath('/', 'layout');
 	return result;
 };
@@ -50,7 +47,6 @@ export const updateCalendar = async (id: string, payload: UpdateCalendarSchema) 
  * Delete a calendar by ID.
  */
 export const deleteCalendar = async (id: string) => {
-	const api = createDirectusServerClient();
-	await api.request(deleteItem('calendars', id));
+	await calendarService.delete(id);
 	revalidatePath('/', 'layout');
 };

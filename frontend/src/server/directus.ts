@@ -1,17 +1,35 @@
 import type { ResponseCookie } from 'next/dist/compiled/@edge-runtime/cookies';
 import { cookies } from 'next/headers';
-import { authentication, createDirectus, rest, type AuthenticationStorage } from '@directus/sdk';
+import {
+	authentication,
+	createDirectus,
+	rest,
+	staticToken,
+	type AuthenticationStorage,
+} from '@directus/sdk';
 
 import type { DirectusSchema } from 'src/lib/types/directus';
 
 /**
- * Creates a client that can communicate with our database (Directus REST API).
+ * Creates a client that can communicate with our backend REST API (Directus).
  * Note: It uses Next.js `cookies()` as it's storage so this only work in Server Components.
  */
-export const createDirectusServerClient = () => {
+export const createDirectusApi = () => {
 	const directus = createDirectus<DirectusSchema>(process.env.NEXT_PUBLIC_DIRECTUS_URL ?? '')
-		.with(authentication('json', { storage: directusAuthStorageHandler() }))
-		.with(rest({ credentials: 'include' }));
+		.with(rest({ credentials: 'include' }))
+		.with(authentication('json', { storage: directusAuthStorageHandler() }));
+
+	return directus;
+};
+
+/**
+ * Same as `createDirectusApi` but without authentification logic.
+ * This version has access to ALL operations. Do not use outside of server runtime.
+ */
+export const createFullAccessDirectusApi = () => {
+	const directus = createDirectus<DirectusSchema>(process.env.NEXT_PUBLIC_DIRECTUS_URL ?? '')
+		.with(rest({ credentials: 'include' }))
+		.with(staticToken(process.env.DIRECTUS_TOKEN!));
 
 	return directus;
 };

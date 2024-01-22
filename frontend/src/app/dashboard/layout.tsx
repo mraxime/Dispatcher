@@ -1,7 +1,7 @@
 import { type FC, type ReactNode } from 'react';
 
+import { getSession } from 'src/server/actions/auth.action';
 import { getCompanies } from 'src/server/actions/company.action';
-import { getSession } from 'src/server/actions/user.action';
 import DashboardLayoutView from './view';
 
 type Props = {

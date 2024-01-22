@@ -1,19 +1,19 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { createItem, deleteItem, readItem, readItems, updateItem } from '@directus/sdk';
 
 import type { CreateServiceSchema, UpdateServiceSchema } from 'src/lib/schemas/service.schema';
 import type { ServiceParams } from 'src/lib/types/directus';
-import { createDirectusServerClient } from '../directus';
+import { ServiceService } from '../services/service.service';
 import { withCompanyIsolation } from './utils';
+
+const serviceService = new ServiceService();
 
 /**
  * Get many services. Can apply filters.
  */
 export const getServices = async (params?: ServiceParams) => {
-	const api = createDirectusServerClient();
-	const result = await api.request(readItems('services', withCompanyIsolation(params)));
+	const result = await serviceService.getMany(withCompanyIsolation(params));
 	return result;
 };
 
@@ -21,8 +21,7 @@ export const getServices = async (params?: ServiceParams) => {
  * Get a single service by ID.
  */
 export const getService = async (id: number, params?: ServiceParams) => {
-	const api = createDirectusServerClient();
-	const result = await api.request(readItem('services', id, withCompanyIsolation(params)));
+	const result = await serviceService.getOne(id, withCompanyIsolation(params));
 	return result;
 };
 
@@ -30,8 +29,7 @@ export const getService = async (id: number, params?: ServiceParams) => {
  * Create a service.
  */
 export const createService = async (payload: CreateServiceSchema) => {
-	const api = createDirectusServerClient();
-	const result = await api.request(createItem('services', payload));
+	const result = await serviceService.create(payload);
 	revalidatePath('/', 'layout');
 	return result;
 };
@@ -40,8 +38,7 @@ export const createService = async (payload: CreateServiceSchema) => {
  * Update a service by ID.
  */
 export const updateService = async (id: number, payload: UpdateServiceSchema) => {
-	const api = createDirectusServerClient();
-	const result = await api.request(updateItem('services', id, payload));
+	const result = await serviceService.update(id, payload);
 	revalidatePath('/', 'layout');
 	return result;
 };
@@ -50,7 +47,6 @@ export const updateService = async (id: number, payload: UpdateServiceSchema) =>
  * Delete a service by ID.
  */
 export const deleteService = async (id: number) => {
-	const api = createDirectusServerClient();
-	await api.request(deleteItem('services', id));
+	await serviceService.delete(id);
 	revalidatePath('/', 'layout');
 };

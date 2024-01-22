@@ -1,19 +1,19 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { createItem, deleteItem, readItem, readItems, updateItem } from '@directus/sdk';
 
 import type { CreateCallSchema, UpdateCallSchema } from 'src/lib/schemas/call.schema';
 import type { CallParams } from 'src/lib/types/directus';
-import { createDirectusServerClient } from '../directus';
+import { CallService } from '../services/call.service';
 import { withCompanyIsolation } from './utils';
+
+const callService = new CallService();
 
 /**
  * Get many calls. Can apply filters.
  */
 export const getCalls = async (params?: CallParams) => {
-	const api = createDirectusServerClient();
-	const result = await api.request(readItems('calls', withCompanyIsolation(params)));
+	const result = await callService.getMany(withCompanyIsolation(params));
 	return result;
 };
 
@@ -21,8 +21,7 @@ export const getCalls = async (params?: CallParams) => {
  * Get a single call by ID.
  */
 export const getCall = async (id: number, params?: CallParams) => {
-	const api = createDirectusServerClient();
-	const result = await api.request(readItem('calls', id, withCompanyIsolation(params)));
+	const result = await callService.getOne(id, withCompanyIsolation(params));
 	return result;
 };
 
@@ -30,8 +29,7 @@ export const getCall = async (id: number, params?: CallParams) => {
  * Create a call.
  */
 export const createCall = async (payload: CreateCallSchema) => {
-	const api = createDirectusServerClient();
-	const result = await api.request(createItem('calls', payload));
+	const result = await callService.create(payload);
 	revalidatePath('/', 'layout');
 	return result;
 };
@@ -40,8 +38,7 @@ export const createCall = async (payload: CreateCallSchema) => {
  * Update a call by ID.
  */
 export const updateCall = async (id: number, payload: UpdateCallSchema) => {
-	const api = createDirectusServerClient();
-	const result = await api.request(updateItem('calls', id, payload));
+	const result = await callService.update(id, payload);
 	revalidatePath('/', 'layout');
 	return result;
 };
@@ -50,7 +47,6 @@ export const updateCall = async (id: number, payload: UpdateCallSchema) => {
  * Delete a call by ID.
  */
 export const deleteCall = async (id: number) => {
-	const api = createDirectusServerClient();
-	await api.request(deleteItem('calls', id));
+	await callService.delete(id);
 	revalidatePath('/', 'layout');
 };

@@ -6,8 +6,8 @@ import type { DirectusSchema } from 'src/lib/types/directus';
 type Params = Query<DirectusSchema, { company: unknown }>;
 
 /**
- * Transform Directus filter params to include the current company from cookie.
- * This makes sure the query data is scoped to the selected company.
+ * Generate Directus filter params to scope data from the current company cookie.
+ * This makes sure that the returned data is not related to other companies.
  */
 export const withCompanyIsolation = <T extends Params>(params?: T): T => {
 	const companyCookie = cookies().get('company')?.value;

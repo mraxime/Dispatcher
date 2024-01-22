@@ -1,19 +1,19 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { createItem, deleteItem, readItem, readItems, updateItem } from '@directus/sdk';
 
 import type { CreateClientSchema, UpdateClientSchema } from 'src/lib/schemas/client.schema';
 import type { ClientParams } from 'src/lib/types/directus';
-import { createDirectusServerClient } from '../directus';
+import { ClientService } from '../services/client.service';
 import { withCompanyIsolation } from './utils';
+
+const clientService = new ClientService();
 
 /**
  * Get many clients. Can apply filters.
  */
 export const getClients = async (params?: ClientParams) => {
-	const api = createDirectusServerClient();
-	const result = await api.request(readItems('clients', withCompanyIsolation(params)));
+	const result = await clientService.getMany(withCompanyIsolation(params));
 	return result;
 };
 
@@ -21,8 +21,7 @@ export const getClients = async (params?: ClientParams) => {
  * Get a single client by ID.
  */
 export const getClient = async (id: number, params?: ClientParams) => {
-	const api = createDirectusServerClient();
-	const result = await api.request(readItem('clients', id, withCompanyIsolation(params)));
+	const result = await clientService.getOne(id, withCompanyIsolation(params));
 	return result;
 };
 
@@ -30,8 +29,7 @@ export const getClient = async (id: number, params?: ClientParams) => {
  * Create a client.
  */
 export const createClient = async (payload: CreateClientSchema) => {
-	const api = createDirectusServerClient();
-	const result = await api.request(createItem('clients', payload));
+	const result = await clientService.create(payload);
 	revalidatePath('/', 'layout');
 	return result;
 };
@@ -40,8 +38,7 @@ export const createClient = async (payload: CreateClientSchema) => {
  * Update a client by ID.
  */
 export const updateClient = async (id: number, payload: UpdateClientSchema) => {
-	const api = createDirectusServerClient();
-	const result = await api.request(updateItem('clients', id, payload));
+	const result = await clientService.update(id, payload);
 	revalidatePath('/', 'layout');
 	return result;
 };
@@ -50,7 +47,6 @@ export const updateClient = async (id: number, payload: UpdateClientSchema) => {
  * Delete a client by ID.
  */
 export const deleteClient = async (id: number) => {
-	const api = createDirectusServerClient();
-	await api.request(deleteItem('clients', id));
+	await clientService.delete(id);
 	revalidatePath('/', 'layout');
 };
