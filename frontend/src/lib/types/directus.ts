@@ -548,5 +548,7 @@ export type DirectusSchema = {
 	users_emergency_contacts: Contact[];
 	custom_permissions: Permission[];
 
+	directus_users: User[];
+	directus_roles: Role[];
 	junction_directus_users_custom_permissions: JunctionUserPermission[];
 };

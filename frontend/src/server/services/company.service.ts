@@ -108,31 +108,31 @@ export class CompanyService {
 		return result;
 	}
 
-	async _getSubCompaniesDeep(id: number, result = new Set<number>()) {
+	/**
+	 * Returns a set of company ids that are related to a specific target.
+	 * Useful to get every sub-companies a company has.
+	 */
+	async _getRelatedCompanies(id: number, result = new Set<number>()) {
 		if (result.has(id)) return result;
 		result.add(id);
 
 		const subCompanies = await this.getMany({
 			filter: { parent_company: { _eq: id } },
-			fields: ['id', 'sub_companies', 'parent_company'],
+			fields: ['id', 'sub_companies'],
 		});
 
 		for (const subCompany of subCompanies) {
 			result.add(subCompany.id);
 			for (const subSubCompany of subCompany.sub_companies) {
-				await this._getSubCompaniesDeep(subSubCompany as number, result);
+				await this._getRelatedCompanies(subSubCompany as number, result);
 			}
 		}
 
 		return result;
 	}
 
-	/**
-	 * Returns an array of all companies
-	 */
-	async getSubCompaniesDeep(id: number, includeParent = true) {
-		const result = await this._getSubCompaniesDeep(id);
-		if (!includeParent) result.delete(id); // don't include parent
+	async getSubCompaniesDeep(id: number) {
+		const result = await this._getRelatedCompanies(id);
 		return [...result];
 	}
 }

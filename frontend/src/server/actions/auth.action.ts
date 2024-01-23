@@ -6,7 +6,6 @@ import { redirect } from 'next/navigation';
 import type { UserLoginSubmitData } from 'src/components/users/UserLoginForm';
 import { ROUTES } from 'src/lib/constants/routes';
 import { loginSchema, type UpdateUserSchema } from 'src/lib/schemas/user.schema';
-import type { User } from 'src/lib/types/directus';
 import { AuthService } from '../services/auth.service';
 
 const authService = new AuthService();
@@ -16,7 +15,7 @@ const authService = new AuthService();
  */
 export const getSession = async () => {
 	try {
-		const result = await authService.getMe();
+		const result = await authService.getMe({ fields: ['*', '*.*', '*.*.*'] });
 		return result;
 	} catch {
 		await authService.logout();
@@ -26,7 +25,7 @@ export const getSession = async () => {
 
 export const updateSession = async (payload: UpdateUserSchema) => {
 	const result = await authService.updateMe(payload);
-	return result as unknown as User;
+	return result;
 };
 
 /**
@@ -35,14 +34,12 @@ export const updateSession = async (payload: UpdateUserSchema) => {
 export const userLogin = async (payload: UserLoginSubmitData) => {
 	const result = loginSchema.safeParse(payload);
 	if (!result.success) return { success: false, error: result.error.message };
-
 	try {
 		await authService.login(result.data);
 	} catch {
 		await authService.logout();
 		revalidatePath(ROUTES.LoginPage());
 	}
-
 	redirect(ROUTES.DashboardPage());
 };
 

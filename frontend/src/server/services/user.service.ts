@@ -10,25 +10,21 @@ import {
 
 import type { USER_ROLES } from 'src/lib/constants/roles';
 import type { CreateUserSchema, UpdateUserSchema } from 'src/lib/schemas/user.schema';
-import type { PermissionParams, Role, RoleParams, User, UserParams } from 'src/lib/types/directus';
+import type { PermissionParams, RoleParams, UserParams } from 'src/lib/types/directus';
 import { createFullAccessDirectusApi } from '../directus';
 
 export class UserService {
 	api = createFullAccessDirectusApi();
 
 	async getMany(params?: UserParams) {
-		const result = (await this.api.request(
-			// @ts-expect-error - Looks fine.
-			readUsers(params),
-		)) as unknown as User[];
+		// @ts-expect-error - Looks fine.
+		const result = await this.api.request(readUsers(params));
 		return result;
 	}
 
 	async getOne(id: string, params?: UserParams) {
-		const result = (await this.api.request(
-			// @ts-expect-error - Looks fine.
-			readUser(id, params),
-		)) as unknown as User;
+		// @ts-expect-error - Looks fine.
+		const result = await this.api.request(readUser(id, params));
 		return result;
 	}
 
@@ -41,7 +37,8 @@ export class UserService {
 			};
 		}
 
-		const result = (await this.api.request(createUser(payload))) as unknown as User;
+		// @ts-expect-error - Looks fine.
+		const result = await this.api.request(createUser(payload));
 		return result;
 	}
 
@@ -54,7 +51,8 @@ export class UserService {
 			};
 		}
 
-		const result = (await this.api.request(updateUser(id, payload))) as unknown as User;
+		// @ts-expect-error - Looks fine.
+		const result = await this.api.request(updateUser(id, payload));
 		return result;
 	}
 
@@ -68,7 +66,8 @@ export class UserService {
 	}
 
 	async getRoles(params?: RoleParams) {
-		const result = (await this.api.request(readRoles(params))) as unknown as Role[];
+		// @ts-expect-error - Looks fine.
+		const result = await this.api.request(readRoles(params));
 		return result;
 	}
 
