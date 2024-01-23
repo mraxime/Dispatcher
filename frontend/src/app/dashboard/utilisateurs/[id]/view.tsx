@@ -6,24 +6,31 @@ import type { SxProps } from '@mui/material/styles';
 
 import UserForm, { type UserSubmitData } from 'src/components/users/UserForm';
 import { useUserActions } from 'src/hooks/useUsers';
-import type { JunctionUserPermission, Permission, Role, User } from 'src/lib/types/directus';
+import type {
+	Company,
+	JunctionUserPermission,
+	Permission,
+	Role,
+	User,
+} from 'src/lib/types/directus';
 
 type Props = {
-	employee: User;
+	user: User;
+	companies: Company[];
 	roles: Role[];
 	permissions: Permission[];
 	sx?: SxProps;
 };
 
-const EmployeePageView: FC<Props> = ({ employee, roles, permissions, sx }) => {
+const UserPageView: FC<Props> = ({ user, companies, roles, permissions, sx }) => {
 	const userActions = useUserActions();
 
 	const handleSubmit = async (data: UserSubmitData) => {
-		await userActions.update(employee.id, data);
+		await userActions.update(user.id, data);
 	};
 
 	// Get the actual permission ids from the junctions
-	const employeePermissionIds = (employee.permissions as JunctionUserPermission[]).map(
+	const userPermissionIds = (user.permissions as JunctionUserPermission[]).map(
 		({ custom_permissions_id }) => custom_permissions_id as number,
 	);
 
@@ -32,7 +39,8 @@ const EmployeePageView: FC<Props> = ({ employee, roles, permissions, sx }) => {
 			<UserForm
 				mode="update"
 				// @ts-expect-error - anoying typescript :)
-				defaultValues={{ ...employee, permissions: employeePermissionIds }}
+				defaultValues={{ ...user, permissions: userPermissionIds }}
+				companies={companies}
 				roles={roles}
 				permissions={permissions}
 				onSubmit={handleSubmit}
@@ -41,4 +49,4 @@ const EmployeePageView: FC<Props> = ({ employee, roles, permissions, sx }) => {
 	);
 };
 
-export default EmployeePageView;
+export default UserPageView;

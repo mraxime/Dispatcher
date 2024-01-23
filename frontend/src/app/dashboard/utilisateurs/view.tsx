@@ -11,27 +11,27 @@ import { ROUTES } from 'src/lib/constants/routes';
 import type { User, UserParams } from 'src/lib/types/directus';
 
 type Props = {
-	employees: User[];
+	users: User[];
 	params: UserParams;
 	sx?: SxProps;
 };
 
-const EmployeesPageView: FC<Props> = ({ employees, params, sx }) => {
+const UsersPageView: FC<Props> = ({ users, params, sx }) => {
 	const router = useRouter();
 	const userActions = useUserActions();
 
 	return (
 		<Box sx={sx}>
 			<UsersTable
-				data={employees}
+				data={users}
 				params={params}
 				onRefresh={userActions.revalidate}
 				onParamsChange={userActions.setParams}
-				onEdit={(id) => router.push(ROUTES.EmployeePage(id))}
+				onEdit={(id) => router.push(ROUTES.UserPage(id))}
 				onDelete={userActions.delete}
 			/>
 		</Box>
 	);
 };
 
-export default EmployeesPageView;
+export default UsersPageView;

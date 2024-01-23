@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, type FC } from 'react';
+import type { FC } from 'react';
 import Link from 'next/link';
 import type { Action, Column } from '@material-table/core';
 import {
@@ -27,8 +27,6 @@ import { isObject } from 'src/lib/utils';
 type Props = {
 	data: User[];
 	params?: UserParams;
-	basePath?: string;
-	tabs?: string[];
 	totalCount?: number;
 	isLoading?: boolean;
 	onRefresh?: () => void;
@@ -46,8 +44,6 @@ const UsersTable: FC<Props> = ({
 		search: '',
 		filter: { role: { name: { _eq: USER_ROLES[0] } } },
 	},
-	basePath = ROUTES.EmployeesPage(),
-	tabs = USER_ROLES,
 	isLoading,
 	totalCount,
 	onRefresh,
@@ -56,81 +52,13 @@ const UsersTable: FC<Props> = ({
 	onDelete,
 	onParamsChange,
 }) => {
-	const COLUMNS: Column<User>[] = useMemo(
-		() => [
-			{
-				title: 'Utilisateur',
-				field: 'first_name',
-				sorting: false,
-				render: (rowData) => (
-					<Stack direction="row" spacing={1} alignItems="center">
-						<Avatar>
-							<Icons.user />
-						</Avatar>
-						<Stack>
-							<MuiLink
-								href={`${basePath}/${rowData.id}`}
-								component={Link}
-								color="inherit"
-								variant="subtitle2"
-							>
-								{`${rowData.first_name} ${rowData.last_name}`}
-							</MuiLink>
-							<Typography variant="caption" color="textSecondary">
-								{rowData.email}
-							</Typography>
-						</Stack>
-					</Stack>
-				),
-			},
-			{
-				title: 'Rôle',
-				render: (rowData) => (
-					<Typography color="textPrimary" variant="body2">
-						{isObject(rowData.role) ? rowData.role.name : ''}
-					</Typography>
-				),
-			},
-			{
-				title: 'Téléphone',
-				field: 'phone',
-				sorting: false,
-				render: (rowData) =>
-					rowData.phone ? (
-						<Stack>
-							<Typography color="inherit" variant="body2">
-								{rowData.phone}
-							</Typography>
-							<Typography color="textSecondary" variant="caption">
-								{rowData.ext && `poste ${rowData.ext}`}
-							</Typography>
-						</Stack>
-					) : (
-						<Typography color="textSecondary" variant="caption">
-							N/A
-						</Typography>
-					),
-			},
-			{
-				title: 'Date de création',
-				field: 'date_created',
-				render: (rowData) => (
-					<Typography color="textPrimary" variant="body2">
-						{format(new Date(rowData.date_created), 'dd/MM/yyyy')}
-					</Typography>
-				),
-			},
-		],
-		[basePath],
-	);
-
 	const actions: (Action<User> | ((rowData: User) => Action<User>))[] = [
 		(rowData) => ({
 			tooltip: 'Modifier',
 			icon: () => (
 				<ConditionalWrapper
 					condition={!onEdit}
-					wrapper={(children) => <Link href={`${basePath}/${rowData.id}`}>{children}</Link>}
+					wrapper={(children) => <Link href={ROUTES.UserPage(rowData.id)}>{children}</Link>}
 				>
 					<SvgIcon fontSize="small" color="action">
 						<Icons.edit />
@@ -183,7 +111,10 @@ const UsersTable: FC<Props> = ({
 		if (onParamsChange) {
 			onParamsChange({
 				...params,
-				filter: { ...params.filter, role: { name: tab === 'ALL' ? { _in: tabs } : { _eq: tab } } },
+				filter: {
+					...params.filter,
+					role: { name: tab === 'ALL' ? { _in: USER_ROLES } : { _eq: tab } },
+				},
 			});
 		}
 	};
@@ -195,8 +126,8 @@ const UsersTable: FC<Props> = ({
 				value={params.filter?.role?.name?._eq ?? 'ALL'}
 				variant="scrollable"
 			>
-				{tabs.length > 2 && <Tab value="ALL" label="Tout" />}
-				{tabs.map((role) => (
+				{USER_ROLES.length > 2 && <Tab value="ALL" label="Tout" />}
+				{USER_ROLES.map((role) => (
 					<Tab value={role} label={role} key={role} />
 				))}
 			</Tabs>
@@ -217,5 +148,70 @@ const UsersTable: FC<Props> = ({
 		</Card>
 	);
 };
+
+const COLUMNS: Column<User>[] = [
+	{
+		title: 'Utilisateur',
+		field: 'first_name',
+		sorting: false,
+		render: (rowData) => (
+			<Stack direction="row" spacing={1} alignItems="center">
+				<Avatar>
+					<Icons.user />
+				</Avatar>
+				<Stack>
+					<MuiLink
+						href={ROUTES.UserPage(rowData.id)}
+						component={Link}
+						color="inherit"
+						variant="subtitle2"
+					>
+						{`${rowData.first_name} ${rowData.last_name}`}
+					</MuiLink>
+					<Typography variant="caption" color="textSecondary">
+						{rowData.email}
+					</Typography>
+				</Stack>
+			</Stack>
+		),
+	},
+	{
+		title: 'Rôle',
+		render: (rowData) => (
+			<Typography color="textPrimary" variant="body2">
+				{isObject(rowData.role) ? rowData.role.name : ''}
+			</Typography>
+		),
+	},
+	{
+		title: 'Téléphone',
+		field: 'phone',
+		sorting: false,
+		render: (rowData) =>
+			rowData.phone ? (
+				<Stack>
+					<Typography color="inherit" variant="body2">
+						{rowData.phone}
+					</Typography>
+					<Typography color="textSecondary" variant="caption">
+						{rowData.ext && `poste ${rowData.ext}`}
+					</Typography>
+				</Stack>
+			) : (
+				<Typography color="textSecondary" variant="caption">
+					N/A
+				</Typography>
+			),
+	},
+	{
+		title: 'Date de création',
+		field: 'date_created',
+		render: (rowData) => (
+			<Typography color="textPrimary" variant="body2">
+				{format(new Date(rowData.date_created), 'dd/MM/yyyy')}
+			</Typography>
+		),
+	},
+];
 
 export default UsersTable;

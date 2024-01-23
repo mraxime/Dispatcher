@@ -9,7 +9,6 @@ import {
 	Collapse,
 	Divider,
 	FormControlLabel,
-	Grid,
 	Stack,
 	SvgIcon,
 	Switch,
@@ -21,18 +20,20 @@ import { capitalCase } from 'change-case';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import { Icons } from 'src/components/base/Icons';
+import CompanySearchInput from 'src/components/companies/CompanySearchInput';
 import useDisclosure from 'src/hooks/useDisclosure';
 import type { NewUserForm } from 'src/lib/schemas/user.schema';
-import type { Permission, Role } from 'src/lib/types/directus';
+import type { Company, Permission, Role } from 'src/lib/types/directus';
 import PermissionsEditor from '../PermissionsEditor/PermissionsEditor';
 
 type Props = {
 	isNew: boolean;
+	companies?: Company[];
 	roles?: Role[];
 	permissions?: Permission[];
 };
 
-const UserFormUser: FC<Props> = ({ isNew, roles = [], permissions = [] }) => {
+const UserFormUser: FC<Props> = ({ isNew, companies = [], roles = [], permissions = [] }) => {
 	const form = useFormContext<NewUserForm>();
 
 	const permissionsDisclosure = useDisclosure(false);
@@ -56,29 +57,41 @@ const UserFormUser: FC<Props> = ({ isNew, roles = [], permissions = [] }) => {
 			/>
 			<Divider />
 			<CardContent>
-				<Grid container spacing={4}>
-					<Grid item xs={12} md={6}>
-						<TextField
-							autoFocus={isNew}
-							error={Boolean(form.formState.errors.first_name)}
-							fullWidth
-							required
-							helperText={form.formState.errors.first_name?.message}
-							label="Prénom"
-							{...form.register('first_name')}
-						/>
-					</Grid>
-					<Grid item xs={12} md={6}>
-						<TextField
-							error={Boolean(form.formState.errors.last_name)}
-							fullWidth
-							required
-							helperText={form.formState.errors.last_name?.message}
-							label="Nom"
-							{...form.register('last_name')}
-						/>
-					</Grid>
-				</Grid>
+				<Box>
+					<Controller
+						name="company"
+						control={form.control}
+						render={({ field }) => (
+							<CompanySearchInput
+								label="Entreprise"
+								items={companies}
+								current={field.value}
+								onSelect={(company) => field.onChange(company?.id)}
+							/>
+						)}
+					/>
+				</Box>
+
+				<Stack mt={4} gap={4} flexDirection={{ xs: 'column-reverse', sm: 'row' }}>
+					<TextField
+						autoFocus={isNew}
+						error={Boolean(form.formState.errors.first_name)}
+						fullWidth
+						required
+						helperText={form.formState.errors.first_name?.message}
+						label="Prénom"
+						{...form.register('first_name')}
+					/>
+					<TextField
+						error={Boolean(form.formState.errors.last_name)}
+						fullWidth
+						required
+						helperText={form.formState.errors.last_name?.message}
+						label="Nom"
+						{...form.register('last_name')}
+					/>
+				</Stack>
+
 				<Box mt={4}>
 					<TextField
 						error={Boolean(form.formState.errors.email)}
@@ -89,6 +102,7 @@ const UserFormUser: FC<Props> = ({ isNew, roles = [], permissions = [] }) => {
 						{...form.register('email')}
 					/>
 				</Box>
+
 				<Box my={4}>
 					{roles && (
 						<>
@@ -157,78 +171,70 @@ const UserFormUser: FC<Props> = ({ isNew, roles = [], permissions = [] }) => {
 						</>
 					)}
 				</Box>
+
 				<Divider />
-				<Box mt={4}>
-					<Grid container spacing={4}>
-						<Grid item xs={12} md={8}>
-							<TextField
-								required
-								error={Boolean(form.formState.errors.phone)}
-								fullWidth
-								helperText={form.formState.errors.phone?.message}
-								label="Téléphone"
-								{...form.register('phone')}
+
+				<Stack mt={4} gap={4} flexDirection={{ xs: 'column-reverse', sm: 'row' }}>
+					<TextField
+						required
+						error={Boolean(form.formState.errors.phone)}
+						fullWidth
+						helperText={form.formState.errors.phone?.message}
+						label="Téléphone"
+						{...form.register('phone')}
+					/>
+					<TextField
+						error={Boolean(form.formState.errors.ext)}
+						fullWidth
+						helperText={form.formState.errors.ext?.message}
+						label="Poste"
+						{...form.register('ext')}
+					/>
+				</Stack>
+
+				<Stack mt={4} gap={4} flexDirection={{ xs: 'column-reverse', sm: 'row' }}>
+					<Controller
+						control={form.control}
+						name="birthday"
+						render={({ field }) => (
+							<DatePicker
+								value={field.value}
+								onChange={field.onChange}
+								slotProps={{
+									textField: {
+										label: 'Date de naissance',
+										fullWidth: true,
+										name: field.name,
+										onBlur: field.onBlur,
+										error: Boolean(form.formState.errors.birthday),
+										helperText: form.formState.errors.birthday?.message,
+									},
+								}}
 							/>
-						</Grid>
-						<Grid item xs={12} md={4}>
-							<TextField
-								error={Boolean(form.formState.errors.ext)}
-								fullWidth
-								helperText={form.formState.errors.ext?.message}
-								label="Poste"
-								{...form.register('ext')}
+						)}
+					/>
+					<Controller
+						control={form.control}
+						name="hireday"
+						render={({ field }) => (
+							<DatePicker
+								value={field.value}
+								onChange={field.onChange}
+								slotProps={{
+									textField: {
+										label: "Date d'embauche",
+										fullWidth: true,
+										name: field.name,
+										onBlur: field.onBlur,
+										error: Boolean(form.formState.errors.hireday),
+										helperText: form.formState.errors.hireday?.message,
+									},
+								}}
 							/>
-						</Grid>
-					</Grid>
-				</Box>
-				<Box mt={4}>
-					<Grid container spacing={4}>
-						<Grid item xs={12} md={6}>
-							<Controller
-								control={form.control}
-								name="birthday"
-								render={({ field }) => (
-									<DatePicker
-										value={field.value}
-										onChange={field.onChange}
-										slotProps={{
-											textField: {
-												label: 'Date de naissance',
-												fullWidth: true,
-												name: field.name,
-												onBlur: field.onBlur,
-												error: Boolean(form.formState.errors.birthday),
-												helperText: form.formState.errors.birthday?.message,
-											},
-										}}
-									/>
-								)}
-							/>
-						</Grid>
-						<Grid item xs={12} md={6}>
-							<Controller
-								control={form.control}
-								name="hireday"
-								render={({ field }) => (
-									<DatePicker
-										value={field.value}
-										onChange={field.onChange}
-										slotProps={{
-											textField: {
-												label: "Date d'embauche",
-												fullWidth: true,
-												name: field.name,
-												onBlur: field.onBlur,
-												error: Boolean(form.formState.errors.hireday),
-												helperText: form.formState.errors.hireday?.message,
-											},
-										}}
-									/>
-								)}
-							/>
-						</Grid>
-					</Grid>
-				</Box>
+						)}
+					/>
+				</Stack>
+
 				<Box mt={4}>
 					<TextField
 						error={Boolean(form.formState.errors.password)}
@@ -240,6 +246,7 @@ const UserFormUser: FC<Props> = ({ isNew, roles = [], permissions = [] }) => {
 						{...form.register('password')}
 					/>
 				</Box>
+
 				<Box mt={4}>
 					<TextField
 						error={Boolean(form.formState.errors.passwordConfirm)}
@@ -251,6 +258,7 @@ const UserFormUser: FC<Props> = ({ isNew, roles = [], permissions = [] }) => {
 						{...form.register('passwordConfirm')}
 					/>
 				</Box>
+
 				<Box mt={4}>
 					<Controller
 						control={form.control}

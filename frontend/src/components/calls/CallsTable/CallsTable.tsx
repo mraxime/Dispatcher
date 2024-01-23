@@ -274,7 +274,7 @@ const COLUMNS: Column<Call>[] = [
 					</Avatar>
 					<Stack>
 						<MuiLink
-							href={ROUTES.EmployeePage(rowData.driver.id)}
+							href={ROUTES.UserPage(rowData.driver.id)}
 							component={Link}
 							color="inherit"
 							variant="subtitle2"

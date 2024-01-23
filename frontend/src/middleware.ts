@@ -1,7 +1,7 @@
 import { NextResponse, type NextMiddleware, type NextRequest } from 'next/server';
 
 import { ROUTES } from 'src/lib/constants/routes';
-import { isCompanyPath } from 'src/lib/utils/navigation';
+import type { User } from './lib/types/directus';
 
 /**
  * Simple server middleware authentification guard.
@@ -25,29 +25,29 @@ export const middleware: NextMiddleware = async (request) => {
 
 		// Validating the token
 		try {
-			const response = await fetch(`${process.env.NEXT_PUBLIC_DIRECTUS_URL}/users/me`, {
-				method: 'GET',
-				headers: { Authorization: `Bearer ${token.value}` },
-			});
-			if (!response.ok) return notAuthorizedResponse(request);
-		} catch {
+			const result = await fetch(
+				`${process.env.NEXT_PUBLIC_DIRECTUS_URL}/users/me?fields=id,company`,
+				{
+					method: 'GET',
+					headers: { Authorization: `Bearer ${token.value}` },
+				},
+			);
+			if (!result.ok) return notAuthorizedResponse(request);
+
+			// Company paths guard
+			const user = ((await result.json()) as { data: Pick<User, 'id' | 'company'> }).data;
+			if (!request.cookies.has('company')) {
+				const url = request.nextUrl.clone();
+				url.pathname = ROUTES.DashboardPage();
+				const response = NextResponse.redirect(url);
+				response.cookies.set('company', String(user.company));
+				return response;
+			}
+		} catch (error) {
+			console.error(error);
 			return notAuthorizedResponse(request);
 		}
 	}
-
-	// Company paths guard
-	if (request.nextUrl.pathname.startsWith('/dashboard')) {
-		const pathname = request.nextUrl.pathname;
-		const requireCompany = isCompanyPath(pathname);
-
-		if (requireCompany && !request.cookies.has('company')) {
-			const url = request.nextUrl.clone();
-			url.pathname = ROUTES.DashboardPage();
-			return NextResponse.redirect(url);
-		}
-	}
-
-	// todo: super admin paths guard
 
 	const response = NextResponse.next();
 	return response;

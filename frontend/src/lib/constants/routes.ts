@@ -15,19 +15,12 @@ export const ROUTES = {
 	EditCompanyPage: (id: number) => `/dashboard/entreprises/${id}/modifier`,
 	NewCompanyPage: () => `/dashboard/entreprises/ajouter`,
 
-	// SUPER_ADMINS
+	// USERS
 	// =======================================================================
-	SuperAdminsPage: () => '/dashboard/super-admins',
-	SuperAdminPage: (id: string) => `/dashboard/super-admins/${id}`,
-	EditSuperAdminPage: (id: string) => `/dashboard/super-admins/${id}/modifier`,
-	NewSuperAdminPage: () => '/dashboard/super-admins/ajouter',
-
-	// EMPLOYEES
-	// =======================================================================
-	EmployeesPage: () => '/dashboard/employes',
-	EmployeePage: (id: string) => `/dashboard/employes/${id}`,
-	EditEmployeePage: (id: string) => `/dashboard/employes/${id}/modifier`,
-	NewEmployeePage: () => '/dashboard/employes/ajouter',
+	UsersPage: () => '/dashboard/utilisateurs',
+	UserPage: (id: string) => `/dashboard/utilisateurs/${id}`,
+	EditUserPage: (id: string) => `/dashboard/utilisateurs/${id}/modifier`,
+	NewUserPage: () => '/dashboard/utilisateurs/ajouter',
 
 	// TRAILERS
 	// =======================================================================

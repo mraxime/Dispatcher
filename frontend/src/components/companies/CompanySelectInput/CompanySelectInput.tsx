@@ -12,7 +12,7 @@ type Props = {
 	isLoading?: boolean;
 	error?: string | boolean;
 	sx?: SxProps;
-	onSelect?: (company: Company | null) => void;
+	onSelect?: (company: Company) => void;
 };
 
 const CompanySelectInput: FC<Props> = ({
@@ -30,16 +30,28 @@ const CompanySelectInput: FC<Props> = ({
 			disabled={disabled}
 			fullWidth
 			label={label}
-			name="theme"
+			name="company"
 			select
-			value={current}
+			defaultValue={current}
 			SelectProps={{ native: true }}
-			onSelect={(value) => {
-				const company = companies.find((company) => company.id === value) ?? null;
-				if (onSelect) onSelect(company);
+			onChange={(value) => {
+				const company =
+					companies.find((company) => company.id === Number(value.target.value)) ?? null;
+				if (onSelect) onSelect(company!);
 			}}
 			error={Boolean(error)}
 			helperText={typeof error === 'string' ? error : undefined}
+			InputLabelProps={{
+				sx: {
+					color: (theme) => theme.palette.neutral[400],
+				},
+			}}
+			InputProps={{
+				sx: {
+					color: (theme) => theme.palette.neutral[50],
+					borderColor: (theme) => theme.palette.neutral[600],
+				},
+			}}
 		>
 			{companies.length > 0 ? (
 				companies.map((company) => (

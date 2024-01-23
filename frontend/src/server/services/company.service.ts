@@ -4,6 +4,7 @@ import type { CreateCompanySchema, UpdateCompanySchema } from 'src/lib/schemas/c
 import type { CompanyParams } from 'src/lib/types/directus';
 import { getPermissions, getRoleByName } from '../actions/user.action';
 import { createFullAccessDirectusApi } from '../directus';
+import { CalendarService } from './calendar.service';
 
 export class CompanyService {
 	api = createFullAccessDirectusApi();
@@ -55,6 +56,10 @@ export class CompanyService {
 			await this.api.request(updateUser(result.admin as string, { company: result.id }));
 		}
 
+		// create calendar for this company
+		const calendarService = new CalendarService();
+		await calendarService.create({ company: result.id, events: [] });
+
 		return result;
 	}
 
@@ -101,5 +106,33 @@ export class CompanyService {
 	async delete(id: number) {
 		const result = await this.api.request(deleteItem('companies', id));
 		return result;
+	}
+
+	async _getSubCompaniesDeep(id: number, result = new Set<number>()) {
+		if (result.has(id)) return result;
+		result.add(id);
+
+		const subCompanies = await this.getMany({
+			filter: { parent_company: { _eq: id } },
+			fields: ['id', 'sub_companies', 'parent_company'],
+		});
+
+		for (const subCompany of subCompanies) {
+			result.add(subCompany.id);
+			for (const subSubCompany of subCompany.sub_companies) {
+				await this._getSubCompaniesDeep(subSubCompany as number, result);
+			}
+		}
+
+		return result;
+	}
+
+	/**
+	 * Returns an array of all companies
+	 */
+	async getSubCompaniesDeep(id: number, includeParent = true) {
+		const result = await this._getSubCompaniesDeep(id);
+		if (!includeParent) result.delete(id); // don't include parent
+		return [...result];
 	}
 }

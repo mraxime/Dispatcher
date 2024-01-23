@@ -41,6 +41,9 @@ export type Company = {
 	admin?: string | User | null;
 	address: string;
 
+	parent_company?: Company | number | null;
+	sub_companies: (Company | number)[];
+
 	/** Format: timestamp */
 	date_created: string;
 	/** Format: timestamp */
@@ -430,7 +433,7 @@ export type User = {
 	ext?: string | null;
 	blocked: boolean;
 	note?: string | null;
-	company?: number | Company | null;
+	company: number | Company;
 	emergency_contact?: number | Contact | null;
 	driver_license?: number | DriverLicense | null;
 	appearance?: string | null;

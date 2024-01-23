@@ -3,7 +3,7 @@ import { Box, Button, Grid, Stack } from '@mui/material';
 import { FormProvider, useForm, type DefaultValues } from 'react-hook-form';
 
 import { createUserSchema, updateUserSchema } from 'src/lib/schemas/user.schema';
-import type { Permission, Role } from 'src/lib/types/directus';
+import type { Company, Permission, Role } from 'src/lib/types/directus';
 import { zodResolverEnhanced } from 'src/lib/utils/zod';
 import type { UserSubmitData } from './types';
 import UserFormContact from './UserFormContact';
@@ -13,6 +13,7 @@ import UserFormUser from './UserFormUser';
 type Props = {
 	mode: 'create' | 'update';
 	defaultValues?: DefaultValues<UserSubmitData>;
+	companies?: Company[];
 	roles?: Role[];
 	permissions?: Permission[];
 	onSubmit?: (formValues: UserSubmitData) => Promise<void>;
@@ -22,6 +23,7 @@ type Props = {
 const UserForm: FC<Props> = ({
 	mode,
 	defaultValues,
+	companies = [],
 	roles = [],
 	permissions = [],
 	onSubmit,
@@ -33,7 +35,7 @@ const UserForm: FC<Props> = ({
 	 * Creates the initial values structure object of the form.
 	 */
 	const getInitialValues = (payload?: Props['defaultValues']): Props['defaultValues'] => ({
-		company: payload?.company ?? null,
+		company: payload?.company ?? undefined,
 		first_name: payload?.first_name ?? '',
 		last_name: payload?.last_name ?? '',
 		role: payload?.role ?? roles[0]?.id ?? '',
@@ -82,7 +84,12 @@ const UserForm: FC<Props> = ({
 			<form id="user-form" onSubmit={handleFormSubmit} noValidate>
 				<Grid container spacing={4}>
 					<Grid item xs={12} lg={6}>
-						<UserFormUser isNew={isNew} roles={roles} permissions={permissions} />
+						<UserFormUser
+							isNew={isNew}
+							companies={companies}
+							roles={roles}
+							permissions={permissions}
+						/>
 					</Grid>
 					<Grid item xs={12} lg={6}>
 						<UserFormContact />

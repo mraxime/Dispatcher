@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 
-import type { SUPER_USER_ROLES } from 'src/lib/constants/roles';
+import type { USER_ROLES } from 'src/lib/constants/roles';
 import { type CreateUserSchema, type UpdateUserSchema } from 'src/lib/schemas/user.schema';
 import type { PermissionParams, Role, RoleParams, UserParams } from 'src/lib/types/directus';
 import { UserService } from '../services/user.service';
@@ -13,11 +13,8 @@ const userService = new UserService();
 /**
  * Get many users. Can apply filters.
  */
-export const getUsers = async (params?: UserParams, companyIsolation = true) => {
-	const result = await userService.getMany(
-		companyIsolation ? withCompanyIsolation(params) : params,
-	);
-
+export const getUsers = async (params?: UserParams) => {
+	const result = await userService.getMany(withCompanyIsolation(params));
 	return result;
 };
 
@@ -29,7 +26,6 @@ export const getUser = async (id: string, params?: UserParams, companyIsolation 
 		id,
 		companyIsolation ? withCompanyIsolation(params) : params,
 	);
-
 	return result;
 };
 
@@ -78,7 +74,7 @@ export const getRoles = async (params?: RoleParams) => {
 /**
  * Get a single user role by name.
  */
-export const getRoleByName = async (name: (typeof SUPER_USER_ROLES)[number]) => {
+export const getRoleByName = async (name: (typeof USER_ROLES)[number]) => {
 	const result = await userService.getRoleByName(name);
 	return result;
 };

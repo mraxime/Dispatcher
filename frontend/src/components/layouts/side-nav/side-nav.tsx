@@ -1,15 +1,13 @@
 'use client';
 
 import { type FC } from 'react';
-import { usePathname } from 'next/navigation';
 import { Box, Drawer, Stack, Typography, useMediaQuery } from '@mui/material';
 import type { SxProps, Theme } from '@mui/material/styles';
 import Cookies from 'js-cookie';
 
-import CompanySearchInput from 'src/components/companies/CompanySearchInput';
-import { NAV_MENU, NAV_MENU_ADMIN } from 'src/lib/constants/navigation';
+import CompanySelectInput from 'src/components/companies/CompanySelectInput';
+import { NAV_MENU } from 'src/lib/constants/navigation';
 import type { Company, JunctionUserPermission, Permission, User } from 'src/lib/types/directus';
-import { isObject } from 'src/lib/utils';
 import { setCompany } from 'src/server/actions/setting.action';
 import SideNavMenu from './side-nav-menu';
 import SideNavProfile from './side-nav-profile';
@@ -24,7 +22,6 @@ type Props = {
 export const DRAWER_WIDTH = '275px';
 
 const SideNav: FC<Props> = ({ isOpen, session, companies, onClose, ...restProps }) => {
-	const pathname = usePathname();
 	const isDesktop = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
 	const companyId = Cookies.get('company');
 
@@ -32,8 +29,6 @@ const SideNav: FC<Props> = ({ isOpen, session, companies, onClose, ...restProps 
 	const permissions = (session.permissions as JunctionUserPermission[]).map(
 		(value) => value.custom_permissions_id as Permission,
 	);
-
-	const isSuperAdmin = isObject(session.role) && session.role.name === 'Super Admin';
 
 	return (
 		<Drawer
@@ -59,21 +54,16 @@ const SideNav: FC<Props> = ({ isOpen, session, companies, onClose, ...restProps 
 			<SideNavProfile user={session} sx={{ mt: 5 }} />
 
 			<Stack mt={3} py={1} px={2} flexGrow={1}>
-				{isSuperAdmin && (
-					<>
-						<SideNavMenu menu={NAV_MENU_ADMIN} />
-						<CompanySearchInput
-							sx={{ width: '100%', my: 3 }}
-							items={companies}
-							current={Number(companyId) || null}
-							onSelect={(company) => setCompany(company?.id ?? null, pathname)}
-						/>
-					</>
-				)}
+				<CompanySelectInput
+					sx={{ width: '100%', my: 3 }}
+					items={companies}
+					current={Number(companyId)}
+					onSelect={(company) => setCompany(company.id)}
+				/>
 
 				<Box flexGrow={1}>{Boolean(companyId) && <SideNavMenu menu={NAV_MENU(permissions)} />}</Box>
 
-				<Box textAlign="center">
+				<Box textAlign="center" mt={3}>
 					<Typography variant="caption" color="neutral.500">
 						{new Date().getFullYear()} &copy; Répartition Québec
 					</Typography>

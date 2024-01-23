@@ -35,7 +35,6 @@ const CompanySearchInput: FC<Props> = ({
 			isOptionEqualToValue={(option, value) => option.id === value.id}
 			onChange={(_, value) => {
 				if (onSelect) onSelect(value);
-				if (value) document.activeElement?.blur();
 			}}
 			getOptionLabel={(option) => option.name}
 			getOptionDisabled={(option) => !option.active}
@@ -49,13 +48,13 @@ const CompanySearchInput: FC<Props> = ({
 					InputLabelProps={{
 						...params.InputLabelProps,
 					}}
-					InputProps={{
-						...params.InputProps,
-						sx: {
-							color: (theme) => theme.palette.neutral[50],
-							borderColor: (theme) => theme.palette.neutral[600],
-						},
-					}}
+					// InputProps={{
+					// 	...params.InputProps,
+					// 	sx: {
+					// 		color: (theme) => theme.palette.neutral[50],
+					// 		borderColor: (theme) => theme.palette.neutral[600],
+					// 	},
+					// }}
 				/>
 			)}
 		/>

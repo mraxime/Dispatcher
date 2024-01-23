@@ -17,10 +17,10 @@ type Props = {
 	data: User;
 };
 
-const EmployeeCard: FC<Props> = ({ data: user }) => {
+const UserCard: FC<Props> = ({ data: user }) => {
 	return (
 		<Card>
-			<CardHeader title="Employé" />
+			<CardHeader title="Utilisateur" />
 			<Divider />
 			<Table>
 				<TableBody>
@@ -110,4 +110,4 @@ const EmployeeCard: FC<Props> = ({ data: user }) => {
 	);
 };
 
-export default EmployeeCard;
+export default UserCard;

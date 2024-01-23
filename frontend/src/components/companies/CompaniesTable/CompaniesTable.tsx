@@ -171,7 +171,7 @@ const COLUMNS: Column<Company>[] = [
 					</Avatar>
 					<Stack>
 						<MuiLink
-							href={ROUTES.SuperAdminPage(rowData.admin.id)}
+							href={ROUTES.UserPage(rowData.admin.id)}
 							component={Link}
 							color="inherit"
 							variant="subtitle2"

@@ -4,8 +4,9 @@ import { Icons } from 'src/components/base/Icons';
 import PageHeader, { type BreadcrumbItem } from 'src/components/base/PageHeader';
 import { USER_ROLES } from 'src/lib/constants/roles';
 import { ROUTES } from 'src/lib/constants/routes';
+import { getCompanies } from 'src/server/actions/company.action';
 import { getPermissions, getRoles, getUser } from 'src/server/actions/user.action';
-import EmployeePageView from './view';
+import UserPageView from './view';
 
 const breadcrumbs: BreadcrumbItem[] = [
 	{
@@ -13,14 +14,15 @@ const breadcrumbs: BreadcrumbItem[] = [
 		href: ROUTES.DashboardPage(),
 	},
 	{
-		name: 'Employés',
-		href: ROUTES.EmployeesPage(),
+		name: 'Utilisateurs',
+		href: ROUTES.UsersPage(),
 	},
 	{ name: 'Modifier' },
 ];
 
-const EmployeePage = async ({ params }: { params: { id: string } }) => {
-	const [employee, roles, permissions] = await Promise.all([
+const UserPage = async ({ params }: { params: { id: string } }) => {
+	const [companies, user, roles, permissions] = await Promise.all([
+		getCompanies(),
 		getUser(params.id, {
 			fields: [
 				'*',
@@ -38,14 +40,15 @@ const EmployeePage = async ({ params }: { params: { id: string } }) => {
 	return (
 		<Container maxWidth="xl">
 			<PageHeader
-				title={`${employee.first_name} ${employee.last_name}`}
+				title={`${user.first_name} ${user.last_name}`}
 				icon={<Icons.user />}
-				iconHref={ROUTES.EmployeesPage()}
+				iconHref={ROUTES.UsersPage()}
 				breadcrumbItems={breadcrumbs}
 			/>
-			<EmployeePageView
+			<UserPageView
 				sx={{ mt: 4 }}
-				employee={employee}
+				user={user}
+				companies={companies}
 				roles={roles}
 				permissions={permissions}
 			/>
@@ -53,4 +56,4 @@ const EmployeePage = async ({ params }: { params: { id: string } }) => {
 	);
 };
 
-export default EmployeePage;
+export default UserPage;

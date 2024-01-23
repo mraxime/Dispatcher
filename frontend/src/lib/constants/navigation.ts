@@ -19,29 +19,23 @@ type NavItem = {
 };
 
 /**
- * Super Admins navigation menu that should be only visible to super admins.
+ * Main navigation menu.
  */
-export const NAV_MENU_ADMIN: NavMenu = {
+export const NAV_MENU = (permissions: Permission[]): NavMenu => ({
 	Administration: [
 		{
 			title: 'Entreprises',
 			href: ROUTES.CompaniesPage(),
 			Icon: Icons.company,
-			hidden: false,
+			hidden: !hasPermission(permissions, 'READ', 'COMPANY'),
 		},
 		{
-			title: 'Super Admins',
-			href: ROUTES.SuperAdminsPage(),
+			title: 'Utilisateurs',
+			href: ROUTES.UsersPage(),
 			Icon: Icons.user,
-			hidden: false,
+			hidden: !hasPermission(permissions, 'READ', 'USER'),
 		},
 	],
-};
-
-/**
- * Main navigation menu.
- */
-export const NAV_MENU = (permissions: Permission[]): NavMenu => ({
 	Appels: [
 		{
 			title: "Formulaires d'appel",
@@ -55,13 +49,7 @@ export const NAV_MENU = (permissions: Permission[]): NavMenu => ({
 			title: 'Calendrier',
 			href: ROUTES.SchedulesPage(),
 			Icon: Icons.calendar,
-			hidden: false,
-		},
-		{
-			title: 'Employés',
-			href: ROUTES.EmployeesPage(),
-			Icon: Icons.user,
-			hidden: !hasPermission(permissions, 'READ', 'USER'),
+			hidden: !hasPermission(permissions, 'READ', 'CALENDAR'),
 		},
 		{
 			title: 'Remorques',
@@ -103,17 +91,14 @@ export const NAV_MENU = (permissions: Permission[]): NavMenu => ({
 			title: 'Discussion',
 			href: ROUTES.ChatPage(),
 			Icon: Icons.chat,
-			hidden: false,
+			hidden: true,
 		},
-	],
-
-	['Liens rapides']: [
 		{
 			title: 'Track-RQ',
 			href: 'https://track.rq.ms',
 			isExternalHref: true,
 			Icon: LinkIcon,
-			hidden: false,
+			hidden: true,
 		},
 	],
 });

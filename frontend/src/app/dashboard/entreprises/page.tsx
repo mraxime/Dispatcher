@@ -1,3 +1,4 @@
+import { cookies } from 'next/headers';
 import Link from 'next/link';
 import { Button, Container, SvgIcon } from '@mui/material';
 
@@ -19,10 +20,12 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 const CompaniesPage = async ({ searchParams }: { searchParams: Record<string, string> }) => {
+	const companyCookie = cookies().get('company')?.value;
 	const params = deepMerge<CompanyParams>(companyParamsSchema.parseSearchParams(searchParams), {
 		page: 1,
 		limit: 10,
 		fields: ['*', { admin: ['*'] }],
+		filter: { parent_company: { _eq: companyCookie } },
 		sort: '-date_created',
 	});
 

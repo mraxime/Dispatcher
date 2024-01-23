@@ -8,7 +8,7 @@ import {
 	updateUser,
 } from '@directus/sdk';
 
-import type { SUPER_USER_ROLES } from 'src/lib/constants/roles';
+import type { USER_ROLES } from 'src/lib/constants/roles';
 import type { CreateUserSchema, UpdateUserSchema } from 'src/lib/schemas/user.schema';
 import type { PermissionParams, Role, RoleParams, User, UserParams } from 'src/lib/types/directus';
 import { createFullAccessDirectusApi } from '../directus';
@@ -72,7 +72,7 @@ export class UserService {
 		return result;
 	}
 
-	async getRoleByName(name: (typeof SUPER_USER_ROLES)[number]) {
+	async getRoleByName(name: (typeof USER_ROLES)[number]) {
 		const result = await this.api.request(readRoles({ filter: { name: { _eq: name } }, limit: 1 }));
 		return result[0];
 	}

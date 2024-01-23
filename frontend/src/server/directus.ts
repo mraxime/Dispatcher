@@ -12,7 +12,7 @@ import type { DirectusSchema } from 'src/lib/types/directus';
 
 /**
  * Creates a client that can communicate with our backend REST API (Directus).
- * Note: It uses Next.js `cookies()` as it's storage so this only work in Server Components.
+ * It uses Next.js `cookies()` as it's auth storage and should only be used on server runtime.
  */
 export const createDirectusApi = () => {
 	const directus = createDirectus<DirectusSchema>(process.env.NEXT_PUBLIC_DIRECTUS_URL ?? '')
@@ -60,9 +60,8 @@ const directusAuthStorageHandler = (): AuthenticationStorage => {
 		set(data) {
 			const cookieOptions: Partial<ResponseCookie> = {
 				path: '/',
-				httpOnly: false,
-				sameSite: 'none', // TODO: investigate why 'Lax' seems to cause issues
-				// secure: true, // TODO: activate this when pushed online for chrome to work with sameSite=None
+				httpOnly: true,
+				secure: false, // better set to `true` when serving on https
 			};
 
 			if (data?.access_token) {

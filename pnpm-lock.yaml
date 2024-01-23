@@ -129,6 +129,9 @@ importers:
       date-fns:
         specifier: ^3.3.1
         version: 3.3.1
+      deepmerge:
+        specifier: ^4.3.1
+        version: 4.3.1
       js-cookie:
         specifier: ^3.0.5
         version: 3.0.5

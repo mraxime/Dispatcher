@@ -40,6 +40,7 @@
 		"change-case": "^5.4.2",
 		"clsx": "^2.1.0",
 		"date-fns": "^3.3.1",
+		"deepmerge": "^4.3.1",
 		"js-cookie": "^3.0.5",
 		"mui-file-dropzone": "^4.0.2",
 		"next": "14.1.0",

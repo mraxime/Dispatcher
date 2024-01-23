@@ -25,7 +25,7 @@ export const passwordUpdateSchema = z
 export const createUserSchema = z
 	.object({
 		id: z.string().optional(),
-		company: z.number().nullish(), // company.id
+		company: z.number(), // company.id
 		first_name: z.string().min(1),
 		last_name: z.string().min(1),
 		role: z.string().min(1).optional(/* will default to public role */), // or createRoleSchema ?

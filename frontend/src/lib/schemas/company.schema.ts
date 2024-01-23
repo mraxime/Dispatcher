@@ -9,6 +9,8 @@ export const createCompanySchema = z.object({
 	active: z.boolean().default(true),
 	address: z.string().min(1),
 	admin: createUserSchema.nullish(),
+	parent_company: z.number().optional(), // company.id
+	sub_companies: z.array(z.number()).default([]), // company.id
 });
 
 export const updateCompanySchema = createCompanySchema.deepPartial();
