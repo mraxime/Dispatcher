@@ -1,69 +1,99 @@
 import { NextResponse, type NextMiddleware, type NextRequest } from 'next/server';
 
 import { ROUTES } from 'src/lib/constants/routes';
-import type { User } from './lib/types/directus';
+import { CompanyService } from './server/services/company.service';
 
 /**
- * Simple server middleware authentification guard.
- *  1. Redirect /connexion to /dashboard/profile if token is found and valid.
- *  2. Redirect /dashboard/* to /connexion if token is not found or invalid.
+ * Server middleware which runs on every requests.
  */
 export const middleware: NextMiddleware = async (request) => {
-	const token = request.cookies.get('access_token');
-
+	/**
+	 * Login Page Guard.
+	 *  1. If session is found, redirect to dashboard page.
+	 *  2. If session is NOT found, let the user login.
+	 */
 	if (request.nextUrl.pathname.startsWith('/connexion')) {
-		if (!token) return NextResponse.next();
-
-		const url = request.nextUrl.clone();
-		url.pathname = ROUTES.DashboardPage();
-		return NextResponse.redirect(url);
+		try {
+			await getSession(request);
+			const url = request.nextUrl.clone();
+			url.pathname = ROUTES.DashboardPage();
+			return NextResponse.redirect(url);
+		} catch {
+			return NextResponse.next();
+		}
 	}
 
+	/**
+	 * Dashboard Pages Guard.
+	 *  1. If session is NOT found, redirect to login page.
+	 *  2. Validate the selected company from cookies.
+	 *  3. Autoselect an appropriate company if not valid.
+	 */
 	if (request.nextUrl.pathname.startsWith('/dashboard')) {
-		// eslint-disable-next-line unicorn/no-lonely-if
-		if (!token) return notAuthorizedResponse(request);
-
-		// Validating the token
 		try {
-			const result = await fetch(
-				`${process.env.NEXT_PUBLIC_DIRECTUS_URL}/users/me?fields=id,company`,
-				{
-					method: 'GET',
-					headers: { Authorization: `Bearer ${token.value}` },
-				},
-			);
-			if (!result.ok) return notAuthorizedResponse(request);
+			const session = await getSession(request);
+			const currentCompany = request.cookies.get('company')?.value;
 
-			// Company paths guard
-			const user = ((await result.json()) as { data: Pick<User, 'id' | 'company'> }).data;
-			if (!request.cookies.has('company')) {
+			if (!currentCompany) {
 				const url = request.nextUrl.clone();
 				url.pathname = ROUTES.DashboardPage();
 				const response = NextResponse.redirect(url);
-				response.cookies.set('company', String(user.company));
+				response.cookies.set('company', String(session.user.company));
+				return response;
+			}
+
+			// get list of companies the user can access
+			const companyService = new CompanyService();
+			const allowedCompanies = await companyService.getSubCompaniesDeep(session.user.company);
+
+			// validate company
+			if (allowedCompanies.includes(Number(currentCompany))) {
+				return NextResponse.next();
+			} else {
+				const response = NextResponse.next();
+				response.cookies.set('company', String(session.user.company));
 				return response;
 			}
 		} catch (error) {
 			console.error(error);
-			return notAuthorizedResponse(request);
+			return UnauthorizedResponse(request);
 		}
 	}
 
-	const response = NextResponse.next();
-	return response;
+	return NextResponse.next();
 };
 
 export const config = {
 	matcher: ['/connexion/:path*', '/dashboard/:path*'],
 };
 
-const notAuthorizedResponse = (request: NextRequest) => {
+/* HELPERS */
+
+/**
+ * Get the current user session.
+ * It validates token from request cookies & retrieves user data.
+ */
+const getSession = async (request: NextRequest) => {
+	const token = request.cookies.get('access_token')?.value;
+	if (!token) throw new Error('No token');
+
+	const result = await fetch(`${process.env.NEXT_PUBLIC_DIRECTUS_URL}/users/me?fields=id,company`, {
+		headers: { Authorization: `Bearer ${token}` },
+	});
+	if (!result.ok) throw new Error('Invalid token');
+	const user = ((await result.json()) as { data: { id: string; company: number } }).data;
+
+	return { token, user };
+};
+
+/**
+ * Returns an unauthorized response.
+ * User is redirected to login page and token cookie is cleared.
+ */
+const UnauthorizedResponse = (request: NextRequest) => {
 	const url = request.nextUrl.clone();
 	url.pathname = ROUTES.LoginPage();
-
-	// new response instance
 	const response = NextResponse.redirect(url);
 	response.cookies.delete('access_token');
-
 	return response;
 };
