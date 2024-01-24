@@ -1,6 +1,7 @@
 'use client';
 
 import { type FC } from 'react';
+import { usePathname } from 'next/navigation';
 import { Box, Drawer, Stack, Typography, useMediaQuery } from '@mui/material';
 import type { SxProps, Theme } from '@mui/material/styles';
 import Cookies from 'js-cookie';
@@ -22,6 +23,7 @@ type Props = {
 export const DRAWER_WIDTH = '275px';
 
 const SideNav: FC<Props> = ({ isOpen, session, companies, onClose, ...restProps }) => {
+	const pathname = usePathname();
 	const isDesktop = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
 	const companyId = Cookies.get('company');
 
@@ -58,7 +60,7 @@ const SideNav: FC<Props> = ({ isOpen, session, companies, onClose, ...restProps 
 					sx={{ width: '100%', my: 3 }}
 					items={companies}
 					current={Number(companyId)}
-					onSelect={(company) => setCompany(company.id)}
+					onSelect={(company) => setCompany(company.id, pathname)}
 				/>
 
 				<Box flexGrow={1}>{Boolean(companyId) && <SideNavMenu menu={NAV_MENU(permissions)} />}</Box>
