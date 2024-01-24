@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { Box, Container } from '@mui/material';
+import Cookies from 'js-cookie';
 
 import { Icons } from 'src/components/base/Icons';
 import PageHeader, { type BreadcrumbItem } from 'src/components/base/PageHeader';
@@ -25,6 +26,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 const NewCompanyPage = () => {
 	const router = useRouter();
 	const companyActions = useCompanyActions();
+	const companyCookie = Cookies.get('company');
 
 	const handleSubmit = async (data: CreateCompanySchema) => {
 		await companyActions.create(data);
@@ -41,7 +43,11 @@ const NewCompanyPage = () => {
 			/>
 
 			<Box mt={4}>
-				<CompanyForm mode="create" onSubmit={handleSubmit} />
+				<CompanyForm
+					mode="create"
+					defaultValues={{ admin: { company: Number(companyCookie) } }}
+					onSubmit={handleSubmit}
+				/>
 			</Box>
 		</Container>
 	);
