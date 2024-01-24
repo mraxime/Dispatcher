@@ -8,7 +8,7 @@ import { ROUTES } from 'src/lib/constants/routes';
 import { companyParamsSchema } from 'src/lib/schemas/company.schema';
 import type { CompanyParams } from 'src/lib/types/directus';
 import { deepMerge } from 'src/lib/utils';
-import { getCompanies } from 'src/server/actions/company.action';
+import { getCompanies, getCompany } from 'src/server/actions/company.action';
 import CompaniesPageView from './view';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -29,12 +29,15 @@ const CompaniesPage = async ({ searchParams }: { searchParams: Record<string, st
 		sort: '-date_created',
 	});
 
-	const companies = await getCompanies(params);
+	const [companies, currentCompany] = await Promise.all([
+		getCompanies(params),
+		getCompany(Number(companyCookie)),
+	]);
 
 	return (
 		<Container maxWidth="xl">
 			<PageHeader
-				title="Liste des entreprises"
+				title={`Entreprises (${currentCompany.name})`}
 				icon={<Icons.company />}
 				breadcrumbItems={breadcrumbs}
 				actionElement={
