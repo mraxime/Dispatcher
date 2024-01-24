@@ -1,7 +1,9 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 
+import { ROUTES } from 'src/lib/constants/routes';
 import type { CreateTrailerSchema, UpdateTrailerSchema } from 'src/lib/schemas/trailer.schema';
 import type { TrailerParams } from 'src/lib/types/directus';
 import { TrailerService } from '../services/trailer.service';
@@ -40,6 +42,9 @@ export const createTrailer = async (payload: CreateTrailerSchema) => {
 export const updateTrailer = async (id: number, payload: UpdateTrailerSchema) => {
 	const result = await trailerService.update(id, payload);
 	revalidatePath('/', 'layout');
+
+	// redirect for now
+	redirect(ROUTES.TrailersPage());
 	return result;
 };
 

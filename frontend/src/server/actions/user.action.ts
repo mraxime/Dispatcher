@@ -1,8 +1,10 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 
 import type { USER_ROLES } from 'src/lib/constants/roles';
+import { ROUTES } from 'src/lib/constants/routes';
 import { type CreateUserSchema, type UpdateUserSchema } from 'src/lib/schemas/user.schema';
 import type { PermissionParams, Role, RoleParams, UserParams } from 'src/lib/types/directus';
 import { UserService } from '../services/user.service';
@@ -44,6 +46,9 @@ export const createUser = async (payload: CreateUserSchema) => {
 export const updateUser = async (id: string, payload: UpdateUserSchema) => {
 	const result = await userService.update(id, payload);
 	revalidatePath('/', 'layout');
+
+	// redirect for now
+	redirect(ROUTES.UsersPage());
 	return result;
 };
 

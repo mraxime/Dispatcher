@@ -1,7 +1,9 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 
+import { ROUTES } from 'src/lib/constants/routes';
 import type { CreatePriceSchema, UpdatePriceSchema } from 'src/lib/schemas/price.schema';
 import type { PriceParams } from 'src/lib/types/directus';
 import { PriceService } from '../services/price.service';
@@ -40,6 +42,9 @@ export const createPrice = async (payload: CreatePriceSchema) => {
 export const updatePrice = async (id: number, payload: UpdatePriceSchema) => {
 	const result = await priceService.update(id, payload);
 	revalidatePath('/', 'layout');
+
+	// redirect for now
+	redirect(ROUTES.PricesPage());
 	return result;
 };
 

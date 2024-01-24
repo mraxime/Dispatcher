@@ -1,7 +1,9 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 
+import { ROUTES } from 'src/lib/constants/routes';
 import type { CreateServiceSchema, UpdateServiceSchema } from 'src/lib/schemas/service.schema';
 import type { ServiceParams } from 'src/lib/types/directus';
 import { ServiceService } from '../services/service.service';
@@ -40,6 +42,9 @@ export const createService = async (payload: CreateServiceSchema) => {
 export const updateService = async (id: number, payload: UpdateServiceSchema) => {
 	const result = await serviceService.update(id, payload);
 	revalidatePath('/', 'layout');
+
+	// redirect for now
+	redirect(ROUTES.ServicesPage());
 	return result;
 };
 

@@ -2,7 +2,9 @@
 
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 
+import { ROUTES } from 'src/lib/constants/routes';
 import type { CreateCompanySchema, UpdateCompanySchema } from 'src/lib/schemas/company.schema';
 import type { CompanyParams } from 'src/lib/types/directus';
 import { deepMerge, isObject } from 'src/lib/utils';
@@ -58,6 +60,9 @@ export const createCompany = async (payload: CreateCompanySchema) => {
 export const updateCompany = async (id: number, payload: UpdateCompanySchema) => {
 	const result = await companyService.update(id, payload);
 	revalidatePath('/', 'layout');
+
+	// redirect for now
+	redirect(ROUTES.CompaniesPage());
 	return result;
 };
 

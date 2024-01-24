@@ -8,7 +8,7 @@ import type { PaletteMode } from '@mui/material';
 import type { MeasureType } from 'src/lib/constants/measures';
 import { ROUTES } from 'src/lib/constants/routes';
 
-export const setCompany = async (id: number, pathname: string) => {
+export const setCompany = async (id: number, pathname?: string) => {
 	cookies().set('company', String(id), {
 		path: '/',
 		httpOnly: false,
@@ -20,18 +20,20 @@ export const setCompany = async (id: number, pathname: string) => {
 	 * When user switches company on specific pages, data fetching errors may occur.
 	 * Thats because the data may not be accessible under the scope of the new company.
 	 */
-	[
-		ROUTES.CompaniesPage(),
-		ROUTES.UsersPage(),
-		ROUTES.CallsPage(),
-		ROUTES.TrailersPage(),
-		ROUTES.ServicesPage(),
-		ROUTES.ClientsPage(),
-		ROUTES.BillsPage(),
-		ROUTES.PricesPage(),
-	].forEach((route) => {
-		if (pathname.startsWith(route + '/')) throw redirect(route);
-	});
+	if (pathname) {
+		[
+			ROUTES.CompaniesPage(),
+			ROUTES.UsersPage(),
+			ROUTES.CallsPage(),
+			ROUTES.TrailersPage(),
+			ROUTES.ServicesPage(),
+			ROUTES.ClientsPage(),
+			ROUTES.BillsPage(),
+			ROUTES.PricesPage(),
+		].forEach((route) => {
+			if (pathname.startsWith(route + '/')) throw redirect(route);
+		});
+	}
 
 	revalidatePath('/', 'layout');
 };

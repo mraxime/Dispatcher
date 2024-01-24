@@ -1,7 +1,9 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 
+import { ROUTES } from 'src/lib/constants/routes';
 import type { CreateClientSchema, UpdateClientSchema } from 'src/lib/schemas/client.schema';
 import type { ClientParams } from 'src/lib/types/directus';
 import { ClientService } from '../services/client.service';
@@ -40,6 +42,9 @@ export const createClient = async (payload: CreateClientSchema) => {
 export const updateClient = async (id: number, payload: UpdateClientSchema) => {
 	const result = await clientService.update(id, payload);
 	revalidatePath('/', 'layout');
+
+	// redirect for now
+	redirect(ROUTES.ClientsPage());
 	return result;
 };
 
