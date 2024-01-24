@@ -17,7 +17,9 @@ import { Controller, FormProvider, useForm, type DefaultValues } from 'react-hoo
 
 import { Icons } from 'src/components/base/Icons';
 import { createCompanySchema, updateCompanySchema } from 'src/lib/schemas/company.schema';
+import type { Company } from 'src/lib/types/directus';
 import { zodResolverEnhanced } from 'src/lib/utils/zod';
+import CompanySelectInput from '../CompanySelectInput';
 import CompanyFormAdmin from './CompanyFormAdmin';
 import type { CompanySubmitData } from './types';
 
@@ -25,6 +27,7 @@ import type { CompanySubmitData } from './types';
  * Creates the initial values structure object of the form.
  */
 const getInitialValues = (payload?: Props['defaultValues']): Props['defaultValues'] => ({
+	parent_company: payload?.parent_company ?? undefined,
 	name: payload?.name ?? '',
 	active: payload?.active ?? true,
 	address: payload?.address ?? '',
@@ -42,12 +45,13 @@ const getInitialValues = (payload?: Props['defaultValues']): Props['defaultValue
 
 type Props = {
 	mode: 'create' | 'update';
+	companies: Company[];
 	defaultValues?: DefaultValues<CompanySubmitData>;
 	onSubmit?: (formValues: CompanySubmitData) => Promise<void>;
 	onCancel?: () => void;
 };
 
-const CompanyForm: FC<Props> = ({ mode, defaultValues, onSubmit, onCancel }) => {
+const CompanyForm: FC<Props> = ({ mode, companies, defaultValues, onSubmit, onCancel }) => {
 	const isNew = mode === 'create';
 
 	const form = useForm<CompanySubmitData>({
@@ -63,13 +67,7 @@ const CompanyForm: FC<Props> = ({ mode, defaultValues, onSubmit, onCancel }) => 
 	return (
 		<FormProvider {...form}>
 			<form id="company-form" onSubmit={handleFormSubmit} noValidate>
-				<Box
-					sx={{
-						display: 'grid',
-						gridTemplateColumns: { sx: '1fr', md: '1fr 1fr' },
-						gap: 4,
-					}}
-				>
+				<Box display="grid" gridTemplateColumns={{ sx: '1fr', md: '1fr 1fr' }} gap={4}>
 					<Card>
 						<CardHeader
 							title={
@@ -82,44 +80,55 @@ const CompanyForm: FC<Props> = ({ mode, defaultValues, onSubmit, onCancel }) => 
 							}
 						/>
 						<Divider />
-						<CardContent>
-							<Stack spacing={3.5}>
-								<TextField
-									autoFocus={isNew}
-									error={Boolean(form.formState.errors.name)}
-									fullWidth
-									required
-									helperText={form.formState.errors.name?.message}
-									label="Nom de l'entreprise"
-									{...form.register('name')}
-								/>
+						<CardContent component={Stack} spacing={3.5}>
+							<Controller
+								name="parent_company"
+								control={form.control}
+								render={({ field }) => (
+									<CompanySelectInput
+										{...field}
+										label="Appartient à"
+										items={companies}
+										onSelect={(company) => field.onChange(company.id)}
+									/>
+								)}
+							/>
 
-								<TextField
-									error={Boolean(form.formState.errors.address)}
-									fullWidth
-									required
-									helperText={form.formState.errors.address?.message}
-									label="Adresse"
-									{...form.register('address')}
-								/>
+							<TextField
+								autoFocus={isNew}
+								error={Boolean(form.formState.errors.name)}
+								fullWidth
+								required
+								helperText={form.formState.errors.name?.message}
+								label="Nom de l'entreprise"
+								{...form.register('name')}
+							/>
 
-								<FormControlLabel
-									control={
-										<Controller
-											control={form.control}
-											name="active"
-											render={({ field }) => (
-												<Switch
-													checked={field.value}
-													onChange={field.onChange}
-													onBlur={field.onBlur}
-												/>
-											)}
-										/>
-									}
-									label="Active"
-								/>
-							</Stack>
+							<TextField
+								error={Boolean(form.formState.errors.address)}
+								fullWidth
+								required
+								helperText={form.formState.errors.address?.message}
+								label="Adresse"
+								{...form.register('address')}
+							/>
+
+							<FormControlLabel
+								control={
+									<Controller
+										control={form.control}
+										name="active"
+										render={({ field }) => (
+											<Switch
+												checked={field.value}
+												onChange={field.onChange}
+												onBlur={field.onBlur}
+											/>
+										)}
+									/>
+								}
+								label="Active"
+							/>
 						</CardContent>
 					</Card>
 					<CompanyFormAdmin isNew={isNew} />

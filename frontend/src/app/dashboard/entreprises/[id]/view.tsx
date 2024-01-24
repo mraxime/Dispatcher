@@ -10,10 +10,11 @@ import type { Company } from 'src/lib/types/directus';
 
 type Props = {
 	company: Company;
+	companies: Company[];
 	sx: SxProps;
 };
 
-const CompanyPageView: FC<Props> = ({ company, sx }) => {
+const CompanyPageView: FC<Props> = ({ company, companies, sx }) => {
 	const companyActions = useCompanyActions();
 
 	const handleSubmit = async (data: CompanySubmitData) => {
@@ -24,6 +25,7 @@ const CompanyPageView: FC<Props> = ({ company, sx }) => {
 		<Box sx={sx}>
 			<CompanyForm
 				mode="update"
+				companies={companies}
 				/* @ts-expect-error - data.company is a number. */
 				defaultValues={company}
 				onSubmit={handleSubmit}

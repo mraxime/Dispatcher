@@ -165,33 +165,6 @@ const COLUMNS: Column<Trailer>[] = [
 		),
 	},
 	{
-		field: 'belongs_to',
-		title: 'Appartient à',
-		sorting: false,
-		render: (rowData) =>
-			rowData.belongs_to ? (
-				<Stack direction="row" spacing={1} alignItems="center">
-					<Avatar>
-						<Icons.user />
-					</Avatar>
-					<Stack>
-						<MuiLink
-							href={ROUTES.TrailersPage()}
-							component={Link}
-							color="inherit"
-							variant="subtitle2"
-						>
-							{rowData.belongs_to}
-						</MuiLink>
-					</Stack>
-				</Stack>
-			) : (
-				<Typography variant="caption" color="textSecondary">
-					N/A
-				</Typography>
-			),
-	},
-	{
 		title: 'Date de création',
 		render: (rowData) => (
 			<Typography color="textPrimary" variant="body2">

@@ -3,7 +3,7 @@ import { Container } from '@mui/material';
 import { Icons } from 'src/components/base/Icons';
 import PageHeader, { type BreadcrumbItem } from 'src/components/base/PageHeader';
 import { ROUTES } from 'src/lib/constants/routes';
-import { getCompany } from 'src/server/actions/company.action';
+import { getCompanies, getCompany } from 'src/server/actions/company.action';
 import CompanyPageView from './view';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -19,7 +19,10 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 const CompanyPage = async ({ params }: { params: { id: number } }) => {
-	const company = await getCompany(params.id, { fields: ['*', { admin: ['*'] }] });
+	const [company, companies] = await Promise.all([
+		getCompany(params.id, { fields: ['*', { admin: ['*'] }] }),
+		getCompanies(),
+	]);
 
 	return (
 		<Container maxWidth="xl">
@@ -29,7 +32,7 @@ const CompanyPage = async ({ params }: { params: { id: number } }) => {
 				iconHref={ROUTES.CompaniesPage()}
 				breadcrumbItems={breadcrumbs}
 			/>
-			<CompanyPageView sx={{ mt: 4 }} company={company} />
+			<CompanyPageView sx={{ mt: 4 }} company={company} companies={companies} />
 		</Container>
 	);
 };

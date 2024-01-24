@@ -3,6 +3,7 @@ import { Container } from '@mui/material';
 import { Icons } from 'src/components/base/Icons';
 import PageHeader, { type BreadcrumbItem } from 'src/components/base/PageHeader';
 import { ROUTES } from 'src/lib/constants/routes';
+import { getCompanies } from 'src/server/actions/company.action';
 import { getTrailer } from 'src/server/actions/trailer.action';
 import TrailerPageView from './view';
 
@@ -19,7 +20,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 const TrailerPage = async ({ params }: { params: { id: string } }) => {
-	const trailer = await getTrailer(Number(params.id));
+	const [trailer, companies] = await Promise.all([getTrailer(Number(params.id)), getCompanies()]);
 
 	return (
 		<Container maxWidth="xl">
@@ -29,7 +30,7 @@ const TrailerPage = async ({ params }: { params: { id: string } }) => {
 				iconHref={ROUTES.TrailersPage()}
 				breadcrumbItems={breadcrumbs}
 			/>
-			<TrailerPageView sx={{ mt: 4 }} trailer={trailer} />
+			<TrailerPageView sx={{ mt: 4 }} trailer={trailer} companies={companies} />
 		</Container>
 	);
 };

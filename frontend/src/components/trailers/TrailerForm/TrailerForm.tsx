@@ -3,6 +3,7 @@ import { Box, Button, Grid, Stack } from '@mui/material';
 import { FormProvider, useForm, type DefaultValues } from 'react-hook-form';
 
 import { createTrailerSchema, updateTrailerSchema } from 'src/lib/schemas/trailer.schema';
+import type { Company } from 'src/lib/types/directus';
 import { zodResolverEnhanced } from 'src/lib/utils/zod';
 import TrailerFormMeasures from './TrailerFormMeasures';
 import TrailerFormOther from './TrailerFormOther';
@@ -17,7 +18,6 @@ const getInitialValues = (payload?: Props['defaultValues']): Props['defaultValue
 	company: payload?.company ?? undefined,
 	name: payload?.name ?? '',
 	in_service: payload?.in_service ?? true,
-	belongs_to: payload?.belongs_to ?? '',
 	brake_type: payload?.brake_type ?? '',
 	capacity: payload?.capacity ?? null,
 	capacity_back: payload?.capacity_back ?? null,
@@ -44,12 +44,13 @@ const getInitialValues = (payload?: Props['defaultValues']): Props['defaultValue
 
 type Props = {
 	mode: 'create' | 'update';
+	companies: Company[];
 	defaultValues?: DefaultValues<TrailerSubmitData>;
 	onSubmit?: (formValues: TrailerSubmitData) => Promise<void>;
 	onCancel?: () => void;
 };
 
-const TrailerForm: FC<Props> = ({ mode, defaultValues, onSubmit, onCancel }) => {
+const TrailerForm: FC<Props> = ({ mode, companies, defaultValues, onSubmit, onCancel }) => {
 	const isNew = mode === 'create';
 
 	const form = useForm<TrailerSubmitData>({
@@ -67,7 +68,7 @@ const TrailerForm: FC<Props> = ({ mode, defaultValues, onSubmit, onCancel }) => 
 			<form id="trailer-form" noValidate onSubmit={handleFormSubmit}>
 				<Grid container spacing={4}>
 					<Grid item xs={12} lg={6}>
-						<TrailerFormTruck isNew={isNew} />
+						<TrailerFormTruck isNew={isNew} companies={companies} />
 						<Box mt={4}>
 							<TrailerFormWheels />
 						</Box>

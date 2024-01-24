@@ -40,14 +40,6 @@ const TrailerCard: FC<Props> = ({ data: trailer }) => {
 						</TableCell>
 					</TableRow>
 					<TableRow>
-						<TableCell sx={{ fontWeight: 'fontWeightMedium' }}>Appartient à</TableCell>
-						<TableCell>
-							<Typography variant="body2" color="textSecondary">
-								{trailer.belongs_to}
-							</Typography>
-						</TableCell>
-					</TableRow>
-					<TableRow>
 						<TableCell sx={{ fontWeight: 'fontWeightMedium' }}>Marque/Modèle/Année</TableCell>
 						<TableCell>
 							<Typography variant="body2" color="textSecondary">

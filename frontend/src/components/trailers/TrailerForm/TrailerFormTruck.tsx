@@ -16,16 +16,17 @@ import { capitalCase } from 'change-case';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import { Icons } from 'src/components/base/Icons';
+import CompanySelectInput from 'src/components/companies/CompanySelectInput';
 import { TRAILER_TYPES_MAP } from 'src/lib/constants/trailers';
 import type { Company } from 'src/lib/types/directus';
 import type { TrailerSubmitData } from './types';
 
 type Props = {
 	isNew?: boolean;
-	companies?: Company[];
+	companies: Company[];
 };
 
-const TrailerFormTruck: FC<Props> = ({ isNew }) => {
+const TrailerFormTruck: FC<Props> = ({ isNew, companies }) => {
 	const form = useFormContext<TrailerSubmitData>();
 
 	return (
@@ -42,23 +43,28 @@ const TrailerFormTruck: FC<Props> = ({ isNew }) => {
 			/>
 			<Divider />
 			<CardContent component={Stack} spacing={3.5}>
-				<TextField
-					autoFocus={isNew}
-					error={Boolean(form.formState.errors.name)}
-					fullWidth
-					required
-					helperText={form.formState.errors.name?.message}
-					label="Nom de la remorque"
-					{...form.register('name')}
+				<Controller
+					name="company"
+					control={form.control}
+					render={({ field }) => (
+						<CompanySelectInput
+							{...field}
+							label="Appartient à"
+							items={companies}
+							onSelect={(company) => field.onChange(company.id)}
+						/>
+					)}
 				/>
 
 				<Stack direction={{ sm: 'row' }} gap={3.5}>
 					<TextField
-						error={Boolean(form.formState.errors.belongs_to)}
+						autoFocus={isNew}
+						error={Boolean(form.formState.errors.name)}
 						fullWidth
-						helperText={form.formState.errors.belongs_to?.message}
-						label="Appartient à"
-						{...form.register('belongs_to')}
+						required
+						helperText={form.formState.errors.name?.message}
+						label="Nom de la remorque"
+						{...form.register('name')}
 					/>
 					<Controller
 						control={form.control}

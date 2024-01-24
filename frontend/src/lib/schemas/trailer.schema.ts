@@ -7,7 +7,6 @@ export const createTrailerSchema = z.object({
 	company: z.number(), // company.id
 	name: z.string().min(1).max(99),
 	in_service: z.boolean().default(false),
-	belongs_to: z.string().max(99).nullish(),
 	type: z.enum(['LIGHT', 'SEMI_HEAVY', 'HEAVY']).default('SEMI_HEAVY'),
 	model: z.string().max(99).nullish(),
 	weight: z.number().min(0).max(999_999).nullish(),

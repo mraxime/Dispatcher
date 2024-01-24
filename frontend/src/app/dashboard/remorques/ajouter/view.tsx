@@ -1,37 +1,41 @@
 'use client';
 
 import type { FC } from 'react';
+import { useRouter } from 'next/navigation';
 import { Box } from '@mui/material';
 import type { SxProps } from '@mui/material/styles';
+import Cookies from 'js-cookie';
 
 import TrailerForm, { type TrailerSubmitData } from 'src/components/trailers/TrailerForm';
 import { useTrailerActions } from 'src/hooks/useTrailers';
-import type { Company, Trailer } from 'src/lib/types/directus';
+import { ROUTES } from 'src/lib/constants/routes';
+import type { Company } from 'src/lib/types/directus';
 
 type Props = {
-	trailer: Trailer;
 	companies: Company[];
 	sx?: SxProps;
 };
 
-const TrailerPageView: FC<Props> = ({ trailer, companies, sx }) => {
+const NewTrailerPageView: FC<Props> = ({ companies, sx }) => {
+	const router = useRouter();
 	const trailerActions = useTrailerActions();
+	const companyCookie = Cookies.get('company');
 
 	const handleSubmit = async (data: TrailerSubmitData) => {
-		await trailerActions.update(trailer.id, data);
+		await trailerActions.create(data);
+		router.push(ROUTES.TrailersPage());
 	};
 
 	return (
 		<Box sx={sx}>
 			<TrailerForm
-				mode="update"
+				mode="create"
 				companies={companies}
-				// @ts-expect-error - data.company is a number.
-				defaultValues={trailer}
+				defaultValues={{ company: Number(companyCookie) }}
 				onSubmit={handleSubmit}
 			/>
 		</Box>
 	);
 };
 
-export default TrailerPageView;
+export default NewTrailerPageView;

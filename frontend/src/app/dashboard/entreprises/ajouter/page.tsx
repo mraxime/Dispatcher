@@ -1,15 +1,10 @@
-'use client';
-
-import { useRouter } from 'next/navigation';
-import { Box, Container } from '@mui/material';
-import Cookies from 'js-cookie';
+import { Container } from '@mui/material';
 
 import { Icons } from 'src/components/base/Icons';
 import PageHeader, { type BreadcrumbItem } from 'src/components/base/PageHeader';
-import CompanyForm from 'src/components/companies/CompanyForm';
-import { useCompanyActions } from 'src/hooks/useCompanies';
 import { ROUTES } from 'src/lib/constants/routes';
-import type { CreateCompanySchema } from 'src/lib/schemas/company.schema';
+import { getCompanies } from 'src/server/actions/company.action';
+import NewCompanyPageView from './view';
 
 const breadcrumbs: BreadcrumbItem[] = [
 	{
@@ -23,15 +18,8 @@ const breadcrumbs: BreadcrumbItem[] = [
 	{ name: 'Ajouter' },
 ];
 
-const NewCompanyPage = () => {
-	const router = useRouter();
-	const companyActions = useCompanyActions();
-	const companyCookie = Cookies.get('company');
-
-	const handleSubmit = async (data: CreateCompanySchema) => {
-		await companyActions.create(data);
-		router.push(ROUTES.CompaniesPage());
-	};
+const NewCompanyPage = async () => {
+	const companies = await getCompanies();
 
 	return (
 		<Container maxWidth="xl">
@@ -41,14 +29,7 @@ const NewCompanyPage = () => {
 				iconHref={ROUTES.CompaniesPage()}
 				breadcrumbItems={breadcrumbs}
 			/>
-
-			<Box mt={4}>
-				<CompanyForm
-					mode="create"
-					defaultValues={{ admin: { company: Number(companyCookie) } }}
-					onSubmit={handleSubmit}
-				/>
-			</Box>
+			<NewCompanyPageView sx={{ mt: 4 }} companies={companies} />
 		</Container>
 	);
 };

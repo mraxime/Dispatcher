@@ -56,7 +56,6 @@ export type Trailer = {
 	company: number | Company;
 	name: string;
 	in_service: boolean;
-	belongs_to?: string | null;
 	type: 'LIGHT' | 'SEMI_HEAVY' | 'HEAVY';
 	model?: string | null;
 	weight?: number | null;

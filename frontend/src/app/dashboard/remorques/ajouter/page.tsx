@@ -1,14 +1,10 @@
-'use client';
-
-import { useRouter } from 'next/navigation';
-import { Box, Container } from '@mui/material';
-import Cookies from 'js-cookie';
+import { Container } from '@mui/material';
 
 import { Icons } from 'src/components/base/Icons';
 import PageHeader, { type BreadcrumbItem } from 'src/components/base/PageHeader';
-import TrailerForm, { type TrailerSubmitData } from 'src/components/trailers/TrailerForm';
-import { useTrailerActions } from 'src/hooks/useTrailers';
 import { ROUTES } from 'src/lib/constants/routes';
+import { getCompanies } from 'src/server/actions/company.action';
+import NewTrailerPageView from './view';
 
 const breadcrumbs: BreadcrumbItem[] = [
 	{
@@ -22,15 +18,8 @@ const breadcrumbs: BreadcrumbItem[] = [
 	{ name: 'Ajouter' },
 ];
 
-const NewTrailerPage = () => {
-	const router = useRouter();
-	const trailerActions = useTrailerActions();
-	const companyCookie = Cookies.get('company');
-
-	const handleSubmit = async (data: TrailerSubmitData) => {
-		await trailerActions.create(data);
-		router.push(ROUTES.TrailersPage());
-	};
+const NewTrailerPage = async () => {
+	const companies = await getCompanies();
 
 	return (
 		<Container maxWidth="xl">
@@ -40,13 +29,8 @@ const NewTrailerPage = () => {
 				iconHref={ROUTES.TrailersPage()}
 				breadcrumbItems={breadcrumbs}
 			/>
-			<Box mt={4}>
-				<TrailerForm
-					mode="create"
-					defaultValues={{ company: Number(companyCookie) }}
-					onSubmit={handleSubmit}
-				/>
-			</Box>
+
+			<NewTrailerPageView sx={{ mt: 4 }} companies={companies} />
 		</Container>
 	);
 };
