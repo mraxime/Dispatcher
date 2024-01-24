@@ -58,8 +58,19 @@ const SideNav: FC<Props> = ({ isOpen, session, companies, onClose, ...restProps 
 			<Stack mt={3} py={1} px={2} flexGrow={1}>
 				<CompanySelectInput
 					sx={{ width: '100%', my: 3 }}
+					InputLabelProps={{
+						sx: {
+							color: (theme) => theme.palette.neutral[400],
+						},
+					}}
+					InputProps={{
+						sx: {
+							color: (theme) => theme.palette.neutral[50],
+							borderColor: (theme) => theme.palette.neutral[600],
+						},
+					}}
 					items={companies}
-					current={Number(companyId)}
+					defaultValue={Number(companyId)}
 					onSelect={(company) => setCompany(company.id, pathname)}
 				/>
 

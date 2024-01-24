@@ -45,9 +45,12 @@ const CompanySearchInput: FC<Props> = ({
 					error={Boolean(error)}
 					helperText={typeof error === 'string' ? error : undefined}
 					{...params}
-					InputLabelProps={{
-						...params.InputLabelProps,
-					}}
+					// InputLabelProps={{
+					// 	...params.InputLabelProps,
+					// 	sx: {
+					// 		color: (theme) => theme.palette.primary.alpha50,
+					// 	},
+					// }}
 					// InputProps={{
 					// 	...params.InputProps,
 					// 	sx: {

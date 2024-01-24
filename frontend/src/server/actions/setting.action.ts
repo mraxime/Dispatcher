@@ -21,6 +21,7 @@ export const setCompany = async (id: number, pathname: string) => {
 	 * Thats because the data may not be accessible under the scope of the new company.
 	 */
 	[
+		ROUTES.CompaniesPage(),
 		ROUTES.UsersPage(),
 		ROUTES.CallsPage(),
 		ROUTES.TrailersPage(),

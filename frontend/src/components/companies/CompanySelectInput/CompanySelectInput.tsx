@@ -1,28 +1,38 @@
 import type { FC } from 'react';
-import { TextField } from '@mui/material';
+import { TextField, type TextFieldProps } from '@mui/material';
 import type { SxProps } from '@mui/material/styles';
 
 import type { Company } from 'src/lib/types/directus';
 
 type Props = {
+	name?: string;
 	label?: string;
 	items: Company[];
-	current?: Company['id'] | null;
+	value?: Company['id'];
+	defaultValue?: Company['id'];
 	disabled?: boolean;
 	isLoading?: boolean;
 	error?: string | boolean;
 	sx?: SxProps;
+	InputProps?: TextFieldProps['InputProps'];
+	InputLabelProps?: TextFieldProps['InputLabelProps'];
 	onSelect?: (company: Company) => void;
+	onBlur?: () => void;
 };
 
 const CompanySelectInput: FC<Props> = ({
+	name = 'company',
 	label = 'Entreprise',
 	items: companies,
-	current = null,
+	value,
+	defaultValue,
 	disabled = false,
 	error,
 	sx,
+	InputProps,
+	InputLabelProps,
 	onSelect,
+	onBlur,
 }) => {
 	return (
 		<TextField
@@ -30,28 +40,21 @@ const CompanySelectInput: FC<Props> = ({
 			disabled={disabled}
 			fullWidth
 			label={label}
-			name="company"
+			name={name}
 			select
-			defaultValue={current}
+			value={value}
+			defaultValue={defaultValue}
 			SelectProps={{ native: true }}
 			onChange={(value) => {
 				const company =
 					companies.find((company) => company.id === Number(value.target.value)) ?? null;
 				if (onSelect) onSelect(company!);
 			}}
+			onBlur={onBlur}
 			error={Boolean(error)}
 			helperText={typeof error === 'string' ? error : undefined}
-			InputLabelProps={{
-				sx: {
-					color: (theme) => theme.palette.neutral[400],
-				},
-			}}
-			InputProps={{
-				sx: {
-					color: (theme) => theme.palette.neutral[50],
-					borderColor: (theme) => theme.palette.neutral[600],
-				},
-			}}
+			InputProps={InputProps}
+			InputLabelProps={InputLabelProps}
 		>
 			{companies.length > 0 ? (
 				companies.map((company) => (
