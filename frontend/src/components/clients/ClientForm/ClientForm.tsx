@@ -1,12 +1,10 @@
 import type { FC } from 'react';
 import {
-	Box,
 	Button,
 	Card,
 	CardContent,
 	CardHeader,
 	Divider,
-	Grid,
 	Stack,
 	SvgIcon,
 	TextField,
@@ -66,77 +64,68 @@ const ClientForm: FC<Props> = ({ mode, defaultValues, onSubmit, onCancel }) => {
 					}
 				/>
 				<Divider />
-				<CardContent>
-					<Box>
-						<Grid container spacing={4}>
-							<Grid item xs={12} md={7}>
-								<TextField
-									autoFocus={isNew}
-									error={Boolean(form.formState.errors.name)}
-									fullWidth
-									required
-									helperText={form.formState.errors.name?.message}
-									label="Nom complet"
-									{...form.register('name')}
-								/>
-							</Grid>
-							<Grid item xs={12} md={5}>
-								<TextField
-									error={Boolean(form.formState.errors.companyName)}
-									fullWidth
-									required={false}
-									helperText={form.formState.errors.companyName?.message}
-									label="Entreprise"
-									{...form.register('companyName')}
-								/>
-							</Grid>
-						</Grid>
-					</Box>
-					<Box mt={4}>
+				<CardContent component={Stack} spacing={4}>
+					<Stack direction={{ sm: 'row' }} gap={4}>
 						<TextField
-							error={Boolean(form.formState.errors.email)}
+							autoFocus={isNew}
+							error={Boolean(form.formState.errors.name)}
 							fullWidth
 							required
-							helperText={form.formState.errors.email?.message}
-							label="Courriel"
-							{...form.register('email')}
+							helperText={form.formState.errors.name?.message}
+							label="Nom complet"
+							{...form.register('name')}
 						/>
-					</Box>
-					<Box mt={4}>
 						<TextField
-							error={Boolean(form.formState.errors.phone)}
+							error={Boolean(form.formState.errors.companyName)}
 							fullWidth
-							required
-							helperText={form.formState.errors.phone?.message}
-							label="Téléphone"
-							{...form.register('phone')}
+							required={false}
+							helperText={form.formState.errors.companyName?.message}
+							label="Entreprise"
+							{...form.register('companyName')}
 						/>
-					</Box>
-					<Box mt={4}>
-						<Controller
-							control={form.control}
-							name="status"
-							render={({ field }) => (
-								<TextField
-									error={Boolean(form.formState.errors.status)}
-									fullWidth
-									helperText={form.formState.errors.status?.message}
-									label="Statut"
-									select
-									SelectProps={{ native: true }}
-									value={field.value}
-									onChange={field.onChange}
-									onBlur={field.onBlur}
-								>
-									{Object.values(CLIENT_STATUS_MAP).map(({ title, value }) => (
-										<option value={value} key={value}>
-											{title}
-										</option>
-									))}
-								</TextField>
-							)}
-						/>
-					</Box>
+					</Stack>
+
+					<TextField
+						error={Boolean(form.formState.errors.email)}
+						fullWidth
+						required
+						helperText={form.formState.errors.email?.message}
+						label="Courriel"
+						{...form.register('email')}
+					/>
+
+					<TextField
+						error={Boolean(form.formState.errors.phone)}
+						fullWidth
+						required
+						helperText={form.formState.errors.phone?.message}
+						label="Téléphone"
+						{...form.register('phone')}
+					/>
+
+					<Controller
+						control={form.control}
+						name="status"
+						render={({ field }) => (
+							<TextField
+								error={Boolean(form.formState.errors.status)}
+								fullWidth
+								helperText={form.formState.errors.status?.message}
+								label="Statut"
+								select
+								SelectProps={{ native: true }}
+								value={field.value}
+								onChange={field.onChange}
+								onBlur={field.onBlur}
+							>
+								{Object.values(CLIENT_STATUS_MAP).map(({ title, value }) => (
+									<option value={value} key={value}>
+										{title}
+									</option>
+								))}
+							</TextField>
+						)}
+					/>
 				</CardContent>
 			</Card>
 

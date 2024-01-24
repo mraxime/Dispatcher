@@ -1,11 +1,9 @@
 import type { FC } from 'react';
 import {
-	Box,
 	Card,
 	CardContent,
 	CardHeader,
 	Divider,
-	Grid,
 	InputAdornment,
 	Stack,
 	SvgIcon,
@@ -33,7 +31,7 @@ const TrailerFormWheels: FC = () => {
 				}
 			/>
 			<Divider />
-			<CardContent>
+			<CardContent component={Stack} spacing={3.5}>
 				<TextField
 					error={Boolean(form.formState.errors.nb)}
 					fullWidth
@@ -42,44 +40,39 @@ const TrailerFormWheels: FC = () => {
 					type="number"
 					{...form.register('nb')}
 				/>
-				<Box mt={3.5}>
-					<Grid container spacing={3.5}>
-						<Grid item xs={12} md={6}>
-							<TextField
-								error={Boolean(form.formState.errors.capacity_front)}
-								fullWidth
-								helperText={form.formState.errors.capacity_front?.message}
-								label="Capacité pneu avant"
-								type="number"
-								InputProps={{
-									endAdornment: (
-										<InputAdornment position="end">
-											<Typography>kg</Typography>
-										</InputAdornment>
-									),
-								}}
-								{...form.register('capacity_front')}
-							/>
-						</Grid>
-						<Grid item xs={12} md={6}>
-							<TextField
-								error={Boolean(form.formState.errors.capacity_back)}
-								fullWidth
-								helperText={form.formState.errors.capacity_back?.message}
-								label="Capacité pneu arrière"
-								type="number"
-								InputProps={{
-									endAdornment: (
-										<InputAdornment position="end">
-											<Typography>kg</Typography>
-										</InputAdornment>
-									),
-								}}
-								{...form.register('capacity_back')}
-							/>
-						</Grid>
-					</Grid>
-				</Box>
+
+				<Stack direction={{ sm: 'row' }} gap={3.5}>
+					<TextField
+						error={Boolean(form.formState.errors.capacity_front)}
+						fullWidth
+						helperText={form.formState.errors.capacity_front?.message}
+						label="Capacité pneu avant"
+						type="number"
+						InputProps={{
+							endAdornment: (
+								<InputAdornment position="end">
+									<Typography>kg</Typography>
+								</InputAdornment>
+							),
+						}}
+						{...form.register('capacity_front')}
+					/>
+					<TextField
+						error={Boolean(form.formState.errors.capacity_back)}
+						fullWidth
+						helperText={form.formState.errors.capacity_back?.message}
+						label="Capacité pneu arrière"
+						type="number"
+						InputProps={{
+							endAdornment: (
+								<InputAdornment position="end">
+									<Typography>kg</Typography>
+								</InputAdornment>
+							),
+						}}
+						{...form.register('capacity_back')}
+					/>
+				</Stack>
 			</CardContent>
 		</Card>
 	);

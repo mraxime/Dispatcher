@@ -1,11 +1,9 @@
 import type { FC } from 'react';
 import {
-	Box,
 	Card,
 	CardContent,
 	CardHeader,
 	Divider,
-	Grid,
 	Stack,
 	SvgIcon,
 	TextField,
@@ -37,7 +35,7 @@ const UserFormLicense: FC<Props> = ({ disabled = false }) => {
 				}
 			/>
 			<Divider />
-			<CardContent>
+			<CardContent component={Stack} spacing={4}>
 				<TextField
 					error={Boolean(form.formState.errors.driver_license?.number)}
 					fullWidth
@@ -46,55 +44,50 @@ const UserFormLicense: FC<Props> = ({ disabled = false }) => {
 					label="Numéro de permis"
 					{...form.register('driver_license.number')}
 				/>
-				<Box mt={4}>
-					<Grid container spacing={4}>
-						<Grid item xs={12} md={6}>
-							<TextField
-								error={Boolean(form.formState.errors.driver_license?.class)}
-								fullWidth
-								disabled={disabled}
-								helperText={form.formState.errors.driver_license?.class?.message}
-								label="Classe du permis"
-								{...form.register('driver_license.class')}
-							/>
-						</Grid>
-						<Grid item xs={12} md={6}>
-							<Controller
-								control={form.control}
-								name="driver_license.expiration_date"
-								render={({ field }) => (
-									<DatePicker
-										disabled={disabled}
-										value={field.value}
-										onChange={field.onChange}
-										slotProps={{
-											textField: {
-												label: 'Expiration du permis',
-												fullWidth: true,
-												name: field.name,
-												onBlur: field.onBlur,
-												error: Boolean(form.formState.errors.driver_license?.expiration_date),
-												helperText: form.formState.errors.driver_license?.expiration_date?.message,
-											},
-										}}
-									/>
-								)}
-							/>
-						</Grid>
-					</Grid>
-				</Box>
-				<Box mt={4}>
+
+				<Stack direction={{ sm: 'row' }} gap={4}>
 					<TextField
-						error={Boolean(form.formState.errors.driver_license?.note)}
+						error={Boolean(form.formState.errors.driver_license?.class)}
 						fullWidth
 						disabled={disabled}
-						multiline
-						rows={4}
-						helperText={form.formState.errors.driver_license?.note?.message}
-						label="Note"
-						{...form.register('driver_license.note')}
+						helperText={form.formState.errors.driver_license?.class?.message}
+						label="Classe du permis"
+						{...form.register('driver_license.class')}
 					/>
-				</Box>
+					<Controller
+						control={form.control}
+						name="driver_license.expiration_date"
+						render={({ field }) => (
+							<DatePicker
+								disabled={disabled}
+								value={field.value}
+								onChange={field.onChange}
+								slotProps={{
+									textField: {
+										label: 'Expiration du permis',
+										fullWidth: true,
+										name: field.name,
+										onBlur: field.onBlur,
+										error: Boolean(form.formState.errors.driver_license?.expiration_date),
+										helperText: form.formState.errors.driver_license?.expiration_date?.message,
+									},
+								}}
+							/>
+						)}
+					/>
+				</Stack>
+
+				<TextField
+					error={Boolean(form.formState.errors.driver_license?.note)}
+					fullWidth
+					disabled={disabled}
+					multiline
+					rows={4}
+					helperText={form.formState.errors.driver_license?.note?.message}
+					label="Note"
+					{...form.register('driver_license.note')}
+				/>
+
 				{/* TODO: CAPACITY */}
 				{/* <Box mt={4}> */}
 				{/* 	<Controller */}

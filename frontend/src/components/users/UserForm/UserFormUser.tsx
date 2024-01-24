@@ -20,7 +20,7 @@ import { capitalCase } from 'change-case';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import { Icons } from 'src/components/base/Icons';
-import CompanySearchInput from 'src/components/companies/CompanySearchInput';
+import CompanySelectInput from 'src/components/companies/CompanySelectInput';
 import useDisclosure from 'src/hooks/useDisclosure';
 import type { NewUserForm } from 'src/lib/schemas/user.schema';
 import type { Company, Permission, Role } from 'src/lib/types/directus';
@@ -56,23 +56,21 @@ const UserFormUser: FC<Props> = ({ isNew, companies = [], roles = [], permission
 				}
 			/>
 			<Divider />
-			<CardContent>
-				<Box>
-					<Controller
-						name="company"
-						control={form.control}
-						render={({ field }) => (
-							<CompanySearchInput
-								label="Entreprise"
-								items={companies}
-								current={field.value}
-								onSelect={(company) => field.onChange(company?.id)}
-							/>
-						)}
-					/>
-				</Box>
+			<CardContent component={Stack} spacing={4}>
+				<Controller
+					name="company"
+					control={form.control}
+					render={({ field }) => (
+						<CompanySelectInput
+							{...field}
+							label="Appartient à"
+							items={companies}
+							onSelect={(company) => field.onChange(company.id)}
+						/>
+					)}
+				/>
 
-				<Stack mt={4} gap={4} flexDirection={{ xs: 'column-reverse', sm: 'row' }}>
+				<Stack direction={{ sm: 'row' }} gap={4}>
 					<TextField
 						autoFocus={isNew}
 						error={Boolean(form.formState.errors.first_name)}
@@ -92,18 +90,16 @@ const UserFormUser: FC<Props> = ({ isNew, companies = [], roles = [], permission
 					/>
 				</Stack>
 
-				<Box mt={4}>
-					<TextField
-						error={Boolean(form.formState.errors.email)}
-						fullWidth
-						required
-						helperText={form.formState.errors.email?.message}
-						label="Courriel"
-						{...form.register('email')}
-					/>
-				</Box>
+				<TextField
+					error={Boolean(form.formState.errors.email)}
+					fullWidth
+					required
+					helperText={form.formState.errors.email?.message}
+					label="Courriel"
+					{...form.register('email')}
+				/>
 
-				<Box my={4}>
+				<div>
 					{roles && (
 						<>
 							<Controller
@@ -170,11 +166,11 @@ const UserFormUser: FC<Props> = ({ isNew, companies = [], roles = [], permission
 							</Stack>
 						</>
 					)}
-				</Box>
+				</div>
 
 				<Divider />
 
-				<Stack mt={4} gap={4} flexDirection={{ xs: 'column-reverse', sm: 'row' }}>
+				<Stack direction={{ sm: 'row' }} gap={4}>
 					<TextField
 						required
 						error={Boolean(form.formState.errors.phone)}
@@ -192,7 +188,7 @@ const UserFormUser: FC<Props> = ({ isNew, companies = [], roles = [], permission
 					/>
 				</Stack>
 
-				<Stack mt={4} gap={4} flexDirection={{ xs: 'column-reverse', sm: 'row' }}>
+				<Stack direction={{ sm: 'row' }} gap={4}>
 					<Controller
 						control={form.control}
 						name="birthday"
@@ -235,44 +231,38 @@ const UserFormUser: FC<Props> = ({ isNew, companies = [], roles = [], permission
 					/>
 				</Stack>
 
-				<Box mt={4}>
-					<TextField
-						error={Boolean(form.formState.errors.password)}
-						fullWidth
-						required={isNew}
-						helperText={form.formState.errors.password?.message}
-						label={isNew ? 'Mot de passe' : 'Nouveau mot de passe'}
-						type="password"
-						{...form.register('password')}
-					/>
-				</Box>
+				<TextField
+					error={Boolean(form.formState.errors.password)}
+					fullWidth
+					required={isNew}
+					helperText={form.formState.errors.password?.message}
+					label={isNew ? 'Mot de passe' : 'Nouveau mot de passe'}
+					type="password"
+					{...form.register('password')}
+				/>
 
-				<Box mt={4}>
-					<TextField
-						error={Boolean(form.formState.errors.passwordConfirm)}
-						fullWidth
-						required={isNew}
-						helperText={form.formState.errors.passwordConfirm?.message}
-						label="Confirmation"
-						type="password"
-						{...form.register('passwordConfirm')}
-					/>
-				</Box>
+				<TextField
+					error={Boolean(form.formState.errors.passwordConfirm)}
+					fullWidth
+					required={isNew}
+					helperText={form.formState.errors.passwordConfirm?.message}
+					label="Confirmation"
+					type="password"
+					{...form.register('passwordConfirm')}
+				/>
 
-				<Box mt={4}>
-					<Controller
-						control={form.control}
-						name="blocked"
-						render={({ field }) => (
-							<FormControlLabel
-								label="Bloquer l'utilisateur"
-								control={
-									<Switch checked={field.value} onChange={(_, value) => field.onChange(value)} />
-								}
-							/>
-						)}
-					/>
-				</Box>
+				<Controller
+					control={form.control}
+					name="blocked"
+					render={({ field }) => (
+						<FormControlLabel
+							label="Bloquer l'utilisateur"
+							control={
+								<Switch checked={field.value} onChange={(_, value) => field.onChange(value)} />
+							}
+						/>
+					)}
+				/>
 			</CardContent>
 		</Card>
 	);

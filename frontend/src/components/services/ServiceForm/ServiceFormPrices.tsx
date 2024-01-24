@@ -33,7 +33,7 @@ const ServiceFormPrices: FC<Props> = ({ prices }) => {
 	};
 
 	return (
-		<Stack spacing={3.5}>
+		<Stack spacing={4}>
 			{selectedPriceIds.map((id, index) => {
 				const filteredPrices = [...availablePrices];
 				const priceToAdd = prices.find((val) => val.id === id);

@@ -70,43 +70,43 @@ const ServiceForm: FC<Props> = ({ mode, defaultValues, prices, onSubmit, onCance
 						}
 					/>
 					<Divider />
-					<CardContent>
-						<Stack spacing={3.5}>
-							<TextField
-								autoFocus={isNew}
-								error={Boolean(form.formState.errors.name)}
-								fullWidth
-								required
-								helperText={form.formState.errors.name?.message}
-								label="Nom du service"
-								{...form.register('name')}
-							/>
-							<Controller
-								control={form.control}
-								name="status"
-								render={({ field }) => (
-									<TextField
-										error={Boolean(form.formState.errors.status)}
-										fullWidth
-										helperText={form.formState.errors.status?.message}
-										label="Statut"
-										select
-										SelectProps={{ native: true }}
-										value={field.value}
-										onChange={field.onChange}
-										onBlur={field.onBlur}
-									>
-										{Object.values(SERVICE_STATUS_MAP).map(({ title, value }) => (
-											<option value={value} key={value}>
-												{title}
-											</option>
-										))}
-									</TextField>
-								)}
-							/>
-						</Stack>
+					<CardContent component={Stack} spacing={4}>
+						<TextField
+							autoFocus={isNew}
+							error={Boolean(form.formState.errors.name)}
+							fullWidth
+							required
+							helperText={form.formState.errors.name?.message}
+							label="Nom du service"
+							{...form.register('name')}
+						/>
 
-						<Divider sx={{ my: 4 }}>Prix attaché(s) au service</Divider>
+						<Controller
+							control={form.control}
+							name="status"
+							render={({ field }) => (
+								<TextField
+									error={Boolean(form.formState.errors.status)}
+									fullWidth
+									helperText={form.formState.errors.status?.message}
+									label="Statut"
+									select
+									SelectProps={{ native: true }}
+									value={field.value}
+									onChange={field.onChange}
+									onBlur={field.onBlur}
+								>
+									{Object.values(SERVICE_STATUS_MAP).map(({ title, value }) => (
+										<option value={value} key={value}>
+											{title}
+										</option>
+									))}
+								</TextField>
+							)}
+						/>
+
+						<Divider>Prix attaché(s) au service</Divider>
+
 						<ServiceFormPrices prices={prices} />
 					</CardContent>
 				</Card>

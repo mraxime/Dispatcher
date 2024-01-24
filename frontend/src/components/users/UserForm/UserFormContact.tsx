@@ -1,7 +1,6 @@
 import type { FC } from 'react';
 import LocalHospitalOutlinedIcon from '@mui/icons-material/LocalHospitalOutlined';
 import {
-	Box,
 	Card,
 	CardContent,
 	CardHeader,
@@ -36,40 +35,36 @@ const UserFormContact: FC<Props> = ({ disabled = false }) => {
 				}
 			/>
 			<Divider />
-			<CardContent>
-				<Grid container spacing={4}>
-					<Grid item xs={12} md={6}>
-						<TextField
-							error={Boolean(form.formState.errors.emergency_contact?.first_name)}
-							fullWidth
-							disabled={disabled}
-							helperText={form.formState.errors.emergency_contact?.first_name?.message}
-							label="Prénom"
-							{...form.register('emergency_contact.first_name')}
-						/>
-					</Grid>
-					<Grid item xs={12} md={6}>
-						<TextField
-							error={Boolean(form.formState.errors.emergency_contact?.last_name)}
-							fullWidth
-							disabled={disabled}
-							helperText={form.formState.errors.emergency_contact?.last_name?.message}
-							label="Nom"
-							{...form.register('emergency_contact.last_name')}
-						/>
-					</Grid>
-				</Grid>
-				<Box mt={4}>
+			<CardContent component={Stack} spacing={4}>
+				<Stack direction={{ sm: 'row' }} gap={4}>
 					<TextField
-						error={Boolean(form.formState.errors.emergency_contact?.relation)}
+						error={Boolean(form.formState.errors.emergency_contact?.first_name)}
 						fullWidth
 						disabled={disabled}
-						helperText={form.formState.errors.emergency_contact?.relation?.message}
-						label="Relation"
-						{...form.register('emergency_contact.relation')}
+						helperText={form.formState.errors.emergency_contact?.first_name?.message}
+						label="Prénom"
+						{...form.register('emergency_contact.first_name')}
 					/>
-				</Box>
-				<Box mt={4}>
+					<TextField
+						error={Boolean(form.formState.errors.emergency_contact?.last_name)}
+						fullWidth
+						disabled={disabled}
+						helperText={form.formState.errors.emergency_contact?.last_name?.message}
+						label="Nom"
+						{...form.register('emergency_contact.last_name')}
+					/>
+				</Stack>
+
+				<TextField
+					error={Boolean(form.formState.errors.emergency_contact?.relation)}
+					fullWidth
+					disabled={disabled}
+					helperText={form.formState.errors.emergency_contact?.relation?.message}
+					label="Relation"
+					{...form.register('emergency_contact.relation')}
+				/>
+
+				<div>
 					<Grid container spacing={4}>
 						<Grid item xs={12} md={8}>
 							<TextField
@@ -92,19 +87,18 @@ const UserFormContact: FC<Props> = ({ disabled = false }) => {
 							/>
 						</Grid>
 					</Grid>
-				</Box>
-				<Box mt={4}>
-					<TextField
-						error={Boolean(form.formState.errors.emergency_contact?.note)}
-						fullWidth
-						disabled={disabled}
-						multiline
-						rows={4}
-						helperText={form.formState.errors.emergency_contact?.note?.message}
-						label="Note"
-						{...form.register('emergency_contact.note')}
-					/>
-				</Box>
+				</div>
+
+				<TextField
+					error={Boolean(form.formState.errors.emergency_contact?.note)}
+					fullWidth
+					disabled={disabled}
+					multiline
+					rows={4}
+					helperText={form.formState.errors.emergency_contact?.note?.message}
+					label="Note"
+					{...form.register('emergency_contact.note')}
+				/>
 			</CardContent>
 		</Card>
 	);
