@@ -1,7 +1,7 @@
 import { createItem, deleteItem, readItem, readItems, updateItem, updateUser } from '@directus/sdk';
 
 import type { CreateCompanySchema, UpdateCompanySchema } from 'src/lib/schemas/company.schema';
-import type { CompanyParams } from 'src/lib/types/directus';
+import type { Company, CompanyParams } from 'src/lib/types/directus';
 import { getPermissions, getRoleByName } from '../actions/user.action';
 import { createFullAccessDirectusApi } from '../directus';
 import { CalendarService } from './calendar.service';
@@ -11,7 +11,7 @@ export class CompanyService {
 
 	async getMany(params?: CompanyParams) {
 		const result = await this.api.request(readItems('companies', params));
-		return result;
+		return result as Company[];
 	}
 
 	async getOne(id: number, params?: CompanyParams) {
