@@ -171,7 +171,9 @@ const COLUMNS: Column<Company>[] = [
 					</Avatar>
 					<Stack>
 						<MuiLink
-							href={ROUTES.UserPage(rowData.admin.id)}
+							// Disable for now since a user can be in another company
+							// href={ROUTES.UserPage(rowData.admin.id)}
+							href="#"
 							component={Link}
 							color="inherit"
 							variant="subtitle2"
