@@ -15,7 +15,20 @@ const authService = new AuthService();
  */
 export const getSession = async () => {
 	try {
-		const result = await authService.getMe({ fields: ['*', '*.*', '*.*.*'] });
+		const result = await authService.getMe({
+			fields: [
+				'*',
+				// Make sure these values can be read on every directus roles (access control)
+				// so that session relation data can be fetched accordingly.
+				{
+					company: ['*'],
+					driver_license: ['*'],
+					emergency_contact: ['*'],
+					permissions: ['*', { custom_permissions_id: ['*'] }],
+					role: ['*'],
+				},
+			],
+		});
 		return result;
 	} catch {
 		await authService.logout();
