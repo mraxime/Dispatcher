@@ -6,11 +6,9 @@ import type { Theme } from '@mui/material/styles/createTheme';
 import SvgIcon from '@mui/material/SvgIcon';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { endOfWeek, format, isSameMonth, startOfWeek } from 'date-fns';
-import frCA from 'date-fns/locale/fr-CA';
 import { ChevronLeft as ChevronLeftIcon, ChevronRight as ChevronRightIcon } from 'react-feather';
 
-import type { CalendarView } from '../types';
+import type { CalendarView } from './types';
 
 type ViewOption = {
 	label: string;
@@ -19,67 +17,48 @@ type ViewOption = {
 
 const viewOptions: ViewOption[] = [
 	{
-		label: 'Mois',
+		label: 'Calendrier (Mois)',
 		value: 'dayGridMonth',
 	},
 	{
-		label: 'Semaine',
+		label: 'Calendrier (Semaine)',
 		value: 'timeGridWeek',
 	},
 	{
-		label: 'Jour',
+		label: 'Calendrier (Jour)',
 		value: 'timeGridDay',
 	},
+	// {
+	// 	label: 'Liste (Mois)',
+	// 	value: 'listMonth',
+	// },
 	{
-		label: 'Agenda',
+		label: 'Liste (Semaine)',
 		value: 'listWeek',
+	},
+	{
+		label: 'Liste (Jour)',
+		value: 'listDay',
 	},
 ];
 
-const getTitleByView = (date: Date, view: CalendarView) => {
-	if (view === 'timeGridWeek' || view === 'listWeek') {
-		const firstWeekDay = startOfWeek(date);
-		const lastWeekDay = endOfWeek(date);
-
-		let formattedStart, formattedEnd;
-		if (isSameMonth(firstWeekDay, lastWeekDay)) {
-			formattedStart = format(firstWeekDay, 'dd', { locale: frCA });
-			formattedEnd = format(lastWeekDay, 'dd MMM', { locale: frCA });
-		} else {
-			formattedStart = format(firstWeekDay, 'dd MMM', { locale: frCA });
-			formattedEnd = format(lastWeekDay, 'dd MMM', { locale: frCA });
-		}
-
-		return `${formattedStart} - ${formattedEnd} `;
-	}
-
-	if (view === 'timeGridDay') {
-		return format(date, 'dd MMMM', { locale: frCA });
-	}
-
-	// default view
-	const dateMonth = format(date, 'MMMM', { locale: frCA });
-	return dateMonth.charAt(0).toUpperCase() + dateMonth.slice(1); // capitalize first letter
-};
-
 type Props = {
-	children?: ReactNode;
-	date: Date;
-	onAddClick?: () => void;
+	title: string;
+	view: CalendarView;
 	onDateNext?: () => void;
 	onDatePrev?: () => void;
 	onDateToday?: () => void;
 	onViewChange?: (view: CalendarView) => void;
-	view: CalendarView;
+	children?: ReactNode;
 };
 
 const CalendarToolbar: FC<Props> = ({
-	date,
+	title = '',
+	view,
 	onDateNext,
 	onDatePrev,
 	onViewChange,
-	view,
-	...other
+	...restProps
 }) => {
 	const mdUp = useMediaQuery((theme: Theme) => theme.breakpoints.up('md'));
 
@@ -89,8 +68,6 @@ const CalendarToolbar: FC<Props> = ({
 		},
 		[onViewChange],
 	);
-
-	const dateDay = format(date, 'y', { locale: frCA });
 
 	// On mobile allow only timeGridDay and agenda views
 	const availableViewOptions = useMemo(() => {
@@ -110,13 +87,17 @@ const CalendarToolbar: FC<Props> = ({
 			}}
 			spacing={3}
 			sx={{ px: 1 }}
-			{...other}
+			{...restProps}
 		>
 			<Stack alignItems="center" direction="row" spacing={1}>
-				<Typography variant="h4">{getTitleByView(date, view)}</Typography>
-				<Typography sx={{ fontWeight: 400 }} variant="h4">
-					{dateDay}
-				</Typography>
+				<Typography
+					variant="h4"
+					textTransform="capitalize"
+					// Eye candy: reduce font-weight on year in the title
+					dangerouslySetInnerHTML={{
+						__html: title.replaceAll(/(\b\d{4}\b)/g, '<span style="font-weight:400">$1</span>'),
+					}}
+				/>
 			</Stack>
 			<Stack alignItems="center" direction="row" spacing={2}>
 				<IconButton onClick={onDatePrev}>

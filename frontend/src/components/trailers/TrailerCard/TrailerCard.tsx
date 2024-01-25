@@ -10,6 +10,7 @@ import {
 	Typography,
 } from '@mui/material';
 
+import { TRAILER_TYPES_MAP } from 'src/lib/constants/trailers';
 import type { Trailer } from 'src/lib/types/directus';
 
 type Props = {
@@ -23,6 +24,7 @@ const TrailerCard: FC<Props> = ({ data: trailer }) => {
 			<Divider />
 			<Table>
 				<TableBody>
+					{/*
 					<TableRow>
 						<TableCell sx={{ fontWeight: 'fontWeightMedium' }}>Id</TableCell>
 						<TableCell>
@@ -31,8 +33,9 @@ const TrailerCard: FC<Props> = ({ data: trailer }) => {
 							</Typography>
 						</TableCell>
 					</TableRow>
+          */}
 					<TableRow>
-						<TableCell sx={{ fontWeight: 'fontWeightMedium' }}>Nom unique</TableCell>
+						<TableCell sx={{ fontWeight: 'fontWeightMedium' }}>Nom</TableCell>
 						<TableCell>
 							<Typography variant="body2" color="textSecondary">
 								{trailer.name}
@@ -75,7 +78,7 @@ const TrailerCard: FC<Props> = ({ data: trailer }) => {
 						<TableCell sx={{ fontWeight: 'fontWeightMedium' }}>Type</TableCell>
 						<TableCell>
 							<Typography variant="body2" color="textSecondary">
-								{trailer.type}
+								{TRAILER_TYPES_MAP[trailer.type].title}
 							</Typography>
 						</TableCell>
 					</TableRow>

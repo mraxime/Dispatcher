@@ -1,21 +1,30 @@
 SEMAINE 1:
 
+  - [x] Calendar: fix multiple bugs
+  - [x] Calendar: add daily agenda view (with driver/towing details)
+  - [x] Calendar: add quick actions for aditional infos
+  - [x] Calendar: automatically guess event title
+  - [x] Calendar: ctrl+c - ctrl+v
+  - [ ] Calendar: block every events if not allowed to create/update
+  - [ ] Handle permissions on server actions (hide calendar delete btn & don't open event form)
+  - [ ] Only allow main users to customize permissions
+
   - [x] Refactor to Drizzle + Server Actions & replace isActive fields to `status`
-  - [x] Verify Companies multitenancy
-  - [x] Improve delete confirm dialog
-  - [x] Show a confirm dialog before leaving a dirty form
-  - [x] Fix side-nav bug when isOpen and isDesktop becomes false
-  - [x] Mobile navigation auto close side-nav
-  - [x] Phone inputs
-  - [x] Trailer field "apartient a..." should be companies (sub-companies)
-  - [x] Clients should have first_name and last_name like users.
+  - [x] Companies multitenancy
+  - [x] Add company selection on multiple forms "apartient a..."
+  - [ ] Improve delete confirm dialog
+  - [ ] Show a confirm dialog before leaving a dirty form
+  - [ ] Fix side-nav bug when isOpen and isDesktop becomes false
+  - [ ] Mobile navigation auto close side-nav
+  - [ ] Phone inputs
+  - [ ] Clients should have first_name and last_name like users.
 
 
 SEMAINE 2:
 
   Call Forms:
-    - [x] Remove mandatory destination
-    - [x] Add "Lieu de la panne" field
+    - [ ] Remove mandatory destination
+    - [ ] Add "Lieu de la panne" field
     - [ ] "Lieu de départ" field should be a dropdown of companies
     - [ ] Vehicle to tow: Add a note field
     - [ ] New form select driver = set directly assigned (not pending)
@@ -35,19 +44,20 @@ SEMAINE 2:
     - [ ] Separate truck caracteristics from capacity (towing itself vs what the towing can transport)
 
   Invoices:
-    - [x] Should not store references (ex: service update should not affect the invoice and its price)
+    - [ ] Should not store references (ex: service update should not affect the invoice and its price)
 
 
 SEMAINE 3:
 
-  - [ ] Allow sub-companies in Frontend
-  - [ ] Address autocomplete inputs  ( si jamais ca peut t'aider : https://motis-project.de/docs/api/endpoint/address.html)
-  - [ ] Refactor prices conditions to be handled in services. UI Idea of services: prices get dragged into conditions.
+  Base:
+    - [x] Allow sub-companies in Frontend
+    - [ ] Address autocomplete inputs  ( si jamais ca peut t'aider : https://motis-project.de/docs/api/endpoint/address.html)
+    - [ ] Refactor prices conditions to be handled in services. UI Idea of services: prices get dragged into conditions.
 
   Others:
-    - [ ] Calendar should have quick actions for aditional infos
-    - [ ] Remove material-table-core.
-    - [ ] Letters sent on input with type="number" seems weird on zod validation. Also recheck custom zodErrorMap with issue.expected === 'number'
+    - [-] Remove material-table-core.
+    - [ ] Letters sent on input with type="number" seems buggy on zod validation.
+            Also recheck custom zodErrorMap with issue.expected === 'number'.
     - [ ] Service prices is a junction. Make sure it is used correctly and fix type.
     - [ ] User contacts: O2O relation. (when a user is deleted, its contacts need to be deleted)
     - [x] Secure non super-admins companies access
@@ -56,4 +66,3 @@ SEMAINE 3:
     - [ ] react-hook-form dirtyfields bug:
             When the zod property schema returns 'undefined', it's messed up.
     - [ ] Get rid of 'js-cookie' and use secure only cookies.
-    - [ ] Autres...

@@ -6,7 +6,7 @@ import type {
 	CreateCalendarEventSchema,
 	UpdateCalendarEventSchema,
 } from 'src/lib/schemas/calendar-event.schema';
-import type { CalendarEventParams } from 'src/lib/types/directus';
+import type { CalendarEvent, CalendarEventParams } from 'src/lib/types/directus';
 import { CalendarEventService } from '../services/calendar-event.service';
 
 const calendarEventService = new CalendarEventService();
@@ -24,7 +24,7 @@ export const getCalendarEvents = async (params?: CalendarEventParams) => {
  */
 export const getCalendarEvent = async (id: string, params?: CalendarEventParams) => {
 	const result = await calendarEventService.getOne(id, params);
-	return result;
+	return result as CalendarEvent;
 };
 
 /**

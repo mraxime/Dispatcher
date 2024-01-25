@@ -9,21 +9,23 @@ import {
 	TableRow,
 	Typography,
 } from '@mui/material';
-import { format } from 'date-fns';
 
 import type { User } from 'src/lib/types/directus';
+import { isObject } from 'src/lib/utils';
 
 type Props = {
 	data: User;
+	title?: string;
 };
 
-const UserCard: FC<Props> = ({ data: user }) => {
+const UserCard: FC<Props> = ({ data: user, title = 'Utilisateur' }) => {
 	return (
 		<Card>
-			<CardHeader title="Utilisateur" />
+			<CardHeader title={title} />
 			<Divider />
 			<Table>
 				<TableBody>
+					{/*
 					<TableRow>
 						<TableCell sx={{ fontWeight: 'fontWeightMedium' }}>Id</TableCell>
 						<TableCell>
@@ -32,6 +34,7 @@ const UserCard: FC<Props> = ({ data: user }) => {
 							</Typography>
 						</TableCell>
 					</TableRow>
+          */}
 					<TableRow>
 						<TableCell sx={{ fontWeight: 'fontWeightMedium' }}>Prénom</TableCell>
 						<TableCell>
@@ -52,7 +55,7 @@ const UserCard: FC<Props> = ({ data: user }) => {
 						<TableCell sx={{ fontWeight: 'fontWeightMedium' }}>Role</TableCell>
 						<TableCell>
 							<Typography variant="body2" color="textPrimary">
-								{user.role?.name}
+								{isObject(user.role) && user.role.name}
 							</Typography>
 						</TableCell>
 					</TableRow>
@@ -88,6 +91,7 @@ const UserCard: FC<Props> = ({ data: user }) => {
 							</Typography>
 						</TableCell>
 					</TableRow>
+					{/*
 					<TableRow>
 						<TableCell sx={{ fontWeight: 'fontWeightMedium' }}>Date de naissance</TableCell>
 						<TableCell>
@@ -104,6 +108,7 @@ const UserCard: FC<Props> = ({ data: user }) => {
 							</Typography>
 						</TableCell>
 					</TableRow>
+          */}
 				</TableBody>
 			</Table>
 		</Card>

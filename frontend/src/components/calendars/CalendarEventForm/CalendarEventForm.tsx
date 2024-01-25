@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import { useEffect, type FC } from 'react';
 import { Radio, RadioGroup, Tooltip } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -17,41 +17,40 @@ import { Controller, useForm, type DefaultValues } from 'react-hook-form';
 
 import TrailerSearchInput from 'src/components/trailers/TrailerSearchInput';
 import UserSearchInput from 'src/components/users/UserSearchInput';
+import useIsMounted from 'src/hooks/useIsMounted';
 import {
 	createCalendarEventSchema,
 	updateCalendarEventSchema,
 } from 'src/lib/schemas/calendar-event.schema';
 import type { Trailer, User } from 'src/lib/types/directus';
+import { isObject } from 'src/lib/utils';
 import { zodResolverEnhanced } from 'src/lib/utils/zod';
+import { getUser } from 'src/server/actions/user.action';
 import type { CalendarEventSubmitData } from './types';
 
 const getInitialValues = (
 	payload?: Props['defaultValues'],
-	range?: { start: number; end: number },
+	range?: { start: Date; end: Date },
 ): Props['defaultValues'] => ({
 	calendar: payload?.calendar ?? undefined,
 	title: payload?.title ?? '',
 	description: payload?.description ?? '',
 	allDay: payload?.allDay ?? true,
 	color: payload?.color ?? 'info',
-	start: payload?.start
-		? new Date(payload.start)
-		: range?.start
-			? new Date(range.start)
-			: new Date(),
-	end: payload?.end
-		? new Date(payload.end)
-		: range?.end
-			? new Date(range.end)
-			: addMinutes(new Date(), 30),
-	user_assignee: payload?.user_assignee ?? null,
-	trailer_assignee: payload?.trailer_assignee ?? null,
+	start: payload?.start ?? range?.start ?? new Date(),
+	end: payload?.end ?? range?.end ?? addMinutes(new Date(), 30),
+	user_assignee: isObject(payload?.user_assignee)
+		? payload?.user_assignee.id
+		: payload?.user_assignee ?? null,
+	trailer_assignee: isObject(payload?.trailer_assignee)
+		? payload?.trailer_assignee.id
+		: payload?.trailer_assignee ?? null,
 });
 
 type Props = {
 	mode?: 'create' | 'update';
 	defaultValues?: DefaultValues<CalendarEventSubmitData>;
-	range?: { start: number; end: number };
+	range?: { start: Date; end: Date };
 	users?: User[];
 	trailers?: Trailer[];
 	onSubmit?: (data: CalendarEventSubmitData) => Promise<void>;
@@ -76,30 +75,61 @@ const CalendarEventForm: FC<Props> = ({
 		resolver: zodResolverEnhanced(isNew ? createCalendarEventSchema : updateCalendarEventSchema),
 	});
 
+	/**
+	 * Try to guess title when selecting a user.
+	 * Code is a bit messy but result is great...
+	 */
+	const isMounted = useIsMounted();
+	const userValue = form.watch('user_assignee');
+	const titleValue = form.watch('title');
+	const shouldGuessTitle =
+		(isNew && !form.formState.dirtyFields.title) ||
+		(!isNew &&
+			!form.formState.dirtyFields.title &&
+			(!titleValue || titleValue?.startsWith('Horaire de ')));
+	const shouldRemoveTitle = shouldGuessTitle && !userValue;
+	useEffect(() => {
+		void (async () => {
+			if (!isMounted) return;
+			// remove title
+			if (shouldRemoveTitle) {
+				form.setValue('title', '', { shouldDirty: false });
+				return;
+			}
+			// set title
+			if (!shouldGuessTitle || !userValue) return;
+			const user = await getUser(userValue);
+			const title = `Horaire de ${user.first_name}${user.last_name ? ` ${user.last_name}` : ''}`;
+			form.setValue('title', title, { shouldDirty: false });
+		})();
+	}, [userValue, shouldGuessTitle, shouldRemoveTitle, isMounted]);
+
 	const handleSubmit = form.handleSubmit(async (formValues) => {
 		if (onSubmit) await onSubmit(formValues);
 		form.reset(formValues);
 	});
 
-	const handleStartDateChange = (date: Date | null): void => {
-		form.setValue('start', date, { shouldDirty: true, shouldValidate: true });
-		const endValue = form.getValues('end');
+	// TODO: Fix this
+	// const handleStartDateChange = (date: Date | null): void => {
+	// 	form.setValue('start', date, { shouldDirty: true, shouldValidate: true });
+	// 	const endValue = form.getValues('end');
+	//
+	// 	// Prevent end date to be before start date
+	// 	if (endValue && date && date < endValue) {
+	// 		form.setValue('end', date, { shouldDirty: true, shouldValidate: true });
+	// 	}
+	// };
 
-		// Prevent end date to be before start date
-		if (endValue && date && date < endValue) {
-			form.setValue('end', date, { shouldDirty: true, shouldValidate: true });
-		}
-	};
-
-	const handleEndDateChange = (date: Date | null): void => {
-		form.setValue('end', date, { shouldDirty: true, shouldValidate: true });
-		const startValue = form.getValues('start');
-
-		// Prevent start date to be after end date
-		if (startValue && date && date < startValue) {
-			form.setValue('start', date, { shouldDirty: true, shouldValidate: true });
-		}
-	};
+	// TODO: Fix this
+	// const handleEndDateChange = (date: Date | null): void => {
+	// 	form.setValue('end', date, { shouldDirty: true, shouldValidate: true });
+	// 	const startValue = form.getValues('start');
+	//
+	// 	// Prevent start date to be after end date
+	// 	if (startValue && date && date < startValue) {
+	// 		form.setValue('start', date, { shouldDirty: true, shouldValidate: true });
+	// 	}
+	// };
 
 	const handleDelete = async () => {
 		if (onDelete && defaultValues?.id) onDelete(defaultValues.id);
@@ -113,8 +143,41 @@ const CalendarEventForm: FC<Props> = ({
 				</Typography>
 			</Box>
 			<Stack spacing={3.5} sx={{ p: 3 }}>
+				<Stack direction={{ sm: 'row' }} gap={3.5}>
+					<Controller
+						name="user_assignee"
+						control={form.control}
+						render={({ field, fieldState }) => (
+							<UserSearchInput
+								sx={{ width: '100%' }}
+								label="Utilisateur assigné"
+								items={users}
+								current={field.value}
+								onSelect={(user) => field.onChange(user?.id ?? null)}
+								error={fieldState.error?.message}
+							/>
+						)}
+					/>
+					<Controller
+						name="trailer_assignee"
+						control={form.control}
+						render={({ field, fieldState }) => (
+							<TrailerSearchInput
+								sx={{ width: '100%' }}
+								label="Remorque assignée"
+								items={trailers}
+								current={field.value}
+								onSelect={(trailer) => field.onChange(trailer?.id ?? null)}
+								error={fieldState.error?.message}
+							/>
+						)}
+					/>
+				</Stack>
+
+				<Divider />
+
 				<TextField
-					autoFocus={isNew}
+					// autoFocus={isNew}
 					fullWidth
 					label="Titre"
 					required
@@ -160,15 +223,18 @@ const CalendarEventForm: FC<Props> = ({
 					<Controller
 						name="start"
 						control={form.control}
-						render={({ field }) => (
-							<DateTimePicker label="Début" {...field} onChange={handleStartDateChange} />
-						)}
+						render={({ field }) => <DateTimePicker label="Début" {...field} />}
 					/>
 					<Controller
 						name="end"
 						control={form.control}
 						render={({ field }) => (
-							<DateTimePicker label="Fin" {...field} onChange={handleEndDateChange} />
+							<div>
+								<DateTimePicker label="Fin" {...field} />
+								{Boolean(form.formState.errors.end) && (
+									<FormHelperText error>{form.formState.errors.end?.message}</FormHelperText>
+								)}
+							</div>
 						)}
 					/>
 				</Stack>
@@ -211,43 +277,6 @@ const CalendarEventForm: FC<Props> = ({
 						/>
 					)}
 				/>
-
-				<Divider />
-
-				<Stack direction={{ sm: 'row' }} gap={3.5}>
-					<Controller
-						name="user_assignee"
-						control={form.control}
-						render={({ field, fieldState }) => (
-							<UserSearchInput
-								sx={{ width: '100%' }}
-								label="Utilisateur assigné"
-								items={users}
-								current={field.value}
-								onSelect={(user) => field.onChange(user?.id ?? null)}
-								error={fieldState.error?.message}
-							/>
-						)}
-					/>
-					<Controller
-						name="trailer_assignee"
-						control={form.control}
-						render={({ field, fieldState }) => (
-							<TrailerSearchInput
-								sx={{ width: '100%' }}
-								label="Remorque assignée"
-								items={trailers}
-								current={field.value}
-								onSelect={(trailer) => field.onChange(trailer?.id ?? null)}
-								error={fieldState.error?.message}
-							/>
-						)}
-					/>
-				</Stack>
-
-				{Boolean(form.formState.errors.end) && (
-					<FormHelperText error>{form.formState.errors.end?.message}</FormHelperText>
-				)}
 			</Stack>
 			<Divider />
 			<Stack alignItems="center" direction="row" justifyContent="start" spacing={1} sx={{ p: 2 }}>
