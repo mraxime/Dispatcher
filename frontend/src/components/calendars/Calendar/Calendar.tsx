@@ -56,6 +56,7 @@ const getPaletteColor = (theme: Theme, value: string) => {
 
 type Props = {
 	events: CalendarEvent[];
+	editable?: boolean;
 	onRangeSelect?: (range: { start: Date; end: Date }) => void;
 	onEventSelect?: (event: EventImpl) => void;
 	onEventResize?: (event: EventImpl) => void;
@@ -65,6 +66,7 @@ type Props = {
 
 const Calendar: FC<Props> = ({
 	events,
+	editable = true,
 	onRangeSelect,
 	onEventSelect,
 	onEventResize,
@@ -265,7 +267,7 @@ const Calendar: FC<Props> = ({
 						allDayText="Tte la journée"
 						dayMaxEventRows={3}
 						droppable
-						editable
+						editable={editable}
 						eventClick={calendarMethods.selectEvent}
 						eventContent={
 							// TODO: check if passing a function doesn't affect performance

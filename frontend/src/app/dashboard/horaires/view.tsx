@@ -21,9 +21,10 @@ type Props = {
 	calendar: CalendarType;
 	users: User[];
 	trailers: Trailer[];
+	editable: boolean;
 };
 
-const CalendarView: FC<Props> = ({ calendar, users, trailers }) => {
+const CalendarView: FC<Props> = ({ calendar, users, trailers, editable }) => {
 	const eventActions = useCalendarEventActions();
 	const formDisclosure = useDisclosure();
 
@@ -97,30 +98,33 @@ const CalendarView: FC<Props> = ({ calendar, users, trailers }) => {
 		<>
 			<Calendar
 				events={calendar.events}
+				editable={editable}
 				onRangeSelect={handleRangeSelect}
 				onEventSelect={handleEventSelect}
 				onEventResize={handleEventUpdate}
 				onEventDrop={handleEventUpdate}
 				onEventDuplicate={handleEventDuplicate}
 			/>
-			<Dialog
-				fullWidth
-				maxWidth="sm"
-				onClose={handleFormClose}
-				open={formDisclosure.isOpen}
-				TransitionProps={{ timeout: formDisclosure.isOpen ? 225 : 0 }} // Disables close transition
-			>
-				<CalendarEventForm
-					mode={currentEvent ? 'update' : 'create'}
-					range={range}
-					defaultValues={{ calendar: calendar.id, ...currentEvent }}
-					users={users}
-					trailers={trailers}
-					onSubmit={handleSubmit}
-					onCancel={handleFormClose}
-					onDelete={handleDelete}
-				/>
-			</Dialog>
+			{editable && (
+				<Dialog
+					fullWidth
+					maxWidth="sm"
+					onClose={handleFormClose}
+					open={formDisclosure.isOpen}
+					TransitionProps={{ timeout: formDisclosure.isOpen ? 225 : 0 }} // Disables close transition
+				>
+					<CalendarEventForm
+						mode={currentEvent ? 'update' : 'create'}
+						range={range}
+						defaultValues={{ calendar: calendar.id, ...currentEvent }}
+						users={users}
+						trailers={trailers}
+						onSubmit={handleSubmit}
+						onCancel={handleFormClose}
+						onDelete={handleDelete}
+					/>
+				</Dialog>
+			)}
 		</>
 	);
 };
