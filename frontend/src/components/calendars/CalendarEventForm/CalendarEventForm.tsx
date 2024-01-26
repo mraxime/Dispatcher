@@ -17,7 +17,7 @@ import { Controller, useForm, type DefaultValues } from 'react-hook-form';
 
 import TrailerSearchInput from 'src/components/trailers/TrailerSearchInput';
 import UserSearchInput from 'src/components/users/UserSearchInput';
-import useIsMounted from 'src/hooks/useIsMounted';
+import { useIsMounted } from 'src/hooks/useIsMounted';
 import {
 	createCalendarEventSchema,
 	updateCalendarEventSchema,
@@ -75,11 +75,12 @@ const CalendarEventForm: FC<Props> = ({
 		resolver: zodResolverEnhanced(isNew ? createCalendarEventSchema : updateCalendarEventSchema),
 	});
 
+	const isMounted = useIsMounted();
+
 	/**
 	 * Try to guess title when selecting a user.
 	 * Code is a bit messy but result is great...
 	 */
-	const isMounted = useIsMounted();
 	const userValue = form.watch('user_assignee');
 	const titleValue = form.watch('title');
 	const shouldGuessTitle =
@@ -90,7 +91,7 @@ const CalendarEventForm: FC<Props> = ({
 	const shouldRemoveTitle = shouldGuessTitle && !userValue;
 	useEffect(() => {
 		void (async () => {
-			if (!isMounted) return;
+			if (!isMounted()) return;
 			// remove title
 			if (shouldRemoveTitle) {
 				form.setValue('title', '', { shouldDirty: false });

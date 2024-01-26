@@ -1,16 +1,24 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
-const useIsMounted = (): boolean => {
+/**
+ * Custom hook that determines if the component is currently mounted.
+ * @returns {() => boolean} A function that returns a boolean value indicating whether the component is mounted.
+ * @example
+ * ```tsx
+ * const isComponentMounted = useIsMounted();
+ * // Use isComponentMounted() to check if the component is currently mounted before performing certain actions.
+ * ```
+ */
+export const useIsMounted = (): (() => boolean) => {
 	const isMounted = useRef(false);
 
-	useEffect(
-		() => () => {
-			isMounted.current = true;
-		},
-		[],
-	);
+	useEffect(() => {
+		isMounted.current = true;
 
-	return isMounted.current;
+		return () => {
+			isMounted.current = false;
+		};
+	}, []);
+
+	return useCallback(() => isMounted.current, []);
 };
-
-export default useIsMounted;
