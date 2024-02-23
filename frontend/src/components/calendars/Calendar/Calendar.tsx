@@ -80,7 +80,7 @@ const Calendar: FC<Props> = ({
 
 	// maybe we don't need these
 	const [date, setDate] = useState<Date>(new Date());
-	const [view, setView] = useState<CalendarView>(mdUp ? 'dayGridMonth' : 'timeGridDay');
+	const [view, setView] = useState<CalendarView>(mdUp ? 'dayGridMonth' : 'listDay');
 
 	/**
 	 * Hack to trigger a rerender when the title is avaible
@@ -99,7 +99,7 @@ const Calendar: FC<Props> = ({
 			if (!calendarEl) return;
 
 			const calendarApi = calendarEl.getApi();
-			const newView: CalendarView = mdUp ? 'dayGridMonth' : 'timeGridDay';
+			const newView: CalendarView = mdUp ? 'dayGridMonth' : 'listDay';
 			calendarApi.changeView(newView);
 			setView(newView);
 		};
@@ -329,6 +329,7 @@ const ListEventContent = (eventInfo: EventContentArg) => {
 						{isObject(trailer) && (
 							<Typography variant="caption">Remorque: {trailer.name}</Typography>
 						)}
+						{isObject(user) && <Typography variant="caption">Téléphone: {user.phone}</Typography>}
 					</Stack>
 				</Stack>
 
