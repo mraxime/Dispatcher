@@ -9,9 +9,10 @@ type Props = {
 	title: string;
 	target?: HTMLAttributeAnchorTarget;
 	badge?: ReactNode;
+	onClick?: () => void;
 };
 
-const SideNavItem: FC<Props> = ({ href, Icon, title, target, badge }) => {
+const SideNavItem: FC<Props> = ({ href, Icon, title, target, badge, onClick }) => {
 	const pathname = usePathname();
 	const selected = pathname.startsWith(href);
 
@@ -39,6 +40,7 @@ const SideNavItem: FC<Props> = ({ href, Icon, title, target, badge }) => {
 					},
 				},
 			}}
+			onClick={onClick}
 		>
 			{Icon && (
 				<ListItemIcon sx={{ fontSize: 20 }}>

@@ -1,6 +1,6 @@
 'use client';
 
-import { type FC } from 'react';
+import { useCallback, type FC } from 'react';
 import { usePathname } from 'next/navigation';
 import { Box, Drawer, Stack, Typography, useMediaQuery } from '@mui/material';
 import type { SxProps, Theme } from '@mui/material/styles';
@@ -31,6 +31,10 @@ const SideNav: FC<Props> = ({ isOpen, session, companies, onClose, ...restProps 
 	const permissions = (session.permissions as JunctionUserPermission[]).map(
 		(value) => value.custom_permissions_id as Permission,
 	);
+
+	const handleItemClick = useCallback(() => {
+		if (!isDesktop) onClose();
+	}, [isDesktop, onClose]);
 
 	return (
 		<Drawer
@@ -74,7 +78,11 @@ const SideNav: FC<Props> = ({ isOpen, session, companies, onClose, ...restProps 
 					onSelect={(company) => setCompany(company.id, pathname)}
 				/>
 
-				<Box flexGrow={1}>{Boolean(companyId) && <SideNavMenu menu={NAV_MENU(permissions)} />}</Box>
+				<Box flexGrow={1}>
+					{Boolean(companyId) && (
+						<SideNavMenu menu={NAV_MENU(permissions)} onItemClick={handleItemClick} />
+					)}
+				</Box>
 
 				<Box textAlign="center" mt={3}>
 					<Typography variant="caption" color="neutral.500">

@@ -40,7 +40,7 @@ type Props = {
 
 const DashboardLayoutView: FC<Props> = ({ children, session, companies }) => {
 	const isDesktop = useMediaQuery((theme: Theme) => theme.breakpoints.up('lg'));
-	const sideNavDisclosure = useDisclosure(true);
+	const sideNavDisclosure = useDisclosure(isDesktop ? true : false);
 
 	useEffect(() => {
 		if (isDesktop) sideNavDisclosure.open();

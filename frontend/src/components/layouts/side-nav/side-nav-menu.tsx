@@ -2,15 +2,16 @@ import type { FC } from 'react';
 import { List, ListSubheader, Stack, Typography } from '@mui/material';
 import type { SxProps } from '@mui/material/styles';
 
-import { type NavMenu } from 'src/lib/constants/navigation';
+import type { NavItem, NavMenu } from 'src/lib/constants/navigation';
 import SideNavItem from './side-nav-item';
 
 type Props = {
 	menu: NavMenu;
 	sx?: SxProps;
+	onItemClick?: (item: NavItem) => void;
 };
 
-const SideNavMenu: FC<Props> = ({ menu, sx }) => {
+const SideNavMenu: FC<Props> = ({ menu, sx, onItemClick }) => {
 	return (
 		<Stack spacing={2} sx={sx}>
 			{Object.entries(menu).map(([group, navItems]) => {
@@ -36,6 +37,7 @@ const SideNavMenu: FC<Props> = ({ menu, sx }) => {
 										Icon={navItem.Icon}
 										href={navItem.disabled ? undefined : navItem.href}
 										target={navItem.isExternalHref ? '_blank' : undefined}
+										onClick={() => onItemClick?.(navItem)}
 									/>
 								);
 							})}

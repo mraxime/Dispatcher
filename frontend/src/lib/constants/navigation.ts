@@ -8,7 +8,7 @@ import { ROUTES } from './routes';
 
 export type NavMenu = Record<string, NavItem[]>;
 
-type NavItem = {
+export type NavItem = {
 	title: string;
 	href: string;
 	isExternalHref?: boolean;
