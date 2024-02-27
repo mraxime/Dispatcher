@@ -37,7 +37,7 @@ const CompaniesPage = async ({ searchParams }: { searchParams: Record<string, st
 	return (
 		<Container maxWidth="xl">
 			<PageHeader
-				title={`Entreprises (${currentCompany.name})`}
+				title={`Entreprises de ${currentCompany.name}`}
 				icon={<Icons.company />}
 				breadcrumbItems={breadcrumbs}
 				actionElement={
