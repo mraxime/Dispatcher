@@ -22,7 +22,21 @@ export type NavItem = {
  * Main navigation menu.
  */
 export const NAV_MENU = (permissions: Permission[]): NavMenu => ({
-	Administration: [
+	Appels: [
+		{
+			title: 'Calendrier',
+			href: ROUTES.SchedulesPage(),
+			Icon: Icons.calendar,
+			hidden: !hasPermission(permissions, 'READ', 'CALENDAR'),
+		},
+		{
+			title: "Formulaires d'appel",
+			href: ROUTES.CallsPage(),
+			Icon: Icons.call,
+			hidden: !hasPermission(permissions, 'READ', 'CALL'),
+		},
+	],
+	Gestion: [
 		{
 			title: 'Entreprises',
 			href: ROUTES.CompaniesPage(),
@@ -34,22 +48,6 @@ export const NAV_MENU = (permissions: Permission[]): NavMenu => ({
 			href: ROUTES.UsersPage(),
 			Icon: Icons.user,
 			hidden: !hasPermission(permissions, 'READ', 'USER'),
-		},
-	],
-	Appels: [
-		{
-			title: "Formulaires d'appel",
-			href: ROUTES.CallsPage(),
-			Icon: Icons.call,
-			hidden: !hasPermission(permissions, 'READ', 'CALL'),
-		},
-	],
-	Gestion: [
-		{
-			title: 'Calendrier',
-			href: ROUTES.SchedulesPage(),
-			Icon: Icons.calendar,
-			hidden: !hasPermission(permissions, 'READ', 'CALENDAR'),
 		},
 		{
 			title: 'Remorques',
