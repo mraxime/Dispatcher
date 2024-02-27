@@ -318,7 +318,11 @@ const ListEventContent = (eventInfo: EventContentArg) => {
 
 	return (
 		<>
-			<Stack direction="row" alignItems="center" justifyContent="space-between">
+			<Stack
+				direction={{ sm: 'row' }}
+				alignItems={{ xs: 'start', sm: 'center' }}
+				justifyContent="space-between"
+			>
 				<Stack direction="row">
 					<Typography variant="body2">{eventInfo.timeText}</Typography>
 
