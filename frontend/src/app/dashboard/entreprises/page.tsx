@@ -1,43 +1,31 @@
-import { cookies } from 'next/headers';
 import Link from 'next/link';
-import { Button, Container, SvgIcon } from '@mui/material';
-
+import { Box, Button, Container, SvgIcon } from '@mui/material';
 import { Icons } from 'src/components/base/Icons';
 import PageHeader, { type BreadcrumbItem } from 'src/components/base/PageHeader';
-import { ROUTES } from 'src/lib/constants/routes';
-import { companyParamsSchema } from 'src/lib/schemas/company.schema';
-import type { CompanyParams } from 'src/lib/types/directus';
-import { deepMerge } from 'src/lib/utils';
-import { getCompanies, getCompany } from 'src/server/actions/company.action';
-import CompaniesPageView from './view';
-
-const breadcrumbs: BreadcrumbItem[] = [
-	{
-		name: 'Dashboard',
-		href: ROUTES.DashboardPage(),
-	},
-	{ name: 'Entreprises' },
-];
+import CompaniesTable from 'src/components/company/CompaniesTable';
+import { ROUTES } from 'src/constants/routes';
+import { getCompanies } from 'src/server/services';
+import { companyParamsSchema } from 'src/validations/company';
+import { pageGuard } from '../guard';
 
 const CompaniesPage = async ({ searchParams }: { searchParams: Record<string, string> }) => {
-	const companyCookie = cookies().get('company')?.value;
-	const params = deepMerge<CompanyParams>(companyParamsSchema.parseSearchParams(searchParams), {
-		page: 1,
-		limit: 10,
-		fields: ['*', { admin: ['*'] }],
-		filter: { parent_company: { _eq: companyCookie } },
-		sort: '-date_created',
-	});
+	const session = await pageGuard('companies:read');
 
-	const [companies, currentCompany] = await Promise.all([
-		getCompanies(params),
-		getCompany(Number(companyCookie)),
-	]);
+	const params = companyParamsSchema.parse(searchParams);
+	const companies = await getCompanies(params);
+
+	const breadcrumbs: BreadcrumbItem[] = [
+		{
+			name: session.selectedCompany.name,
+			href: ROUTES.DashboardPage(),
+		},
+		{ name: 'Entreprises' },
+	];
 
 	return (
 		<Container maxWidth="xl">
 			<PageHeader
-				title={`Entreprises de ${currentCompany.name}`}
+				title={`Mes entreprises`}
 				icon={<Icons.company />}
 				breadcrumbItems={breadcrumbs}
 				actionElement={
@@ -55,7 +43,10 @@ const CompaniesPage = async ({ searchParams }: { searchParams: Record<string, st
 					</Button>
 				}
 			/>
-			<CompaniesPageView sx={{ mt: 4 }} companies={companies} params={params} />
+
+			<Box mt={4}>
+				<CompaniesTable data={companies} params={params} />
+			</Box>
 		</Container>
 	);
 };

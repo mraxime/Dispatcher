@@ -1,35 +1,31 @@
 import Link from 'next/link';
-import { Button, Container, SvgIcon } from '@mui/material';
-
+import { Box, Button, Container, SvgIcon } from '@mui/material';
 import { Icons } from 'src/components/base/Icons';
 import PageHeader, { type BreadcrumbItem } from 'src/components/base/PageHeader';
-import { ROUTES } from 'src/lib/constants/routes';
-import { billParamsSchema } from 'src/lib/schemas/bill.schema';
-import type { BillParams } from 'src/lib/types/directus';
-import { deepMerge } from 'src/lib/utils';
-import { getBills } from 'src/server/actions/bill.action';
-import BillsPageView from './view';
-
-const breadcrumbs: BreadcrumbItem[] = [
-	{
-		name: 'Dashboard',
-		href: ROUTES.DashboardPage(),
-	},
-	{
-		name: 'Factures',
-	},
-];
+import BillsTable from 'src/components/bill/BillsTable';
+import { ROUTES } from 'src/constants/routes';
+import { getBills } from 'src/server/services';
+import { billParamsSchema } from 'src/validations/bill';
+import { pageGuard } from '../guard';
 
 const BillsPage = async ({ searchParams }: { searchParams: Record<string, string> }) => {
-	const params = deepMerge<BillParams>(billParamsSchema.parseSearchParams(searchParams), {
-		page: 1,
-		limit: 10,
-		fields: ['*', { call: ['*'], client: ['*', { company: ['*'] }], price: ['*'] }],
-		filter: { status: { _eq: 'PAID' } },
-		sort: '-date_created',
-	});
+	const session = await pageGuard('bills:read');
 
+	// const params = {
+	// 	fields: ['*', { call: ['*'], client: ['*', { company: ['*'] }], price: ['*'] }],
+	// };
+	const params = billParamsSchema.parse(searchParams);
 	const bills = await getBills(params);
+
+	const breadcrumbs: BreadcrumbItem[] = [
+		{
+			name: session.selectedCompany.name,
+			href: ROUTES.DashboardPage(),
+		},
+		{
+			name: 'Factures',
+		},
+	];
 
 	return (
 		<Container maxWidth="xl">
@@ -52,7 +48,10 @@ const BillsPage = async ({ searchParams }: { searchParams: Record<string, string
 					</Button>
 				}
 			/>
-			<BillsPageView sx={{ mt: 4 }} bills={bills} params={params} />
+
+			<Box mt={4}>
+				<BillsTable data={bills} params={params} />
+			</Box>
 		</Container>
 	);
 };

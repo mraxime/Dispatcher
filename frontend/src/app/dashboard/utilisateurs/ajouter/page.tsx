@@ -1,31 +1,26 @@
-import { Container } from '@mui/material';
-
+import { Box, Container } from '@mui/material';
 import { Icons } from 'src/components/base/Icons';
 import PageHeader, { type BreadcrumbItem } from 'src/components/base/PageHeader';
-import { USER_ROLES } from 'src/lib/constants/roles';
-import { ROUTES } from 'src/lib/constants/routes';
-import { getCompanies } from 'src/server/actions/company.action';
-import { getPermissions, getRoles } from 'src/server/actions/user.action';
-import NewUserPageView from './view';
-
-const breadcrumbs: BreadcrumbItem[] = [
-	{
-		name: 'Dashboard',
-		href: ROUTES.DashboardPage(),
-	},
-	{
-		name: 'Utilisateurs',
-		href: ROUTES.UsersPage(),
-	},
-	{ name: 'Ajouter' },
-];
+import UserForm from 'src/components/user/UserForm';
+import { ROUTES } from 'src/constants/routes';
+import { getAllPermissions, getCompanies } from 'src/server/services';
+import { pageGuard } from '../../guard';
 
 const NewUserPage = async () => {
-	const [companies, roles, permissions] = await Promise.all([
-		getCompanies(),
-		getRoles({ fields: ['*'], sort: 'name', filter: { name: { _in: USER_ROLES } } }),
-		getPermissions({ fields: ['*'], sort: 'group' }),
-	]);
+	const session = await pageGuard('users:read', 'users:create');
+	const [companies, permissions] = await Promise.all([getCompanies(), getAllPermissions()]);
+
+	const breadcrumbs: BreadcrumbItem[] = [
+		{
+			name: session.selectedCompany.name,
+			href: ROUTES.DashboardPage(),
+		},
+		{
+			name: 'Utilisateurs',
+			href: ROUTES.UsersPage(),
+		},
+		{ name: 'Ajouter' },
+	];
 
 	return (
 		<Container maxWidth="xl">
@@ -35,12 +30,14 @@ const NewUserPage = async () => {
 				iconHref={ROUTES.UsersPage()}
 				breadcrumbItems={breadcrumbs}
 			/>
-			<NewUserPageView
-				sx={{ mt: 4 }}
-				companies={companies}
-				roles={roles}
-				permissions={permissions}
-			/>
+
+			<Box mt={4}>
+				<UserForm
+					defaultValues={{ companyId: session.user.selectedCompanyId }}
+					companies={companies}
+					permissions={permissions}
+				/>
+			</Box>
 		</Container>
 	);
 };

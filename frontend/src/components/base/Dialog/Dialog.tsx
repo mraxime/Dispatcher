@@ -9,7 +9,6 @@ import {
 	SvgIcon,
 	Typography,
 } from '@mui/material';
-
 import { Icons } from 'src/components/base/Icons';
 
 const Dialog = () => {

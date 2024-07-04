@@ -1,57 +1,56 @@
-import { Container } from '@mui/material';
-
+import { Box, Container } from '@mui/material';
 import { Icons } from 'src/components/base/Icons';
 import PageHeader, { type BreadcrumbItem } from 'src/components/base/PageHeader';
-import { USER_ROLES } from 'src/lib/constants/roles';
-import { ROUTES } from 'src/lib/constants/routes';
-import { getCompanies } from 'src/server/actions/company.action';
-import { getPermissions, getRoles, getUser } from 'src/server/actions/user.action';
-import UserPageView from './view';
-
-const breadcrumbs: BreadcrumbItem[] = [
-	{
-		name: 'Dashboard',
-		href: ROUTES.DashboardPage(),
-	},
-	{
-		name: 'Utilisateurs',
-		href: ROUTES.UsersPage(),
-	},
-	{ name: 'Modifier' },
-];
+import UserForm from 'src/components/user/UserForm';
+import { ROUTES } from 'src/constants/routes';
+import { getAllPermissions, getCompanies, getUser, getUserPermissions } from 'src/server/services';
+import { pageGuard } from '../../guard';
 
 const UserPage = async ({ params }: { params: { id: string } }) => {
-	const [companies, user, roles, permissions] = await Promise.all([
+	const session = await pageGuard('users:read');
+
+	const [companies, user, allPermissions] = await Promise.all([
 		getCompanies(),
-		getUser(params.id, {
-			fields: [
-				'*',
-				{
-					driver_license: ['*'],
-					emergency_contact: ['*'],
-					permissions: ['custom_permissions_id'],
-				},
-			],
-		}),
-		getRoles({ fields: ['*'], sort: 'name', filter: { name: { _in: USER_ROLES } } }),
-		getPermissions({ fields: ['*'], sort: 'group' }),
+		getUser(params.id, { contacts: true, driverLicenses: true }),
+		getAllPermissions(),
 	]);
+
+	if (!user) throw new Error('User not found');
+
+	const userPermissions = await getUserPermissions(user.id);
+
+	const breadcrumbs: BreadcrumbItem[] = [
+		{
+			name: session.selectedCompany.name,
+			href: ROUTES.DashboardPage(),
+		},
+		{
+			name: 'Utilisateurs',
+			href: ROUTES.UsersPage(),
+		},
+		{ name: 'Modifier' },
+	];
 
 	return (
 		<Container maxWidth="xl">
 			<PageHeader
-				title={`${user.first_name} ${user.last_name}`}
+				title={`${user.firstName} ${user.lastName}`}
 				icon={<Icons.user />}
 				iconHref={ROUTES.UsersPage()}
 				breadcrumbItems={breadcrumbs}
 			/>
-			<UserPageView
-				sx={{ mt: 4 }}
-				user={user}
-				companies={companies}
-				roles={roles}
-				permissions={permissions}
-			/>
+
+			<Box mt={4}>
+				<UserForm
+					id={user.id}
+					defaultValues={{
+						...user,
+						permissions: userPermissions.map((permission) => permission.id),
+					}}
+					companies={companies}
+					permissions={allPermissions}
+				/>
+			</Box>
 		</Container>
 	);
 };

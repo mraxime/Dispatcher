@@ -1,49 +1,44 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/navigation';
-import { useQuery } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
-
-import {
-	calendarEventParamsSchema,
-	type CreateCalendarEventSchema,
-	type UpdateCalendarEventSchema,
-} from 'src/lib/schemas/calendar-event.schema';
-import type { CalendarEvent, CalendarEventParams } from 'src/lib/types/directus';
+import { useSocket } from 'src/providers/SocketProvider';
 import {
 	createCalendarEvent,
 	deleteCalendarEvent,
-	getCalendarEvent,
 	updateCalendarEvent,
-} from 'src/server/actions/calendar-event.action';
-import { useCustomSearchParams } from './useCustomSearchParams';
+} from 'src/server/actions/calendar-event';
+import type { CalendarEventInput } from 'src/types';
 
 /**
  * Provides useful calendar-event actions.
  */
 export const useCalendarEventActions = () => {
 	const router = useRouter();
-	const searchParams = useCustomSearchParams();
+	const { socket } = useSocket();
 
 	const calendarEventActions = useMemo(
 		() => ({
-			setParams: (params: CalendarEventParams) => {
-				const newValue = calendarEventParamsSchema.createSearchParams(params);
-				searchParams.reset(newValue);
-			},
+			// setParams: (params: CalendarEventParams) => {
+			// 	searchParams.reset(params);
+			// },
 
 			revalidate: () => {
 				router.refresh();
 			},
 
-			create: async (payload: CreateCalendarEventSchema) => {
+			create: async (payload: CalendarEventInput) => {
 				const result = await createCalendarEvent(payload);
 				toast.success('Événement de calendrier créé !');
+				// TODO: specify which companyId calendar to update
+				socket.emit('update-calendar');
 				return result;
 			},
 
-			update: async (id: string, payload: UpdateCalendarEventSchema) => {
+			update: async (id: string, payload: Partial<CalendarEventInput>) => {
 				const result = await updateCalendarEvent(id, payload);
 				toast.success('Calendrier mis à jour !');
+				// TODO: specify which companyId calendar to update
+				socket.emit('update-calendar');
 				return result;
 			},
 
@@ -59,28 +54,12 @@ export const useCalendarEventActions = () => {
 
 				await deleteCalendarEvent(id);
 				toast.success('Événement de calendrier supprimée !');
+				// TODO: specify which companyId calendar to update
+				socket.emit('update-calendar');
 			},
 		}),
 		[],
 	);
 
 	return calendarEventActions;
-};
-
-export const useCalendarEvent = (
-	id: string | undefined,
-	opts?: { initialData?: CalendarEvent; params?: CalendarEventParams },
-) => {
-	const calendarEventCache = useQuery({
-		queryKey: ['calendar-event', id, opts?.params],
-		queryFn: async () => {
-			if (id) return await getCalendarEvent(id, opts?.params);
-		},
-		initialData: opts?.initialData,
-	});
-
-	return {
-		data: calendarEventCache.data,
-		isLoading: calendarEventCache.isLoading,
-	};
 };

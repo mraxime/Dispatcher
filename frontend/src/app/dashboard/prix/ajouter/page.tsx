@@ -1,14 +1,9 @@
-'use client';
-
-import { useRouter } from 'next/navigation';
 import { Box, Container } from '@mui/material';
-import Cookies from 'js-cookie';
-
 import { Icons } from 'src/components/base/Icons';
 import PageHeader, { type BreadcrumbItem } from 'src/components/base/PageHeader';
-import PriceForm, { type PriceSubmitData } from 'src/components/prices/PriceForm';
-import { usePriceActions } from 'src/hooks/usePrices';
-import { ROUTES } from 'src/lib/constants/routes';
+import PriceForm from 'src/components/price/PriceForm';
+import { ROUTES } from 'src/constants/routes';
+import { pageGuard } from '../../guard';
 
 const breadcrumbs: BreadcrumbItem[] = [
 	{
@@ -22,15 +17,8 @@ const breadcrumbs: BreadcrumbItem[] = [
 	{ name: 'Ajouter' },
 ];
 
-const NewPricePage = () => {
-	const router = useRouter();
-	const priceActions = usePriceActions();
-	const companyCookie = Cookies.get('company');
-
-	const handleSubmit = async (data: PriceSubmitData) => {
-		await priceActions.create(data);
-		router.push(ROUTES.PricesPage());
-	};
+const NewPricePage = async () => {
+	const session = await pageGuard('prices:read');
 
 	return (
 		<Container maxWidth="md">
@@ -41,11 +29,7 @@ const NewPricePage = () => {
 				breadcrumbItems={breadcrumbs}
 			/>
 			<Box mt={4}>
-				<PriceForm
-					mode="create"
-					defaultValues={{ company: Number(companyCookie) }}
-					onSubmit={handleSubmit}
-				/>
+				<PriceForm defaultValues={{ companyId: session.selectedCompany.id }} />
 			</Box>
 		</Container>
 	);

@@ -242,6 +242,13 @@ export const createComponents = (): Components => {
 				underline: 'hover',
 			},
 		},
+		MuiListItemButton: {
+			styleOverrides: {
+				root: {
+					borderRadius: '12px',
+				},
+			},
+		},
 		MuiListItemIcon: {
 			styleOverrides: {
 				root: {

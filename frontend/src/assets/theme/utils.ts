@@ -1,5 +1,4 @@
 import type { PaletteColor } from '@mui/material/styles/createPalette';
-
 import type { ColorPreset } from '.';
 import { blue, green, indigo, purple } from './colors';
 

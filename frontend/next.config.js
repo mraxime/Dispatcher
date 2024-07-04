@@ -4,6 +4,12 @@ const nextConfig = {
 	typescript: { ignoreBuildErrors: true },
 	eslint: { ignoreDuringBuilds: true },
 	output: 'standalone',
+	// prevent oslo/password from getting bundled
+	// TODO: find the equivalent for turbopack to be able to use --turbo
+	webpack: (config) => {
+		config.externals.push('@node-rs/argon2', '@node-rs/bcrypt');
+		return config;
+	},
 	async redirects() {
 		return [
 			{

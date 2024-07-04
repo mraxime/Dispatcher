@@ -1,17 +1,16 @@
 import { Container } from '@mui/material';
-
 import { Icons } from 'src/components/base/Icons';
 import PageHeader from 'src/components/base/PageHeader';
-import { getSession } from 'src/server/actions/auth.action';
-import ProfilePageView from './view';
+import UserAccountManager from 'src/components/user/UserAccountManager';
+import { pageGuard } from '../guard';
 
 const ProfilePage = async () => {
-	const session = await getSession();
+	const session = await pageGuard();
 
 	return (
 		<Container maxWidth="xl">
 			<PageHeader title="Mon profil" icon={<Icons.user />} />
-			<ProfilePageView sx={{ mt: 4 }} session={session} />
+			<UserAccountManager sx={{ mt: 4 }} data={session.user} />
 		</Container>
 	);
 };

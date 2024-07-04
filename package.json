@@ -1,21 +1,21 @@
 {
   "name": "repartition-quebec",
-  "author": "Maxime Romero <maxime.romero50@gmail.com>",
-  "version": "2.0.0",
+  "author": "Maxime Romero <mraxime@gmail.com>",
   "private": true,
+  "version": "3.0.0",
+  "type": "module",
+  "packageManager": "pnpm@9.4.0",
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=22.0.0"
   },
-  "packageManager": "pnpm@latest",
   "scripts": {
-    "build": "turbo run build",
-    "start": "turbo run start",
-    "dev": "turbo run dev --parallel",
-    "lint": "turbo run lint",
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
-    "prettier": "^3.2.5",
-    "turbo": "^1.13.0"
+    "prettier": "^3.3.2",
+    "turbo": "^2.0.6"
   }
 }

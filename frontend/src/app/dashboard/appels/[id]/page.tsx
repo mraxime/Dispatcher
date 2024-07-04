@@ -1,53 +1,72 @@
-import { Container } from '@mui/material';
-
+import { Box, Container, Grid, Stack } from '@mui/material';
 import { Icons } from 'src/components/base/Icons';
 import PageHeader, { type BreadcrumbItem } from 'src/components/base/PageHeader';
-import { ROUTES } from 'src/lib/constants/routes';
-import { getCall } from 'src/server/actions/call.action';
-import { getClients } from 'src/server/actions/client.action';
-import { getServices } from 'src/server/actions/service.action';
-import { getTrailers } from 'src/server/actions/trailer.action';
-import { getUsers } from 'src/server/actions/user.action';
-import CallPageView from './view';
+import CallDispatcher from 'src/components/call/CallDispatcher';
+import CallForm from 'src/components/call/CallForm';
+import CallPriceCard from 'src/components/call/CallPriceCard';
+import CallTrajectCard from 'src/components/call/CallTrajectCard';
+import { ROUTES } from 'src/constants/routes';
+import { getCall, getClients, getServices, getTowings, getUsers } from 'src/server/services';
+import { pageGuard } from '../../guard';
 
-const breadcrumbs: BreadcrumbItem[] = [
-	{
-		name: 'Dashboard',
-		href: ROUTES.DashboardPage(),
-	},
-	{ name: 'Appels', href: ROUTES.CallsPage() },
-	{ name: 'Modifier' },
-];
+const ClientPage = async ({ params }: { params: { id: string } }) => {
+	const session = await pageGuard('calls:read');
+	const call = await getCall(params.id, {
+		client: session.permissionKeys.includes('clients:read') ? true : undefined,
+		vehicle: session.permissionKeys.includes('clients:read') ? true : undefined,
+	});
 
-const CallPage = async ({ params }: { params: { id: number } }) => {
-	const [call, clients, drivers, services, trailers] = await Promise.all([
-		getCall(params.id, { fields: ['*', { vehicle: ['*'] }] }),
-		getClients(),
-		getUsers({
-			filter: { role: { name: { _eq: 'Chauffeur' } } },
-		}),
-		getServices(),
-		getTrailers(),
-	]);
+	const clients = session.permissionKeys.includes('clients:read') ? await getClients() : [];
+	const drivers = session.permissionKeys.includes('users:read')
+		? await getUsers({ role: 'driver' })
+		: [];
+	const services = session.permissionKeys.includes('services:read') ? await getServices() : [];
+	const towings = session.permissionKeys.includes('towings:read') ? await getTowings() : [];
+
+	const breadcrumbs: BreadcrumbItem[] = [
+		{
+			name: session.selectedCompany.name,
+			href: ROUTES.DashboardPage(),
+		},
+		{
+			name: 'Appels',
+			href: ROUTES.CallsPage(),
+		},
+		{ name: 'Modifier' },
+	];
 
 	return (
 		<Container maxWidth="xl">
 			<PageHeader
-				title={`Formulaire d'appel: ${call.name}`}
+				title={`Formulaire d'appel`}
 				icon={<Icons.call />}
 				iconHref={ROUTES.CallsPage()}
 				breadcrumbItems={breadcrumbs}
 			/>
-			<CallPageView
-				sx={{ mt: 4 }}
-				call={call}
-				clients={clients}
-				drivers={drivers}
-				services={services}
-				trailers={trailers}
-			/>
+
+			<Box mt={4}>
+				<Grid container spacing={4}>
+					<Grid item xs={12} md={9}>
+						<CallForm
+							id={params.id}
+							defaultValues={call}
+							clients={clients}
+							drivers={drivers}
+							services={services}
+							towings={towings}
+						/>
+					</Grid>
+					<Grid item xs={12} md={3}>
+						<Stack spacing={4}>
+							<CallDispatcher data={call} drivers={drivers} towings={towings} />
+							<CallTrajectCard data={call} />
+							<CallPriceCard data={call} />
+						</Stack>
+					</Grid>
+				</Grid>
+			</Box>
 		</Container>
 	);
 };
 
-export default CallPage;
+export default ClientPage;

@@ -1,14 +1,10 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
-
-import {
-	messageParamsSchema,
-	type CreateMessageSchema,
-	type UpdateMessageSchema,
-} from 'src/lib/schemas/message.schema';
-import type { MessageParams } from 'src/lib/types/directus';
-import { createMessage, deleteMessage, updateMessage } from 'src/server/actions/message.action';
+import { createMessage, deleteMessage, updateMessage } from 'src/server/actions/message';
+import type { MessageInput, MessageParams } from 'src/types';
+import { messageParamsSchema } from 'src/validations/message';
+import { removeDefaultParams } from 'src/validations/utils';
 import { useCustomSearchParams } from './useCustomSearchParams';
 
 /**
@@ -21,27 +17,26 @@ export const useMessageActions = () => {
 	const messageActions = useMemo(
 		() => ({
 			setParams: (params: MessageParams) => {
-				const newValue = messageParamsSchema.createSearchParams(params);
-				searchParams.reset(newValue);
+				searchParams.reset(removeDefaultParams(params, messageParamsSchema));
 			},
 
 			revalidate: () => {
 				router.refresh();
 			},
 
-			create: async (payload: CreateMessageSchema) => {
+			create: async (payload: MessageInput) => {
 				const result = await createMessage(payload);
 				toast.success('Message créé !');
 				return result;
 			},
 
-			update: async (id: number, payload: UpdateMessageSchema) => {
+			update: async (id: string, payload: Partial<MessageInput>) => {
 				const result = await updateMessage(id, payload);
 				toast.success('Message mis à jour !');
 				return result;
 			},
 
-			delete: async (id: number) => {
+			delete: async (id: string) => {
 				if (
 					!window.confirm(`
             Êtes-vous sûr de vouloir supprimer ce message ?\n

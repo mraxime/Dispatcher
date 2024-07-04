@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState, type FC, type ReactNode } from 'react';
-
 import PageLoading from 'src/components/base/PageLoading';
 
 type Props = {

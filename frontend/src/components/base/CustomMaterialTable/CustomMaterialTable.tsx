@@ -1,6 +1,5 @@
 import { useCallback } from 'react';
 import MaterialTable, { type MaterialTableProps } from '@material-table/core';
-
 import CustomMaterialTableToolbar from './CustomMaterialTableToolbar';
 
 const CustomMaterialTable = <T extends object>(

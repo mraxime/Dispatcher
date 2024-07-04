@@ -1,7 +1,6 @@
 import { useCallback } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-
-import { createUrl } from 'src/lib/utils';
+import { createUrl } from 'src/utils';
 
 /**
  * Same as Next.js `useSearchParams`, but with aditional features.

@@ -1,13 +1,14 @@
 import { Box, Container, Paper, Stack, SvgIcon, Typography } from '@mui/material';
 import { Clock as ClockIcon } from 'react-feather';
-
-import Chat from 'src/components/messages/Chat';
-import UsersAsideList from 'src/components/users/UsersAsideList';
-import type { MessageParams, UserParams } from 'src/lib/types/directus';
-import { getMessages } from 'src/server/actions/message.action';
-import { getUsers } from 'src/server/actions/user.action';
+import Chat from 'src/components/message/Chat';
+import UsersAsideList from 'src/components/user/UsersAsideList';
+import { getMessages, getUsers } from 'src/server/services';
+import type { MessageParams, UserParams } from 'src/types';
+import { pageGuard } from '../guard';
 
 const ChatPage = async () => {
+	await pageGuard('messages:read');
+
 	const userParams: UserParams = {
 		page: 1,
 		limit: 10,

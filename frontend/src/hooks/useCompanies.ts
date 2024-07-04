@@ -1,14 +1,10 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
-
-import {
-	companyParamsSchema,
-	type CreateCompanySchema,
-	type UpdateCompanySchema,
-} from 'src/lib/schemas/company.schema';
-import type { CompanyParams } from 'src/lib/types/directus';
-import { createCompany, deleteCompany, updateCompany } from 'src/server/actions/company.action';
+import { createCompany, deleteCompany, updateCompany } from 'src/server/actions/company';
+import type { CompanyInput, CompanyParams } from 'src/types';
+import { companyParamsSchema } from 'src/validations/company';
+import { removeDefaultParams } from 'src/validations/utils';
 import { useCustomSearchParams } from './useCustomSearchParams';
 
 /**
@@ -21,27 +17,26 @@ export const useCompanyActions = () => {
 	const companyActions = useMemo(
 		() => ({
 			setParams: (params: CompanyParams) => {
-				const newValue = companyParamsSchema.createSearchParams(params);
-				searchParams.reset(newValue);
+				searchParams.reset(removeDefaultParams(params, companyParamsSchema));
 			},
 
 			revalidate: () => {
 				router.refresh();
 			},
 
-			create: async (payload: CreateCompanySchema) => {
+			create: async (payload: CompanyInput) => {
 				const result = await createCompany(payload);
 				toast.success('Entreprise créée !');
 				return result;
 			},
 
-			update: async (id: number, payload: UpdateCompanySchema) => {
+			update: async (id: string, payload: Partial<CompanyInput>) => {
 				const result = await updateCompany(id, payload);
 				toast.success('Entreprise mise à jour !');
 				return result;
 			},
 
-			delete: async (id: number) => {
+			delete: async (id: string) => {
 				if (
 					!window.confirm(`
             Êtes-vous sûr de vouloir supprimer cette entreprise ?\n

@@ -155,7 +155,7 @@ export const createComponents = ({ palette }: Config): Components => {
 				},
 			},
 		},
-		// @ts-ignore
+		// @ts-expect-error - seems ok
 		MuiTimelineConnector: {
 			styleOverrides: {
 				root: {

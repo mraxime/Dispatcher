@@ -1,7 +1,6 @@
 import type { FC, ReactNode } from 'react';
 import { Box, CircularProgress, IconButton, SvgIcon } from '@mui/material';
 import { alpha } from '@mui/material/styles';
-
 import { Icons } from 'src/components/base/Icons';
 
 type Props = {

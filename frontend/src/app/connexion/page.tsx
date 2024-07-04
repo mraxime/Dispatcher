@@ -1,22 +1,13 @@
-'use client';
-
 import type { NextPage } from 'next';
+import { redirect } from 'next/navigation';
 import { Container } from '@mui/material';
-import toast from 'react-hot-toast';
+import UserLoginForm from 'src/components/user/UserLoginForm';
+import { ROUTES } from 'src/constants/routes';
+import { getSession } from 'src/server/services';
 
-import UserLoginForm, { type UserLoginSubmitData } from 'src/components/users/UserLoginForm';
-import { useSessionActions } from 'src/hooks/useSession';
-
-const LoginPage: NextPage = () => {
-	const session = useSessionActions();
-
-	const handleSubmit = async (values: UserLoginSubmitData) => {
-		try {
-			await session.login(values.email, values.password);
-		} catch {
-			toast.error('Identifiant ou mot de passe incorrectes');
-		}
-	};
+const LoginPage: NextPage = async () => {
+	const { user } = await getSession();
+	if (user) throw redirect(ROUTES.DashboardPage());
 
 	return (
 		<Container
@@ -27,7 +18,7 @@ const LoginPage: NextPage = () => {
 				justifyContent: 'center',
 			}}
 		>
-			<UserLoginForm onSubmit={handleSubmit} />
+			<UserLoginForm />
 		</Container>
 	);
 };

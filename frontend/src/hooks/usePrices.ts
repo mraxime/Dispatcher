@@ -1,14 +1,10 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
-
-import {
-	priceParamsSchema,
-	type CreatePriceSchema,
-	type UpdatePriceSchema,
-} from 'src/lib/schemas/price.schema';
-import type { PriceParams } from 'src/lib/types/directus';
-import { createPrice, deletePrice, updatePrice } from 'src/server/actions/price.action';
+import { createPrice, deletePrice, updatePrice } from 'src/server/actions/price';
+import type { PriceInput, PriceParams } from 'src/types';
+import { priceParamsSchema } from 'src/validations/price';
+import { removeDefaultParams } from 'src/validations/utils';
 import { useCustomSearchParams } from './useCustomSearchParams';
 
 /**
@@ -21,27 +17,26 @@ export const usePriceActions = () => {
 	const priceActions = useMemo(
 		() => ({
 			setParams: (params: PriceParams) => {
-				const newValue = priceParamsSchema.createSearchParams(params);
-				searchParams.reset(newValue);
+				searchParams.reset(removeDefaultParams(params, priceParamsSchema));
 			},
 
 			revalidate: () => {
 				router.refresh();
 			},
 
-			create: async (payload: CreatePriceSchema) => {
+			create: async (payload: PriceInput) => {
 				const result = await createPrice(payload);
 				toast.success('Prix créé !');
 				return result;
 			},
 
-			update: async (id: number, payload: UpdatePriceSchema) => {
+			update: async (id: string, payload: Partial<PriceInput>) => {
 				const result = await updatePrice(id, payload);
 				toast.success('Prix mis à jour !');
 				return result;
 			},
 
-			delete: async (id: number) => {
+			delete: async (id: string) => {
 				if (
 					!window.confirm(`
             Êtes-vous sûr de vouloir supprimer ce prix ?\n

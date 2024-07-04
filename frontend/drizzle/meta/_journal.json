@@ -1,0 +1,27 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1711598076187,
+      "tag": "0000_eminent_machine_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1718811439728,
+      "tag": "0001_mute_owl",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1718869891928,
+      "tag": "0002_workable_starfox",
+      "breakpoints": true
+    }
+  ]
+}

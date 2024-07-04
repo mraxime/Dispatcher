@@ -1,34 +1,25 @@
 import Link from 'next/link';
-import { Button, Container, SvgIcon } from '@mui/material';
-
+import { Box, Button, Container, SvgIcon } from '@mui/material';
 import { Icons } from 'src/components/base/Icons';
 import PageHeader, { type BreadcrumbItem } from 'src/components/base/PageHeader';
-import { USER_ROLES } from 'src/lib/constants/roles';
-import { ROUTES } from 'src/lib/constants/routes';
-import { userParamsSchema } from 'src/lib/schemas/user.schema';
-import type { UserParams } from 'src/lib/types/directus';
-import { deepMerge } from 'src/lib/utils';
-import { getUsers } from 'src/server/actions/user.action';
-import UsersPageView from './view';
-
-const breadcrumbs: BreadcrumbItem[] = [
-	{
-		name: 'Dashboard',
-		href: ROUTES.DashboardPage(),
-	},
-	{ name: 'Utilisateurs' },
-];
+import UsersTable from 'src/components/user/UsersTable';
+import { ROUTES } from 'src/constants/routes';
+import { getUsers } from 'src/server/services';
+import { userParamsSchema } from 'src/validations/auth';
+import { pageGuard } from '../guard';
 
 const UsersPage = async ({ searchParams }: { searchParams: Record<string, string> }) => {
-	const params = deepMerge<UserParams>(userParamsSchema.parseSearchParams(searchParams), {
-		page: 1,
-		limit: 10,
-		fields: ['*', { role: ['*'] }],
-		filter: { role: { name: { _in: USER_ROLES } } },
-		sort: ['role.name', '-date_created'],
-	});
-
+	const session = await pageGuard('users:read');
+	const params = userParamsSchema.parse(searchParams);
 	const users = await getUsers(params);
+
+	const breadcrumbs: BreadcrumbItem[] = [
+		{
+			name: session.selectedCompany.name,
+			href: ROUTES.DashboardPage(),
+		},
+		{ name: 'Utilisateurs' },
+	];
 
 	return (
 		<Container maxWidth="xl">
@@ -51,7 +42,10 @@ const UsersPage = async ({ searchParams }: { searchParams: Record<string, string
 					</Button>
 				}
 			/>
-			<UsersPageView sx={{ mt: 4 }} users={users} params={params} />
+
+			<Box mt={4}>
+				<UsersTable data={users} params={params} />
+			</Box>
 		</Container>
 	);
 };

@@ -1,43 +1,35 @@
 import Link from 'next/link';
-import { Button, Container, SvgIcon } from '@mui/material';
-
+import { Box, Button, Container, SvgIcon } from '@mui/material';
 import { Icons } from 'src/components/base/Icons';
 import PageHeader, { type BreadcrumbItem } from 'src/components/base/PageHeader';
-import { ROUTES } from 'src/lib/constants/routes';
-import { trailerParamsSchema } from 'src/lib/schemas/trailer.schema';
-import type { TrailerParams } from 'src/lib/types/directus';
-import { deepMerge } from 'src/lib/utils';
-import { getTrailers } from 'src/server/actions/trailer.action';
-import TrailersPageView from './view';
+import TowingsTable from 'src/components/towing/TowingsTable';
+import { ROUTES } from 'src/constants/routes';
+import { getTowings } from 'src/server/services';
+import { towingParamsSchema } from 'src/validations/towing';
+import { pageGuard } from '../guard';
 
-const breadcrumbs: BreadcrumbItem[] = [
-	{
-		name: 'Dashboard',
-		href: ROUTES.DashboardPage(),
-	},
-	{ name: 'Remorques' },
-];
+const TowingsPage = async ({ searchParams }: { searchParams: Record<string, string> }) => {
+	const session = await pageGuard('towings:read');
+	const params = towingParamsSchema.parse(searchParams);
+	const towings = await getTowings(params);
 
-const TrailersPage = async ({ searchParams }: { searchParams: Record<string, string> }) => {
-	const params = deepMerge<TrailerParams>(trailerParamsSchema.parseSearchParams(searchParams), {
-		page: 1,
-		limit: 10,
-		fields: ['*'],
-		filter: { in_service: { _eq: true } },
-		sort: '-date_created',
-	});
-
-	const trailers = await getTrailers(params);
+	const breadcrumbs: BreadcrumbItem[] = [
+		{
+			name: session.selectedCompany.name,
+			href: ROUTES.DashboardPage(),
+		},
+		{ name: 'Remorques' },
+	];
 
 	return (
 		<Container maxWidth="xl">
 			<PageHeader
 				title="Liste des remorques"
-				icon={<Icons.trailer />}
+				icon={<Icons.towing />}
 				breadcrumbItems={breadcrumbs}
 				actionElement={
 					<Button
-						href={ROUTES.NewTrailerPage()}
+						href={ROUTES.NewTowingPage()}
 						LinkComponent={Link}
 						variant="contained"
 						startIcon={
@@ -50,9 +42,12 @@ const TrailersPage = async ({ searchParams }: { searchParams: Record<string, str
 					</Button>
 				}
 			/>
-			<TrailersPageView sx={{ mt: 4 }} trailers={trailers} params={params} />
+
+			<Box mt={4}>
+				<TowingsTable data={towings} params={params} />
+			</Box>
 		</Container>
 	);
 };
 
-export default TrailersPage;
+export default TowingsPage;

@@ -1,14 +1,10 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
-
-import {
-	serviceParamsSchema,
-	type CreateServiceSchema,
-	type UpdateServiceSchema,
-} from 'src/lib/schemas/service.schema';
-import type { ServiceParams } from 'src/lib/types/directus';
-import { createService, deleteService, updateService } from 'src/server/actions/service.action';
+import { createService, deleteService, updateService } from 'src/server/actions/service';
+import type { ServiceInput, ServiceParams } from 'src/types';
+import { serviceParamsSchema } from 'src/validations/service';
+import { removeDefaultParams } from 'src/validations/utils';
 import { useCustomSearchParams } from './useCustomSearchParams';
 
 /**
@@ -21,27 +17,26 @@ export const useServiceActions = () => {
 	const serviceActions = useMemo(
 		() => ({
 			setParams: (params: ServiceParams) => {
-				const newValue = serviceParamsSchema.createSearchParams(params);
-				searchParams.reset(newValue);
+				searchParams.reset(removeDefaultParams(params, serviceParamsSchema));
 			},
 
 			revalidate: () => {
 				router.refresh();
 			},
 
-			create: async (payload: CreateServiceSchema) => {
+			create: async (payload: ServiceInput) => {
 				const result = await createService(payload);
 				toast.success('Service créé !');
 				return result;
 			},
 
-			update: async (id: number, payload: UpdateServiceSchema) => {
+			update: async (id: string, payload: Partial<ServiceInput>) => {
 				const result = await updateService(id, payload);
 				toast.success('Service mis à jour !');
 				return result;
 			},
 
-			delete: async (id: number) => {
+			delete: async (id: string) => {
 				if (
 					!window.confirm(`
             Êtes-vous sûr de vouloir supprimer ce service ?\n

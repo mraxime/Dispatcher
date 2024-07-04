@@ -1,38 +1,39 @@
-import { Container } from '@mui/material';
-
+import { Box, Container } from '@mui/material';
 import { Icons } from 'src/components/base/Icons';
 import PageHeader, { type BreadcrumbItem } from 'src/components/base/PageHeader';
-import { ROUTES } from 'src/lib/constants/routes';
-import { getCompanies, getCompany } from 'src/server/actions/company.action';
-import CompanyPageView from './view';
+import CompanyForm from 'src/components/company/CompanyForm';
+import { ROUTES } from 'src/constants/routes';
+import { getCompanies, getCompany } from 'src/server/services';
+import { pageGuard } from '../../guard';
 
-const breadcrumbs: BreadcrumbItem[] = [
-	{
-		name: 'Dashboard',
-		href: ROUTES.DashboardPage(),
-	},
-	{
-		name: 'Entreprises',
-		href: ROUTES.CompaniesPage(),
-	},
-	{ name: 'Modifier' },
-];
+const CompanyPage = async ({ params }: { params: { id: string } }) => {
+	const session = await pageGuard('companies:read');
+	const [company, companies] = await Promise.all([getCompany(params.id), getCompanies()]);
 
-const CompanyPage = async ({ params }: { params: { id: number } }) => {
-	const [company, companies] = await Promise.all([
-		getCompany(params.id, { fields: ['*', { admin: ['*'] }] }),
-		getCompanies(),
-	]);
+	const breadcrumbs: BreadcrumbItem[] = [
+		{
+			name: session.selectedCompany.name,
+			href: ROUTES.DashboardPage(),
+		},
+		{
+			name: 'Entreprises',
+			href: ROUTES.CompaniesPage(),
+		},
+		{ name: 'Modifier' },
+	];
 
 	return (
-		<Container maxWidth="xl">
+		<Container maxWidth="md">
 			<PageHeader
 				title={company.name}
 				icon={<Icons.company />}
 				iconHref={ROUTES.CompaniesPage()}
 				breadcrumbItems={breadcrumbs}
 			/>
-			<CompanyPageView sx={{ mt: 4 }} company={company} companies={companies} />
+
+			<Box mt={4}>
+				<CompanyForm id={company.id} companies={companies} defaultValues={company} />
+			</Box>
 		</Container>
 	);
 };

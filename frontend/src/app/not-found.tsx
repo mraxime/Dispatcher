@@ -2,8 +2,7 @@ import type { NextPage } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Box, Button, Container, Typography } from '@mui/material';
-
-import { ROUTES } from 'src/lib/constants/routes';
+import { ROUTES } from 'src/constants/routes';
 
 const NotFoundPage: NextPage = () => {
 	const mobileDevice = true;
@@ -24,7 +23,7 @@ const NotFoundPage: NextPage = () => {
 				404: Non trouvable
 			</Typography>
 			<Typography align="center" variant="subtitle2">
-				La page que vous voulez accéder est invalide!
+				Cette page que vous souhaitez accéder n'existe pas.
 			</Typography>
 			<Box mt={6} display="flex" justifyContent="center">
 				<Image

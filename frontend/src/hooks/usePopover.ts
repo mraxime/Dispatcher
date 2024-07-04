@@ -1,6 +1,5 @@
 import type { MutableRefObject } from 'react';
 import { useRef } from 'react';
-
 import useDisclosure from './useDisclosure';
 
 type Props<T> = {

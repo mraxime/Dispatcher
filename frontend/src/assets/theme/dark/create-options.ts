@@ -1,5 +1,4 @@
 import type { ThemeOptions } from '@mui/material/styles/createTheme';
-
 import type { ColorPreset, Contrast } from '..';
 import { createComponents } from './create-components';
 import { createPalette } from './create-palette';

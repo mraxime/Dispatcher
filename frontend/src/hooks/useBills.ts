@@ -1,14 +1,10 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
-
-import {
-	billParamsSchema,
-	type CreateBillSchema,
-	type UpdateBillSchema,
-} from 'src/lib/schemas/bill.schema';
-import type { BillParams } from 'src/lib/types/directus';
-import { createBill, deleteBill, updateBill } from 'src/server/actions/bill.action';
+import { createBill, deleteBill, updateBill } from 'src/server/actions/bill';
+import type { BillInput, BillParams } from 'src/types';
+import { billParamsSchema } from 'src/validations/bill';
+import { removeDefaultParams } from 'src/validations/utils';
 import { useCustomSearchParams } from './useCustomSearchParams';
 
 /**
@@ -21,27 +17,26 @@ export const useBillActions = () => {
 	const billActions = useMemo(
 		() => ({
 			setParams: (params: BillParams) => {
-				const newValue = billParamsSchema.createSearchParams(params);
-				searchParams.reset(newValue);
+				searchParams.reset(removeDefaultParams(params, billParamsSchema));
 			},
 
 			revalidate: () => {
 				router.refresh();
 			},
 
-			create: async (payload: CreateBillSchema) => {
+			create: async (payload: BillInput) => {
 				const result = await createBill(payload);
 				toast.success('Facture créée !');
 				return result;
 			},
 
-			update: async (id: number, payload: UpdateBillSchema) => {
+			update: async (id: string, payload: Partial<BillInput>) => {
 				const result = await updateBill(id, payload);
 				toast.success('Facture mise à jour !');
 				return result;
 			},
 
-			delete: async (id: number) => {
+			delete: async (id: string) => {
 				if (
 					!window.confirm(`
             Êtes-vous sûr de vouloir supprimer cette facture ?\n

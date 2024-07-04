@@ -14,7 +14,6 @@ import {
 	type BoxProps,
 } from '@mui/material';
 import { alpha, type Theme } from '@mui/material/styles';
-
 import BreadcrumbsSeparator from 'src/components/base/BreadcrumbsSeparator';
 import { Icons } from 'src/components/base/Icons';
 import type { BreadcrumbItem } from './types';
@@ -44,7 +43,7 @@ const PageHeader: FC<Props> = ({
 
 	return (
 		<Box {...restProps}>
-			<Stack direction="row" alignItems="center" spacing={2}>
+			<Stack direction="row" alignItems="start" spacing={2}>
 				{!disableIcon && isDesktop && iconHref && (
 					<IconButton
 						size="large"
@@ -81,7 +80,7 @@ const PageHeader: FC<Props> = ({
 						<SvgIcon>{icon}</SvgIcon>
 					</IconButton>
 				)}
-				<Stack flexGrow={1} position="relative" spacing={0.5}>
+				<Stack flexGrow={1} position="relative" spacing={0.25}>
 					{caption && (
 						<Typography position="absolute" top={-12} color="textSecondary" variant="caption">
 							{caption}

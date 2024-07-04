@@ -1,35 +1,27 @@
 import Link from 'next/link';
-import { Button, Container, SvgIcon } from '@mui/material';
-
+import { Box, Button, Container, SvgIcon } from '@mui/material';
 import { Icons } from 'src/components/base/Icons';
 import PageHeader, { type BreadcrumbItem } from 'src/components/base/PageHeader';
-import { ROUTES } from 'src/lib/constants/routes';
-import { priceParamsSchema } from 'src/lib/schemas/price.schema';
-import type { PriceParams } from 'src/lib/types/directus';
-import { deepMerge } from 'src/lib/utils';
-import { getPrices } from 'src/server/actions/price.action';
-import PricesPageView from './view';
-
-const breadcrumbs: BreadcrumbItem[] = [
-	{
-		name: 'Dashboard',
-		href: ROUTES.DashboardPage(),
-	},
-	{
-		name: 'Prix',
-	},
-];
+import PricesTable from 'src/components/price/PricesTable';
+import { ROUTES } from 'src/constants/routes';
+import { getPrices } from 'src/server/services';
+import { priceParamsSchema } from 'src/validations/price';
+import { pageGuard } from '../guard';
 
 const PricesPage = async ({ searchParams }: { searchParams: Record<string, string> }) => {
-	const params = deepMerge<PriceParams>(priceParamsSchema.parseSearchParams(searchParams), {
-		page: 1,
-		limit: 10,
-		fields: ['*'],
-		filter: { status: { _eq: 'ACTIVE' } },
-		sort: '-date_created',
-	});
-
+	const session = await pageGuard('prices:read');
+	const params = priceParamsSchema.parse(searchParams);
 	const prices = await getPrices(params);
+
+	const breadcrumbs: BreadcrumbItem[] = [
+		{
+			name: session.selectedCompany.name,
+			href: ROUTES.DashboardPage(),
+		},
+		{
+			name: 'Prix',
+		},
+	];
 
 	return (
 		<Container maxWidth="xl">
@@ -52,7 +44,10 @@ const PricesPage = async ({ searchParams }: { searchParams: Record<string, strin
 					</Button>
 				}
 			/>
-			<PricesPageView sx={{ mt: 4 }} prices={prices} params={params} />
+
+			<Box mt={4}>
+				<PricesTable data={prices} params={params} />
+			</Box>
 		</Container>
 	);
 };

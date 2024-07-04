@@ -1,14 +1,10 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
-
-import {
-	calendarParamsSchema,
-	type CreateCalendarSchema,
-	type UpdateCalendarSchema,
-} from 'src/lib/schemas/calendar.schema';
-import type { CalendarParams } from 'src/lib/types/directus';
-import { createCalendar, deleteCalendar, updateCalendar } from 'src/server/actions/calendar.action';
+import { createCalendar, deleteCalendar, updateCalendar } from 'src/server/actions/calendar';
+import type { CalendarInput, CalendarParams } from 'src/types';
+import { calendarParamsSchema } from 'src/validations/calendar';
+import { removeDefaultParams } from 'src/validations/utils';
 import { useCustomSearchParams } from './useCustomSearchParams';
 
 /**
@@ -21,21 +17,20 @@ export const useCalendarActions = () => {
 	const calendarActions = useMemo(
 		() => ({
 			setParams: (params: CalendarParams) => {
-				const newValue = calendarParamsSchema.createSearchParams(params);
-				searchParams.reset(newValue);
+				searchParams.reset(removeDefaultParams(params, calendarParamsSchema));
 			},
 
 			revalidate: () => {
 				router.refresh();
 			},
 
-			create: async (payload: CreateCalendarSchema) => {
+			create: async (payload: CalendarInput) => {
 				const result = await createCalendar(payload);
 				toast.success('Calendrier créé !');
 				return result;
 			},
 
-			update: async (id: string, payload: UpdateCalendarSchema) => {
+			update: async (id: string, payload: Partial<CalendarInput>) => {
 				const result = await updateCalendar(id, payload);
 				toast.success('Calendrier mis à jour !');
 				return result;

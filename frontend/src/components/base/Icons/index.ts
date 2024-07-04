@@ -18,6 +18,7 @@ import {
 	X as Close,
 	DollarSign,
 	Edit,
+	Eye,
 	Mail,
 	Menu,
 	MoreHorizontal,
@@ -63,7 +64,8 @@ export const Icons = {
 	send: Send,
 	service: BuildCircleOutlined,
 	settings: Settings,
-	trailer: Truck,
+	towing: Truck,
 	user: User,
 	vehicle: DirectionsCarFilledOutlined,
+	view: Eye,
 };

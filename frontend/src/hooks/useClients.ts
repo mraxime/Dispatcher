@@ -1,14 +1,10 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
-
-import {
-	clientParamsSchema,
-	type CreateClientSchema,
-	type UpdateClientSchema,
-} from 'src/lib/schemas/client.schema';
-import type { ClientParams } from 'src/lib/types/directus';
-import { createClient, deleteClient, updateClient } from 'src/server/actions/client.action';
+import { createClient, deleteClient, updateClient } from 'src/server/actions/client';
+import type { ClientInput, ClientParams } from 'src/types';
+import { clientParamsSchema } from 'src/validations/client';
+import { removeDefaultParams } from 'src/validations/utils';
 import { useCustomSearchParams } from './useCustomSearchParams';
 
 /**
@@ -21,27 +17,26 @@ export const useClientActions = () => {
 	const clientActions = useMemo(
 		() => ({
 			setParams: (params: ClientParams) => {
-				const newValue = clientParamsSchema.createSearchParams(params);
-				searchParams.reset(newValue);
+				searchParams.reset(removeDefaultParams(params, clientParamsSchema));
 			},
 
 			revalidate: () => {
 				router.refresh();
 			},
 
-			create: async (payload: CreateClientSchema) => {
+			create: async (payload: ClientInput) => {
 				const result = await createClient(payload);
 				toast.success('Client créé !');
 				return result;
 			},
 
-			update: async (id: number, payload: UpdateClientSchema) => {
+			update: async (id: string, payload: Partial<ClientInput>) => {
 				const result = await updateClient(id, payload);
 				toast.success('Client mis à jour !');
 				return result;
 			},
 
-			delete: async (id: number) => {
+			delete: async (id: string) => {
 				if (
 					!window.confirm(`
             Êtes-vous sûr de vouloir supprimer ce client ?\n

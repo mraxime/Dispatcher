@@ -1,6 +1,5 @@
 import type { FC } from 'react';
 import Image from 'next/image';
-
 import logo from 'src/public/static/logo.png';
 
 const Logo: FC = () => (

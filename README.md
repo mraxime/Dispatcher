@@ -1,29 +1,24 @@
-# Repartition Quebec
+# Dispatch Web App (RQ)
 
-This is a mono repo containing app/services for `https://rq.ms`.
+Mono repo containing app/services of RQ - A multitenant towing dispatcher.
 
-## What's inside?
+![Demo](./demo.png)
 
-This turborepo uses [pnpm](https://pnpm.io) as a packages manager. It includes the following packages/apps:
+## Apps & Services
 
-### Apps and Packages
+- `frontend`: Web interface built with [Next.js](https://nextjs.org)
+- `socket`: [Socket.io](https://socket.io) server for realtime stuff
 
-- `frontend`: [Next.js](https://nextjs.org) app
-- `backend`: Simple HTTP server for `socket.io` and other stuff
-- `cms`: `Directus` cms for managing the database
+## Setup
 
-### Build
+- `pnpm install --recursive` to install dependencies
+- Follow the setup instructions in each app's README.md file, if available
 
-To build all apps and packages, run the following command:
+## Development
 
-```
-pnpm run build
-```
+- `pnpm run dev` to start the development server of all apps and services
 
-### Develop
+## Production Build
 
-To develop all apps and packages, run the following command:
-
-```
-pnpm run dev
-```
+- `pnpm run build` to create a production build of all apps and services
+- `pnpm run start` to start the production build of all apps and services

@@ -1,33 +1,25 @@
 import Link from 'next/link';
-import { Button, Container, SvgIcon } from '@mui/material';
-
+import { Box, Button, Container, SvgIcon } from '@mui/material';
 import { Icons } from 'src/components/base/Icons';
 import PageHeader, { type BreadcrumbItem } from 'src/components/base/PageHeader';
-import { ROUTES } from 'src/lib/constants/routes';
-import { clientParamsSchema } from 'src/lib/schemas/client.schema';
-import type { ClientParams } from 'src/lib/types/directus';
-import { deepMerge } from 'src/lib/utils';
-import { getClients } from 'src/server/actions/client.action';
-import ClientsPageView from './view';
-
-const breadcrumbs: BreadcrumbItem[] = [
-	{
-		name: 'Dashboard',
-		href: ROUTES.DashboardPage(),
-	},
-	{ name: 'Clients' },
-];
+import ClientsTable from 'src/components/client/ClientsTable';
+import { ROUTES } from 'src/constants/routes';
+import { getClients } from 'src/server/services';
+import { clientParamsSchema } from 'src/validations/client';
+import { pageGuard } from '../guard';
 
 const ClientsPage = async ({ searchParams }: { searchParams: Record<string, string> }) => {
-	const params = deepMerge<ClientParams>(clientParamsSchema.parseSearchParams(searchParams), {
-		page: 1,
-		limit: 10,
-		fields: ['*'],
-		filter: { status: { _eq: 'ACTIVE' } },
-		sort: '-date_created',
-	});
-
+	const session = await pageGuard('clients:read');
+	const params = clientParamsSchema.parse(searchParams);
 	const clients = await getClients(params);
+
+	const breadcrumbs: BreadcrumbItem[] = [
+		{
+			name: session.selectedCompany.name,
+			href: ROUTES.DashboardPage(),
+		},
+		{ name: 'Clients' },
+	];
 
 	return (
 		<Container maxWidth="xl">
@@ -50,7 +42,10 @@ const ClientsPage = async ({ searchParams }: { searchParams: Record<string, stri
 					</Button>
 				}
 			/>
-			<ClientsPageView sx={{ mt: 4 }} clients={clients} params={params} />
+
+			<Box mt={4}>
+				<ClientsTable data={clients} params={params} />
+			</Box>
 		</Container>
 	);
 };

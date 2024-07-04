@@ -1,14 +1,10 @@
 import { useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
-
-import {
-	callParamsSchema,
-	type CreateCallSchema,
-	type UpdateCallSchema,
-} from 'src/lib/schemas/call.schema';
-import type { CallParams } from 'src/lib/types/directus';
-import { createCall, deleteCall, updateCall } from 'src/server/actions/call.action';
+import { createCall, deleteCall, updateCall } from 'src/server/actions/call';
+import type { CallInput, CallParams } from 'src/types';
+import { callParamsSchema } from 'src/validations/call';
+import { removeDefaultParams } from 'src/validations/utils';
 import { useCustomSearchParams } from './useCustomSearchParams';
 
 /**
@@ -21,27 +17,26 @@ export const useCallActions = () => {
 	const callActions = useMemo(
 		() => ({
 			setParams: (params: CallParams) => {
-				const newValue = callParamsSchema.createSearchParams(params);
-				searchParams.reset(newValue);
+				searchParams.reset(removeDefaultParams(params, callParamsSchema));
 			},
 
 			revalidate: () => {
 				router.refresh();
 			},
 
-			create: async (payload: CreateCallSchema) => {
+			create: async (payload: CallInput) => {
 				const result = await createCall(payload);
 				toast.success("Formulaire d'appel créé !");
 				return result;
 			},
 
-			update: async (id: number, payload: UpdateCallSchema) => {
+			update: async (id: string, payload: Partial<CallInput>) => {
 				const result = await updateCall(id, payload);
 				toast.success("Formulaire d'appel mis à jour !");
 				return result;
 			},
 
-			delete: async (id: number) => {
+			delete: async (id: string) => {
 				if (
 					!window.confirm(`
             Êtes-vous sûr de vouloir supprimer ce formulaire d'appel ?\n

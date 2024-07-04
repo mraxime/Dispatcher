@@ -1,6 +1,5 @@
 import { alpha } from '@mui/material/styles';
 import type { PaletteOptions } from '@mui/material/styles/createPalette';
-
 import type { ColorPreset, Contrast } from '..';
 import { error, info, neutral, success, warning } from '../colors';
 import { getPrimary } from '../utils';

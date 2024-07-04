@@ -1,38 +1,44 @@
-import { Container } from '@mui/material';
-
+import { Box, Container } from '@mui/material';
 import { Icons } from 'src/components/base/Icons';
 import PageHeader, { type BreadcrumbItem } from 'src/components/base/PageHeader';
-import { ROUTES } from 'src/lib/constants/routes';
-import { getCompanies } from 'src/server/actions/company.action';
-import NewTrailerPageView from './view';
+import TowingForm from 'src/components/towing/TowingForm';
+import { ROUTES } from 'src/constants/routes';
+import { getCompanies } from 'src/server/services';
+import { pageGuard } from '../../guard';
 
-const breadcrumbs: BreadcrumbItem[] = [
-	{
-		name: 'Dashboard',
-		href: ROUTES.DashboardPage(),
-	},
-	{
-		name: 'Remorques',
-		href: ROUTES.TrailersPage(),
-	},
-	{ name: 'Ajouter' },
-];
-
-const NewTrailerPage = async () => {
+const NewTowingPage = async () => {
+	const session = await pageGuard('towings:read', 'towings:create');
 	const companies = await getCompanies();
+
+	const breadcrumbs: BreadcrumbItem[] = [
+		{
+			name: session.selectedCompany.name,
+			href: ROUTES.DashboardPage(),
+		},
+		{
+			name: 'Remorques',
+			href: ROUTES.TowingsPage(),
+		},
+		{ name: 'Ajouter' },
+	];
 
 	return (
 		<Container maxWidth="xl">
 			<PageHeader
 				title="Créer une remorque"
-				icon={<Icons.trailer />}
-				iconHref={ROUTES.TrailersPage()}
+				icon={<Icons.towing />}
+				iconHref={ROUTES.TowingsPage()}
 				breadcrumbItems={breadcrumbs}
 			/>
 
-			<NewTrailerPageView sx={{ mt: 4 }} companies={companies} />
+			<Box mt={4}>
+				<TowingForm
+					companies={companies}
+					defaultValues={{ companyId: session.user.selectedCompanyId }}
+				/>
+			</Box>
 		</Container>
 	);
 };
 
-export default NewTrailerPage;
+export default NewTowingPage;

@@ -1,6 +1,6 @@
 import { createTheme as createMuiTheme, responsiveFontSizes } from '@mui/material/styles';
 import type { Theme } from '@mui/material/styles/createTheme';
-
+import type { ThemeMode } from 'src/constants/settings';
 import { createOptions as createBaseOptions } from './base/create-options';
 import { createOptions as createDarkOptions } from './dark/create-options';
 import { createOptions as createLightOptions } from './light/create-options';
@@ -49,13 +49,11 @@ export type Contrast = 'normal' | 'high';
 
 export type Direction = 'ltr' | 'rtl';
 
-export type PaletteMode = 'light' | 'dark';
-
 export type ThemeConfig = {
 	colorPreset?: ColorPreset;
 	contrast?: Contrast;
 	direction?: Direction;
-	paletteMode?: PaletteMode;
+	paletteMode?: ThemeMode;
 	responsiveFontSizes?: boolean;
 };
 

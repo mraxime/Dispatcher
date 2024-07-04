@@ -1,26 +1,27 @@
-import { Container } from '@mui/material';
-
+import { Box, Container } from '@mui/material';
 import { Icons } from 'src/components/base/Icons';
 import PageHeader, { type BreadcrumbItem } from 'src/components/base/PageHeader';
-import { ROUTES } from 'src/lib/constants/routes';
-import { getPrices } from 'src/server/actions/price.action';
-import { getService } from 'src/server/actions/service.action';
-import ServicePageView from './view';
-
-const breadcrumbs: BreadcrumbItem[] = [
-	{
-		name: 'Dashboard',
-		href: ROUTES.DashboardPage(),
-	},
-	{
-		name: 'Services',
-		href: ROUTES.ServicesPage(),
-	},
-	{ name: 'Modifier' },
-];
+import ServiceForm from 'src/components/service/ServiceForm';
+import { ROUTES } from 'src/constants/routes';
+import { getPrices, getService } from 'src/server/services';
+import { pageGuard } from '../../guard';
 
 const ServicePage = async ({ params }: { params: { id: string } }) => {
-	const [service, prices] = await Promise.all([getService(Number(params.id)), getPrices()]);
+	const session = await pageGuard('services:read');
+	const service = await getService(params.id);
+	const prices = session.permissionKeys.includes('prices:read') ? await getPrices() : [];
+
+	const breadcrumbs: BreadcrumbItem[] = [
+		{
+			name: session.selectedCompany.name,
+			href: ROUTES.DashboardPage(),
+		},
+		{
+			name: 'Services',
+			href: ROUTES.ServicesPage(),
+		},
+		{ name: 'Modifier' },
+	];
 
 	return (
 		<Container maxWidth="md">
@@ -30,7 +31,9 @@ const ServicePage = async ({ params }: { params: { id: string } }) => {
 				iconHref={ROUTES.ServicesPage()}
 				breadcrumbItems={breadcrumbs}
 			/>
-			<ServicePageView sx={{ mt: 4 }} service={service} prices={prices} />
+			<Box mt={4}>
+				<ServiceForm id={service.id} defaultValues={service} prices={prices} />
+			</Box>
 		</Container>
 	);
 };
