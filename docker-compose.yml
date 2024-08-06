@@ -1,0 +1,75 @@
+version: "3"
+services:
+  # DIRECTUS DB
+  database:
+    container_name: repartition-quebec_database
+    image: postgis/postgis:14-master
+    restart: unless-stopped
+    # ports:
+    #   - "8055:8055"
+    networks:
+      - default
+    volumes:
+      - database:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: "progtech"
+      POSTGRES_PASSWORD: "Pr0gt3ch!"
+      POSTGRES_DB: "directus"
+
+  # DIRECTUS CACHE
+  cache:
+    container_name: repartition-quebec_cache
+    image: redis:7
+    restart: unless-stopped
+    networks:
+      - default
+
+  # DIRECTUS APP
+  directus:
+    container_name: repartition-quebec_directus
+    image: directus/directus:10.8.1
+    restart: unless-stopped
+    networks:
+      - default
+      - reverse-proxy
+    volumes:
+      # By default, uploads are stored in /directus/uploads
+      # Always make sure your volumes matches the storage root when using
+      # local driver
+      - ./cms/uploads:/directus/uploads
+      # If you want to load extensions from the host
+      # - ./extensions:/directus/extensions
+    depends_on:
+      - cache
+      - database
+    env_file: ./cms/.env
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.repartition-quebec_directus.rule=Host(`directus.mspti.dev`)"
+      - "traefik.http.services.repartition-quebec_directus.loadbalancer.server.port=8055"
+
+  # FRONTEND APP
+  frontend:
+    container_name: repartition-quebec_frontend
+    build: ./frontend
+    restart: unless-stopped
+    networks:
+      - default
+      - reverse-proxy
+    depends_on:
+      - directus
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.repartition-quebec_frontend.rule=Host(`rq.ms`)"
+      - "traefik.http.services.repartition-quebec_frontend.loadbalancer.server.port=3000"
+
+volumes:
+  database:
+    name: repartition-quebec_database
+
+networks:
+  default:
+    name: repartition-quebec
+  reverse-proxy:
+    name: reverse-proxy
+    external: true

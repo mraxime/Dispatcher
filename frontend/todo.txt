@@ -1,0 +1,57 @@
+SEMAINE 1:
+
+  - [x] Refactor to Drizzle + Server Actions
+  - [x] Verify Companies multitenancy
+  - [ ] Allow sub-companies in Frontend
+  - [ ] Improve delete confirm dialog
+  - [ ] Show a confirm dialog before leaving a dirty form
+  - [ ] Fix side-nav bug when isOpen and isDesktop becomes false
+  - [ ] Mobile navigation auto close side-nav
+  - [ ] Phone inputs
+  - [ ] Address autocomplete inputs  ( si jamais ca peut t'aider : https://motis-project.de/docs/api/endpoint/address.html)
+  - [ ] Trailer field "apartient a..." should be companies (sub-companies)
+  - [ ] Clients should have first_name and last_name like users.
+  - [ ] Refactor prices conditions to be handled in services. UI Idea of services: prices get dragged into conditions.
+
+
+SEMAINE 2:
+
+  Call Forms:
+    - [ ] Remove mandatory destination
+    - [ ] Add "Lieu de la panne" field
+    - [ ] "Lieu de départ" field should be a dropdown of companies
+    - [ ] Vehicle to tow: Add a note field
+    - [ ] New form select driver = set directly assigned (not pending)
+    - [ ] Navigation on the side instead of table tabs for filtering call types
+    - [ ] Above client add "bill to" field, the client can be random and not stored
+
+  Clients:
+    - [ ] Add service preferences in the client that will serve to place the preferred services in priority in the service list of the call form
+    - [ ] Add more fields like Business Owner, company, accounting information - (example group: Contact)
+
+  Users:
+    - [ ] Add "Courte description" field
+    - [ ] Driver: Add capabilities (ex: T4, T8, etc...) that can be managed in its own section
+
+  Trailers:
+    - [ ] Add "Short description" field
+    - [ ] Separate truck caracteristics from capacity (towing itself vs what the towing can transport)
+
+  Invoices:
+     - [ ] Should not store references (ex: service update should not affect the invoice and its price)
+
+
+SEMAINE 3:
+
+  Others:
+    - [ ] Calendar should have quick actions for aditional infos
+    - [ ] Remove material-table-core.
+    - [ ] Letters sent on input with type="number" seems weird on zod validation. Also recheck custom zodErrorMap with issue.expected === 'number'
+    - [ ] Service prices is a junction. Make sure it is used correctly and fix type.
+    - [ ] User contacts: O2O relation. (when a user is deleted, its contacts need to be deleted)
+    - [x] Secure non super-admins companies access
+    - [ ] (code style) sort textfield props like the ones in the file 'CompanyFormAdmin'
+    - [ ] (code style) cleanup 'DriverSelectorModal' form logic
+    - [ ] react-hook-form dirtyfields bug:
+            When the zod property schema returns 'undefined', it's messed up.
+    - [ ] Autres...

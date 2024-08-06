@@ -1,0 +1,7858 @@
+version: 1
+directus: 9.22.4
+collections:
+  - collection: bills
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: bills
+      color: null
+      display_template: null
+      group: null
+      hidden: false
+      icon: article
+      item_duplication_fields: null
+      note: null
+      singleton: false
+      sort: 7
+      sort_field: sort
+      translations:
+        - language: fr-CA
+          translation: Factures
+          singular: facture
+          plural: factures
+      unarchive_value: null
+    schema:
+      comment: null
+      name: bills
+      schema: public
+  - collection: calendar
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: calendar
+      color: null
+      display_template: null
+      group: null
+      hidden: false
+      icon: calendar_month
+      item_duplication_fields: []
+      note: null
+      singleton: false
+      sort: 2
+      sort_field: sort
+      translations:
+        - language: fr-CA
+          translation: Calendriers
+          singular: calendrier
+          plural: calendriers
+      unarchive_value: null
+    schema:
+      comment: null
+      name: calendar
+      schema: public
+  - collection: calls
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: locked
+      collection: calls
+      color: null
+      display_template: null
+      group: null
+      hidden: false
+      icon: phone
+      item_duplication_fields: null
+      note: null
+      singleton: false
+      sort: 8
+      sort_field: sort
+      translations:
+        - language: fr-CA
+          translation: Formulaires d'appel
+          singular: appel
+          plural: appels
+      unarchive_value: null
+    schema:
+      comment: null
+      name: calls
+      schema: public
+  - collection: clients
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: clients
+      color: null
+      display_template: null
+      group: null
+      hidden: false
+      icon: person_pin
+      item_duplication_fields: null
+      note: null
+      singleton: false
+      sort: 6
+      sort_field: sort
+      translations:
+        - language: fr-CA
+          translation: Clients
+          singular: client
+          plural: clients
+      unarchive_value: null
+    schema:
+      comment: null
+      name: clients
+      schema: public
+  - collection: companies
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: companies
+      color: null
+      display_template: null
+      group: null
+      hidden: false
+      icon: work_outline
+      item_duplication_fields: null
+      note: null
+      singleton: false
+      sort: 1
+      sort_field: sort
+      translations:
+        - language: fr-CA
+          translation: Entreprises
+          singular: entreprise
+          plural: entreprises
+      unarchive_value: null
+    schema:
+      comment: null
+      name: companies
+      schema: public
+  - collection: custom_permissions
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: custom_permissions
+      color: null
+      display_template: null
+      group: null
+      hidden: true
+      icon: null
+      item_duplication_fields: null
+      note: null
+      singleton: false
+      sort: null
+      sort_field: null
+      translations: null
+      unarchive_value: null
+    schema:
+      comment: null
+      name: custom_permissions
+      schema: public
+  - collection: driver_licenses
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: driver_licenses
+      color: null
+      display_template: null
+      group: null
+      hidden: false
+      icon: person_pin
+      item_duplication_fields: null
+      note: null
+      singleton: false
+      sort: 11
+      sort_field: null
+      translations:
+        - language: fr-CA
+          translation: Permis de conduire
+          singular: permis de conduire
+          plural: permis de conduire
+      unarchive_value: null
+    schema:
+      comment: null
+      name: driver_licenses
+      schema: public
+  - collection: junction_directus_users_custom_permissions
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: junction_directus_users_custom_permissions
+      color: null
+      display_template: null
+      group: null
+      hidden: true
+      icon: import_export
+      item_duplication_fields: null
+      note: null
+      singleton: false
+      sort: null
+      sort_field: null
+      translations: null
+      unarchive_value: null
+    schema:
+      comment: null
+      name: junction_directus_users_custom_permissions
+      schema: public
+  - collection: messages
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: messages
+      color: null
+      display_template: null
+      group: null
+      hidden: false
+      icon: message
+      item_duplication_fields: null
+      note: null
+      singleton: false
+      sort: 9
+      sort_field: sort
+      translations:
+        - language: fr-CA
+          translation: Messages
+          singular: message
+          plural: messages
+      unarchive_value: null
+    schema:
+      comment: null
+      name: messages
+      schema: public
+  - collection: prices
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: status
+      archive_value: archived
+      collapse: open
+      collection: prices
+      color: null
+      display_template: null
+      group: null
+      hidden: false
+      icon: attach_money
+      item_duplication_fields: null
+      note: null
+      singleton: false
+      sort: 5
+      sort_field: null
+      translations:
+        - language: fr-CA
+          translation: Liste des prix
+          singular: prix
+          plural: prix
+      unarchive_value: draft
+    schema:
+      comment: null
+      name: prices
+      schema: public
+  - collection: services
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: status
+      archive_value: archived
+      collapse: open
+      collection: services
+      color: null
+      display_template: null
+      group: null
+      hidden: false
+      icon: menu_book
+      item_duplication_fields: null
+      note: null
+      singleton: false
+      sort: 4
+      sort_field: sort
+      translations:
+        - language: fr-CA
+          translation: Codes de service
+          singular: service
+          plural: services
+      unarchive_value: draft
+    schema:
+      comment: null
+      name: services
+      schema: public
+  - collection: services_prices
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: services_prices
+      color: null
+      display_template: null
+      group: null
+      hidden: true
+      icon: import_export
+      item_duplication_fields: null
+      note: null
+      singleton: false
+      sort: null
+      sort_field: null
+      translations: null
+      unarchive_value: null
+    schema:
+      comment: null
+      name: services_prices
+      schema: public
+  - collection: towed_vehicles
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: towed_vehicles
+      color: null
+      display_template: null
+      group: null
+      hidden: false
+      icon: car_repair
+      item_duplication_fields: null
+      note: null
+      singleton: false
+      sort: 10
+      sort_field: null
+      translations:
+        - language: fr-CA
+          translation: Vehicules Remorqués
+          singular: vehicule remorqué
+          plural: vehicules remorqués
+      unarchive_value: null
+    schema:
+      comment: null
+      name: towed_vehicles
+      schema: public
+  - collection: trailers
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: trailers
+      color: null
+      display_template: null
+      group: null
+      hidden: false
+      icon: directions_car
+      item_duplication_fields: null
+      note: null
+      singleton: false
+      sort: 3
+      sort_field: sort
+      translations:
+        - language: fr-CA
+          translation: Remorques
+          singular: remorque
+          plural: remorque
+      unarchive_value: null
+    schema:
+      comment: null
+      name: trailers
+      schema: public
+  - collection: users_emergency_contacts
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: users_emergency_contacts
+      color: null
+      display_template: null
+      group: null
+      hidden: true
+      icon: null
+      item_duplication_fields: null
+      note: null
+      singleton: false
+      sort: 12
+      sort_field: null
+      translations: null
+      unarchive_value: null
+    schema:
+      comment: null
+      name: users_emergency_contacts
+      schema: public
+fields:
+  - collection: bills
+    field: call
+    meta:
+      collection: bills
+      conditions: null
+      display: null
+      display_options: null
+      field: call
+      group: null
+      hidden: false
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: "#{{id}}\_({{name}})"
+      readonly: false
+      required: false
+      sort: 6
+      special:
+        - m2o
+      translations:
+        - language: fr-CA
+          translation: Formulaire d'appel
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: integer
+      default_value: null
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: calls
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: call
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: bills
+    type: integer
+  - collection: bills
+    field: client
+    meta:
+      collection: bills
+      conditions: null
+      display: null
+      display_options: null
+      field: client
+      group: null
+      hidden: false
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: "{{name}}\_({{email}})"
+      readonly: false
+      required: true
+      sort: 12
+      special:
+        - m2o
+      translations:
+        - language: fr-CA
+          translation: Client
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: integer
+      default_value: null
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: clients
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: client
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: bills
+    type: integer
+  - collection: bills
+    field: company
+    meta:
+      collection: bills
+      conditions: null
+      display: null
+      display_options: null
+      field: company
+      group: null
+      hidden: false
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: '{{name}}'
+      readonly: false
+      required: true
+      sort: 5
+      special:
+        - m2o
+      translations:
+        - language: fr-CA
+          translation: Entreprise associée
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: integer
+      default_value: null
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: companies
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: company
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: bills
+    type: integer
+  - collection: bills
+    field: date_created
+    meta:
+      collection: bills
+      conditions: null
+      display: datetime
+      display_options:
+        relative: true
+      field: date_created
+      group: null
+      hidden: true
+      interface: datetime
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 3
+      special:
+        - date-created
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: timestamp with time zone
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: date_created
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: bills
+    type: timestamp
+  - collection: bills
+    field: date_updated
+    meta:
+      collection: bills
+      conditions: null
+      display: datetime
+      display_options:
+        relative: true
+      field: date_updated
+      group: null
+      hidden: true
+      interface: datetime
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 4
+      special:
+        - date-updated
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: timestamp with time zone
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: date_updated
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: bills
+    type: timestamp
+  - collection: bills
+    field: id
+    meta:
+      collection: bills
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: integer
+      default_value: nextval('bills_id_seq'::regclass)
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: true
+      is_generated: false
+      is_nullable: false
+      is_primary_key: true
+      is_unique: true
+      max_length: null
+      name: id
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: bills
+    type: integer
+  - collection: bills
+    field: note
+    meta:
+      collection: bills
+      conditions: null
+      display: null
+      display_options: null
+      field: note
+      group: null
+      hidden: false
+      interface: input-multiline
+      note: null
+      options:
+        trim: true
+      readonly: false
+      required: false
+      sort: 10
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Note
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: text
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: note
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: bills
+    type: text
+  - collection: bills
+    field: price
+    meta:
+      collection: bills
+      conditions: null
+      display: null
+      display_options: null
+      field: price
+      group: null
+      hidden: false
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: "#{{id}}\_({{value}})"
+      readonly: false
+      required: true
+      sort: 11
+      special:
+        - m2o
+      translations:
+        - language: fr-CA
+          translation: price
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: integer
+      default_value: null
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: prices
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: price
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: bills
+    type: integer
+  - collection: bills
+    field: sort
+    meta:
+      collection: bills
+      conditions: null
+      display: null
+      display_options: null
+      field: sort
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 2
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: integer
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: sort
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: bills
+    type: integer
+  - collection: bills
+    field: status
+    meta:
+      collection: bills
+      conditions: null
+      display: null
+      display_options: null
+      field: status
+      group: null
+      hidden: false
+      interface: select-dropdown
+      note: null
+      options:
+        choices:
+          - text: Non payé
+            value: UNPAID
+          - text: Payé
+            value: PAID
+      readonly: false
+      required: true
+      sort: 7
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Status
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: character varying
+      default_value: UNPAID
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: 255
+      name: status
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: bills
+    type: string
+  - collection: bills
+    field: totalDistance
+    meta:
+      collection: bills
+      conditions: null
+      display: null
+      display_options: null
+      field: totalDistance
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options:
+        min: 0
+      readonly: false
+      required: false
+      sort: 9
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Distance
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: real
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: totalDistance
+      numeric_precision: 24
+      numeric_scale: null
+      schema: public
+      table: bills
+    type: float
+  - collection: bills
+    field: totalHours
+    meta:
+      collection: bills
+      conditions: null
+      display: null
+      display_options: null
+      field: totalHours
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options:
+        min: 0
+      readonly: false
+      required: false
+      sort: 8
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Temps en heure
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: integer
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: totalHours
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: bills
+    type: integer
+  - collection: calendar
+    field: all_day
+    meta:
+      collection: calendar
+      conditions: null
+      display: null
+      display_options:
+        colorOff: null
+        colorOn: null
+        labelOff: null
+        labelOn: null
+      field: all_day
+      group: null
+      hidden: false
+      interface: boolean
+      note: null
+      options:
+        colorOff: '#E35169'
+        colorOn: '#00C897'
+      readonly: false
+      required: true
+      sort: null
+      special:
+        - boolean
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: boolean
+      default_value: true
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: all_day
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: calendar
+    type: boolean
+  - collection: calendar
+    field: date_created
+    meta:
+      collection: calendar
+      conditions: null
+      display: datetime
+      display_options:
+        relative: true
+      field: date_created
+      group: null
+      hidden: true
+      interface: datetime
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: null
+      special:
+        - date-created
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: timestamp with time zone
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: date_created
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: calendar
+    type: timestamp
+  - collection: calendar
+    field: date_updated
+    meta:
+      collection: calendar
+      conditions: null
+      display: datetime
+      display_options:
+        relative: true
+      field: date_updated
+      group: null
+      hidden: true
+      interface: datetime
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: null
+      special:
+        - date-updated
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: timestamp with time zone
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: date_updated
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: calendar
+    type: timestamp
+  - collection: calendar
+    field: end_date
+    meta:
+      collection: calendar
+      conditions: null
+      display: null
+      display_options: null
+      field: end_date
+      group: null
+      hidden: false
+      interface: datetime
+      note: null
+      options: null
+      readonly: false
+      required: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Date de fin
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: timestamp without time zone
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: end_date
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: calendar
+    type: dateTime
+  - collection: calendar
+    field: id
+    meta:
+      collection: calendar
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: null
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: integer
+      default_value: nextval('calendar_id_seq'::regclass)
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: true
+      is_generated: false
+      is_nullable: false
+      is_primary_key: true
+      is_unique: true
+      max_length: null
+      name: id
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: calendar
+    type: integer
+  - collection: calendar
+    field: sort
+    meta:
+      collection: calendar
+      conditions: null
+      display: null
+      display_options: null
+      field: sort
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: null
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: integer
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: sort
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: calendar
+    type: integer
+  - collection: calendar
+    field: start_date
+    meta:
+      collection: calendar
+      conditions: null
+      display: null
+      display_options: null
+      field: start_date
+      group: null
+      hidden: false
+      interface: datetime
+      note: null
+      options: null
+      readonly: false
+      required: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Date de départ
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: timestamp without time zone
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: start_date
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: calendar
+    type: dateTime
+  - collection: calendar
+    field: user
+    meta:
+      collection: calendar
+      conditions: null
+      display: related-values
+      display_options:
+        template: "{{first_name}}\_{{last_name}}\_({{email}})"
+      field: user
+      group: null
+      hidden: false
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: "{{first_name}}\_{{last_name}}\_({{email}})"
+      readonly: false
+      required: true
+      sort: null
+      special:
+        - m2o
+      translations:
+        - language: fr-CA
+          translation: Utilisateur
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: uuid
+      default_value: null
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: directus_users
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: user
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: calendar
+    type: uuid
+  - collection: calls
+    field: address
+    meta:
+      collection: calls
+      conditions: null
+      display: null
+      display_options: null
+      field: address
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options:
+        trim: true
+      readonly: false
+      required: true
+      sort: 8
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Lieu de la panne
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: character varying
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: 255
+      name: address
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: calls
+    type: string
+  - collection: calls
+    field: bill_note
+    meta:
+      collection: calls
+      conditions: null
+      display: null
+      display_options: null
+      field: bill_note
+      group: null
+      hidden: false
+      interface: input-multiline
+      note: null
+      options:
+        trim: true
+      readonly: false
+      required: false
+      sort: null
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Notes sur la facturation
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: text
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: bill_note
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: calls
+    type: text
+  - collection: calls
+    field: company
+    meta:
+      collection: calls
+      conditions: null
+      display: null
+      display_options: null
+      field: company
+      group: null
+      hidden: false
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: '{{name}}'
+      readonly: false
+      required: true
+      sort: 5
+      special:
+        - m2o
+      translations:
+        - language: fr-CA
+          translation: Entreprise associée
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: integer
+      default_value: null
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: companies
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: company
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: calls
+    type: integer
+  - collection: calls
+    field: date_created
+    meta:
+      collection: calls
+      conditions: null
+      display: datetime
+      display_options:
+        relative: true
+      field: date_created
+      group: null
+      hidden: true
+      interface: datetime
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 3
+      special:
+        - date-created
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: timestamp with time zone
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: date_created
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: calls
+    type: timestamp
+  - collection: calls
+    field: date_updated
+    meta:
+      collection: calls
+      conditions: null
+      display: datetime
+      display_options:
+        relative: true
+      field: date_updated
+      group: null
+      hidden: true
+      interface: datetime
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 4
+      special:
+        - date-updated
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: timestamp with time zone
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: date_updated
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: calls
+    type: timestamp
+  - collection: calls
+    field: destination
+    meta:
+      collection: calls
+      conditions: null
+      display: null
+      display_options: null
+      field: destination
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options:
+        trim: true
+      readonly: false
+      required: false
+      sort: 9
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Destination
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: character varying
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: 255
+      name: destination
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: calls
+    type: string
+  - collection: calls
+    field: driver
+    meta:
+      collection: calls
+      conditions: null
+      display: null
+      display_options: null
+      field: driver
+      group: null
+      hidden: false
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: "{{first_name}}\_{{last_name}}\_({{email}})"
+      readonly: false
+      required: true
+      sort: 12
+      special:
+        - m2o
+      translations:
+        - language: fr-CA
+          translation: Chauffeur
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: uuid
+      default_value: null
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: directus_users
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: driver
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: calls
+    type: uuid
+  - collection: calls
+    field: driver_truck
+    meta:
+      collection: calls
+      conditions: null
+      display: null
+      display_options: null
+      field: driver_truck
+      group: null
+      hidden: false
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: '{{name}}'
+      readonly: false
+      required: true
+      sort: 13
+      special:
+        - m2o
+      translations:
+        - language: fr-CA
+          translation: Camion
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: integer
+      default_value: null
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: trailers
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: driver_truck
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: calls
+    type: integer
+  - collection: calls
+    field: id
+    meta:
+      collection: calls
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: integer
+      default_value: nextval('calls_id_seq'::regclass)
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: true
+      is_generated: false
+      is_nullable: false
+      is_primary_key: true
+      is_unique: true
+      max_length: null
+      name: id
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: calls
+    type: integer
+  - collection: calls
+    field: name
+    meta:
+      collection: calls
+      conditions: null
+      display: null
+      display_options: null
+      field: name
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options:
+        trim: true
+      readonly: false
+      required: true
+      sort: 6
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Nom du client sur la route
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: character varying
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: 255
+      name: name
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: calls
+    type: string
+  - collection: calls
+    field: note
+    meta:
+      collection: calls
+      conditions: null
+      display: null
+      display_options: null
+      field: note
+      group: null
+      hidden: false
+      interface: input-multiline
+      note: null
+      options:
+        trim: true
+      readonly: false
+      required: false
+      sort: 16
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Notes sur le formulaire d'appel
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: text
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: note
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: calls
+    type: text
+  - collection: calls
+    field: phone
+    meta:
+      collection: calls
+      conditions: null
+      display: null
+      display_options: null
+      field: phone
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options:
+        trim: true
+      readonly: false
+      required: true
+      sort: 7
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Téléphone du client sur la route
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: character varying
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: 255
+      name: phone
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: calls
+    type: string
+  - collection: calls
+    field: service
+    meta:
+      collection: calls
+      conditions: null
+      display: null
+      display_options: null
+      field: service
+      group: null
+      hidden: false
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: '{{name}}'
+      readonly: false
+      required: true
+      sort: 10
+      special:
+        - m2o
+      translations:
+        - language: fr-CA
+          translation: Code de service
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: integer
+      default_value: null
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: services
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: service
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: calls
+    type: integer
+  - collection: calls
+    field: sort
+    meta:
+      collection: calls
+      conditions: null
+      display: null
+      display_options: null
+      field: sort
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 2
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: integer
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: sort
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: calls
+    type: integer
+  - collection: calls
+    field: status
+    meta:
+      collection: calls
+      conditions: null
+      display: null
+      display_options: null
+      field: status
+      group: null
+      hidden: false
+      interface: select-dropdown
+      note: null
+      options:
+        choices:
+          - text: En cours
+            value: IN_PROGRESS
+          - text: En attente
+            value: PENDING
+          - text: Complété
+            value: COMPLETED
+          - text: IMPOUNDED
+            value: IMPOUNDED
+          - text: Réservé
+            value: RESERVED
+      readonly: false
+      required: true
+      sort: 11
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Status
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: character varying
+      default_value: PENDING
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: 255
+      name: status
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: calls
+    type: string
+  - collection: calls
+    field: vehicle
+    meta:
+      collection: calls
+      conditions: null
+      display: null
+      display_options: null
+      field: vehicle
+      group: null
+      hidden: false
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: '{{model}}'
+      readonly: false
+      required: true
+      sort: 14
+      special:
+        - m2o
+      translations:
+        - language: fr-CA
+          translation: Vehicule à remorquer
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: integer
+      default_value: null
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: towed_vehicles
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: vehicle
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: calls
+    type: integer
+  - collection: clients
+    field: company
+    meta:
+      collection: clients
+      conditions: null
+      display: null
+      display_options: null
+      field: company
+      group: null
+      hidden: false
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: '{{name}}'
+      readonly: false
+      required: true
+      sort: 5
+      special:
+        - m2o
+      translations:
+        - language: fr-CA
+          translation: Entreprise associée
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: integer
+      default_value: null
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: companies
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: company
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: clients
+    type: integer
+  - collection: clients
+    field: companyName
+    meta:
+      collection: clients
+      conditions: null
+      display: null
+      display_options: null
+      field: companyName
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options:
+        trim: true
+      readonly: false
+      required: false
+      sort: null
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Nom d'entreprise
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: character varying
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: 255
+      name: companyName
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: clients
+    type: string
+  - collection: clients
+    field: date_created
+    meta:
+      collection: clients
+      conditions: null
+      display: datetime
+      display_options:
+        relative: true
+      field: date_created
+      group: null
+      hidden: true
+      interface: datetime
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 3
+      special:
+        - date-created
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: timestamp with time zone
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: date_created
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: clients
+    type: timestamp
+  - collection: clients
+    field: date_updated
+    meta:
+      collection: clients
+      conditions: null
+      display: datetime
+      display_options:
+        relative: true
+      field: date_updated
+      group: null
+      hidden: true
+      interface: datetime
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 4
+      special:
+        - date-updated
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: timestamp with time zone
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: date_updated
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: clients
+    type: timestamp
+  - collection: clients
+    field: email
+    meta:
+      collection: clients
+      conditions: null
+      display: null
+      display_options: null
+      field: email
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options:
+        trim: true
+      readonly: false
+      required: true
+      sort: 9
+      special: null
+      translations:
+        - language: fr-CA
+          translation: E-mail
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: character varying
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: 255
+      name: email
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: clients
+    type: string
+  - collection: clients
+    field: id
+    meta:
+      collection: clients
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: integer
+      default_value: nextval('clients_id_seq'::regclass)
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: true
+      is_generated: false
+      is_nullable: false
+      is_primary_key: true
+      is_unique: true
+      max_length: null
+      name: id
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: clients
+    type: integer
+  - collection: clients
+    field: name
+    meta:
+      collection: clients
+      conditions: null
+      display: null
+      display_options: null
+      field: name
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options:
+        trim: true
+      readonly: false
+      required: true
+      sort: 6
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Nom
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: character varying
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: 255
+      name: name
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: clients
+    type: string
+  - collection: clients
+    field: phone
+    meta:
+      collection: clients
+      conditions: null
+      display: null
+      display_options: null
+      field: phone
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options:
+        trim: true
+      readonly: false
+      required: false
+      sort: 8
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Téléphone
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: character varying
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: 255
+      name: phone
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: clients
+    type: string
+  - collection: clients
+    field: sort
+    meta:
+      collection: clients
+      conditions: null
+      display: null
+      display_options: null
+      field: sort
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 2
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: integer
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: sort
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: clients
+    type: integer
+  - collection: clients
+    field: status
+    meta:
+      collection: clients
+      conditions: null
+      display: null
+      display_options: null
+      field: status
+      group: null
+      hidden: false
+      interface: select-dropdown
+      note: null
+      options:
+        choices:
+          - text: Actif
+            value: ACTIVE
+          - text: Innactif
+            value: INACTIVE
+      readonly: false
+      required: true
+      sort: 7
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Status
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: character varying
+      default_value: ACTIVE
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: 255
+      name: status
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: clients
+    type: string
+  - collection: companies
+    field: active
+    meta:
+      collection: companies
+      conditions: null
+      display: null
+      display_options: null
+      field: active
+      group: null
+      hidden: false
+      interface: boolean
+      note: null
+      options: null
+      readonly: false
+      required: true
+      sort: 6
+      special:
+        - boolean
+      translations:
+        - language: fr-CA
+          translation: Active
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: boolean
+      default_value: true
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: active
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: companies
+    type: boolean
+  - collection: companies
+    field: address
+    meta:
+      collection: companies
+      conditions: null
+      display: null
+      display_options: null
+      field: address
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options:
+        trim: true
+      readonly: false
+      required: false
+      sort: 7
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Adresse
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: character varying
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: 255
+      name: address
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: companies
+    type: string
+  - collection: companies
+    field: admin
+    meta:
+      collection: companies
+      conditions: null
+      display: related-values
+      display_options:
+        template: "{{first_name}}\_{{last_name}}\_({{email}})"
+      field: admin
+      group: null
+      hidden: false
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: "{{first_name}}\_{{last_name}}\_({{email}})"
+      readonly: false
+      required: true
+      sort: 8
+      special:
+        - m2o
+      translations:
+        - language: fr-CA
+          translation: Administrateur
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: uuid
+      default_value: null
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: directus_users
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: admin
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: companies
+    type: uuid
+  - collection: companies
+    field: date_created
+    meta:
+      collection: companies
+      conditions: null
+      display: datetime
+      display_options:
+        relative: true
+      field: date_created
+      group: null
+      hidden: true
+      interface: datetime
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 3
+      special:
+        - date-created
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: timestamp with time zone
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: date_created
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: companies
+    type: timestamp
+  - collection: companies
+    field: date_updated
+    meta:
+      collection: companies
+      conditions: null
+      display: datetime
+      display_options:
+        relative: true
+      field: date_updated
+      group: null
+      hidden: true
+      interface: datetime
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 4
+      special:
+        - date-updated
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: timestamp with time zone
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: date_updated
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: companies
+    type: timestamp
+  - collection: companies
+    field: id
+    meta:
+      collection: companies
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: integer
+      default_value: nextval('companies_id_seq'::regclass)
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: true
+      is_generated: false
+      is_nullable: false
+      is_primary_key: true
+      is_unique: true
+      max_length: null
+      name: id
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: companies
+    type: integer
+  - collection: companies
+    field: name
+    meta:
+      collection: companies
+      conditions: null
+      display: null
+      display_options: {}
+      field: name
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options:
+        trim: true
+      readonly: false
+      required: true
+      sort: 5
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Nom
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: character varying
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: 255
+      name: name
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: companies
+    type: string
+  - collection: companies
+    field: sort
+    meta:
+      collection: companies
+      conditions: null
+      display: null
+      display_options: null
+      field: sort
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 2
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: integer
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: sort
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: companies
+    type: integer
+  - collection: custom_permissions
+    field: action
+    meta:
+      collection: custom_permissions
+      conditions: null
+      display: null
+      display_options: null
+      field: action
+      group: null
+      hidden: false
+      interface: select-dropdown
+      note: null
+      options:
+        choices:
+          - text: Créer
+            value: CREATE
+          - text: Voir
+            value: READ
+          - text: Update
+            value: UPDATE
+          - text: Supprimer
+            value: DELETE
+      readonly: false
+      required: true
+      sort: null
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: character varying
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: 255
+      name: action
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: custom_permissions
+    type: string
+  - collection: custom_permissions
+    field: group
+    meta:
+      collection: custom_permissions
+      conditions: null
+      display: null
+      display_options: null
+      field: group
+      group: null
+      hidden: false
+      interface: select-dropdown
+      note: null
+      options:
+        choices:
+          - text: USER
+            value: USER
+          - text: BILL
+            value: BILL
+          - text: CALENDAR
+            value: CALENDAR
+          - text: CALL
+            value: CALL
+          - text: CLIENT
+            value: CLIENT
+          - text: COMPANY
+            value: COMPANY
+          - text: PRICE
+            value: PRICE
+          - text: SERVICE
+            value: SERVICE
+          - text: TRAILER
+            value: TRAILER
+      readonly: false
+      required: true
+      sort: null
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: character varying
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: 255
+      name: group
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: custom_permissions
+    type: string
+  - collection: custom_permissions
+    field: id
+    meta:
+      collection: custom_permissions
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: null
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: integer
+      default_value: nextval('custom_permissions_id_seq'::regclass)
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: true
+      is_generated: false
+      is_nullable: false
+      is_primary_key: true
+      is_unique: true
+      max_length: null
+      name: id
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: custom_permissions
+    type: integer
+  - collection: directus_users
+    field: birthday
+    meta:
+      collection: directus_users
+      conditions: null
+      display: null
+      display_options: null
+      field: birthday
+      group: null
+      hidden: false
+      interface: datetime
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 5
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Date de naissance
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: date
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: birthday
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: directus_users
+    type: date
+  - collection: directus_users
+    field: blocked
+    meta:
+      collection: directus_users
+      conditions: null
+      display: null
+      display_options: null
+      field: blocked
+      group: null
+      hidden: false
+      interface: boolean
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 7
+      special:
+        - boolean
+      translations:
+        - language: fr-CA
+          translation: Bloqué
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: boolean
+      default_value: false
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: blocked
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: directus_users
+    type: boolean
+  - collection: directus_users
+    field: company
+    meta:
+      collection: directus_users
+      conditions: null
+      display: null
+      display_options: null
+      field: company
+      group: null
+      hidden: false
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: '{{name}}'
+      readonly: false
+      required: true
+      sort: 2
+      special:
+        - m2o
+      translations:
+        - language: fr-CA
+          translation: Entreprise associée
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: integer
+      default_value: null
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: companies
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: company
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: directus_users
+    type: integer
+  - collection: directus_users
+    field: date_created
+    meta:
+      collection: directus_users
+      conditions: null
+      display: datetime
+      display_options:
+        relative: true
+      field: date_created
+      group: null
+      hidden: true
+      interface: datetime
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 1
+      special:
+        - date-created
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: timestamp with time zone
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: date_created
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: directus_users
+    type: timestamp
+  - collection: directus_users
+    field: driver_license
+    meta:
+      collection: directus_users
+      conditions: null
+      display: null
+      display_options: null
+      field: driver_license
+      group: null
+      hidden: false
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: "{{class}}\_-\_{{number}}"
+      readonly: false
+      required: false
+      sort: 9
+      special:
+        - m2o
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: integer
+      default_value: null
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: driver_licenses
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: driver_license
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: directus_users
+    type: integer
+  - collection: directus_users
+    field: emergency_contact
+    meta:
+      collection: directus_users
+      conditions: null
+      display: null
+      display_options: null
+      field: emergency_contact
+      group: null
+      hidden: false
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: "{{relation}}\_-\_{{first_name}}\_{{last_name}}"
+      readonly: false
+      required: false
+      sort: 8
+      special:
+        - m2o
+      translations:
+        - language: fr-CA
+          translation: Contact d'urgence
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: integer
+      default_value: null
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: users_emergency_contacts
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: emergency_contact
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: directus_users
+    type: integer
+  - collection: directus_users
+    field: ext
+    meta:
+      collection: directus_users
+      conditions: null
+      display: null
+      display_options: null
+      field: ext
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options:
+        trim: true
+      readonly: false
+      required: false
+      sort: 4
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Ext
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: character varying
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: 255
+      name: ext
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: directus_users
+    type: string
+  - collection: directus_users
+    field: hireday
+    meta:
+      collection: directus_users
+      conditions: null
+      display: null
+      display_options: null
+      field: hireday
+      group: null
+      hidden: false
+      interface: datetime
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 6
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Date recruté
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: date
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: hireday
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: directus_users
+    type: date
+  - collection: directus_users
+    field: note
+    meta:
+      collection: directus_users
+      conditions: null
+      display: null
+      display_options: null
+      field: note
+      group: null
+      hidden: false
+      interface: input-multiline
+      note: null
+      options:
+        trim: true
+      readonly: false
+      required: false
+      sort: 10
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Note
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: text
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: note
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: directus_users
+    type: text
+  - collection: directus_users
+    field: permissions
+    meta:
+      collection: directus_users
+      conditions: null
+      display: related-values
+      display_options:
+        template: "{{directus_users_id.first_name}}\_->\_{{custom_permissions_id.action}}\_{{custom_permissions_id.group}}"
+      field: permissions
+      group: null
+      hidden: false
+      interface: list-m2m
+      note: null
+      options:
+        template: "{{directus_users_id.first_name}}\_->\_{{custom_permissions_id.action}}\_{{custom_permissions_id.group}}"
+      readonly: false
+      required: false
+      sort: null
+      special:
+        - m2m
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema: null
+    type: alias
+  - collection: directus_users
+    field: phone
+    meta:
+      collection: directus_users
+      conditions: null
+      display: null
+      display_options: null
+      field: phone
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options:
+        trim: true
+      readonly: false
+      required: false
+      sort: 3
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Téléphone
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: character varying
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: 255
+      name: phone
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: directus_users
+    type: string
+  - collection: driver_licenses
+    field: capacity
+    meta:
+      collection: driver_licenses
+      conditions: null
+      display: null
+      display_options: null
+      field: capacity
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options:
+        min: 0
+      readonly: false
+      required: false
+      sort: null
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Capacité
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: real
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: capacity
+      numeric_precision: 24
+      numeric_scale: null
+      schema: public
+      table: driver_licenses
+    type: float
+  - collection: driver_licenses
+    field: class
+    meta:
+      collection: driver_licenses
+      conditions: null
+      display: null
+      display_options: null
+      field: class
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options:
+        trim: true
+      readonly: false
+      required: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Classe
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: character varying
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: 255
+      name: class
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: driver_licenses
+    type: string
+  - collection: driver_licenses
+    field: date_created
+    meta:
+      collection: driver_licenses
+      conditions: null
+      display: datetime
+      display_options:
+        relative: true
+      field: date_created
+      group: null
+      hidden: true
+      interface: datetime
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: null
+      special:
+        - date-created
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: timestamp with time zone
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: date_created
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: driver_licenses
+    type: timestamp
+  - collection: driver_licenses
+    field: date_updated
+    meta:
+      collection: driver_licenses
+      conditions: null
+      display: datetime
+      display_options:
+        relative: true
+      field: date_updated
+      group: null
+      hidden: true
+      interface: datetime
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: null
+      special:
+        - date-updated
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: timestamp with time zone
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: date_updated
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: driver_licenses
+    type: timestamp
+  - collection: driver_licenses
+    field: expiration_date
+    meta:
+      collection: driver_licenses
+      conditions: null
+      display: null
+      display_options: null
+      field: expiration_date
+      group: null
+      hidden: false
+      interface: datetime
+      note: null
+      options: null
+      readonly: false
+      required: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Date d'expiration
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: date
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: expiration_date
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: driver_licenses
+    type: date
+  - collection: driver_licenses
+    field: id
+    meta:
+      collection: driver_licenses
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: null
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: integer
+      default_value: nextval('driver_licenses_id_seq'::regclass)
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: true
+      is_generated: false
+      is_nullable: false
+      is_primary_key: true
+      is_unique: true
+      max_length: null
+      name: id
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: driver_licenses
+    type: integer
+  - collection: driver_licenses
+    field: note
+    meta:
+      collection: driver_licenses
+      conditions: null
+      display: null
+      display_options: null
+      field: note
+      group: null
+      hidden: false
+      interface: input-multiline
+      note: null
+      options:
+        trim: true
+      readonly: false
+      required: false
+      sort: null
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Note
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: text
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: note
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: driver_licenses
+    type: text
+  - collection: driver_licenses
+    field: number
+    meta:
+      collection: driver_licenses
+      conditions: null
+      display: null
+      display_options: null
+      field: number
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options:
+        trim: true
+      readonly: false
+      required: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Numéro
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: character varying
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: 255
+      name: number
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: driver_licenses
+    type: string
+  - collection: junction_directus_users_custom_permissions
+    field: custom_permissions_id
+    meta:
+      collection: junction_directus_users_custom_permissions
+      conditions: null
+      display: null
+      display_options: null
+      field: custom_permissions_id
+      group: null
+      hidden: true
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: null
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: integer
+      default_value: null
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: custom_permissions
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: custom_permissions_id
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: junction_directus_users_custom_permissions
+    type: integer
+  - collection: junction_directus_users_custom_permissions
+    field: directus_users_id
+    meta:
+      collection: junction_directus_users_custom_permissions
+      conditions: null
+      display: null
+      display_options: null
+      field: directus_users_id
+      group: null
+      hidden: true
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: null
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: uuid
+      default_value: null
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: directus_users
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: directus_users_id
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: junction_directus_users_custom_permissions
+    type: uuid
+  - collection: junction_directus_users_custom_permissions
+    field: id
+    meta:
+      collection: junction_directus_users_custom_permissions
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: null
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: integer
+      default_value: nextval('junction_directus_users_custom_permissions_id_seq'::regclass)
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: true
+      is_generated: false
+      is_nullable: false
+      is_primary_key: true
+      is_unique: true
+      max_length: null
+      name: id
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: junction_directus_users_custom_permissions
+    type: integer
+  - collection: messages
+    field: content
+    meta:
+      collection: messages
+      conditions: null
+      display: null
+      display_options: null
+      field: content
+      group: null
+      hidden: false
+      interface: input-multiline
+      note: null
+      options:
+        trim: true
+      readonly: false
+      required: true
+      sort: 7
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Contenu du message
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: text
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: content
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: messages
+    type: text
+  - collection: messages
+    field: date_created
+    meta:
+      collection: messages
+      conditions: null
+      display: datetime
+      display_options:
+        relative: true
+      field: date_created
+      group: null
+      hidden: true
+      interface: datetime
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 3
+      special:
+        - date-created
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: timestamp with time zone
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: date_created
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: messages
+    type: timestamp
+  - collection: messages
+    field: date_updated
+    meta:
+      collection: messages
+      conditions: null
+      display: datetime
+      display_options:
+        relative: true
+      field: date_updated
+      group: null
+      hidden: true
+      interface: datetime
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 4
+      special:
+        - date-updated
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: timestamp with time zone
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: date_updated
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: messages
+    type: timestamp
+  - collection: messages
+    field: file
+    meta:
+      collection: messages
+      conditions: null
+      display: null
+      display_options: null
+      field: file
+      group: null
+      hidden: false
+      interface: file
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: null
+      special:
+        - file
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: uuid
+      default_value: null
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: directus_files
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: file
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: messages
+    type: uuid
+  - collection: messages
+    field: id
+    meta:
+      collection: messages
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: integer
+      default_value: nextval('messages_id_seq'::regclass)
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: true
+      is_generated: false
+      is_nullable: false
+      is_primary_key: true
+      is_unique: true
+      max_length: null
+      name: id
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: messages
+    type: integer
+  - collection: messages
+    field: receiver
+    meta:
+      collection: messages
+      conditions: null
+      display: null
+      display_options: null
+      field: receiver
+      group: null
+      hidden: false
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: "{{first_name}}\_{{last_name}}\_({{email}})"
+      readonly: false
+      required: true
+      sort: 6
+      special:
+        - m2o
+      translations:
+        - language: fr-CA
+          translation: Receveur
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: uuid
+      default_value: null
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: directus_users
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: receiver
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: messages
+    type: uuid
+  - collection: messages
+    field: sender
+    meta:
+      collection: messages
+      conditions: null
+      display: null
+      display_options: null
+      field: sender
+      group: null
+      hidden: false
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: "{{first_name}}\_{{last_name}}\_({{email}})"
+      readonly: false
+      required: true
+      sort: 5
+      special:
+        - m2o
+      translations:
+        - language: fr-CA
+          translation: Expéditeur
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: uuid
+      default_value: null
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: directus_users
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: sender
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: messages
+    type: uuid
+  - collection: messages
+    field: sort
+    meta:
+      collection: messages
+      conditions: null
+      display: null
+      display_options: null
+      field: sort
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 2
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: integer
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: sort
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: messages
+    type: integer
+  - collection: prices
+    field: company
+    meta:
+      collection: prices
+      conditions: null
+      display: null
+      display_options: null
+      field: company
+      group: null
+      hidden: false
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: '{{name}}'
+      readonly: false
+      required: true
+      sort: 4
+      special:
+        - m2o
+      translations:
+        - language: fr-CA
+          translation: Entreprise associée
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: integer
+      default_value: null
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: companies
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: company
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: prices
+    type: integer
+  - collection: prices
+    field: date_created
+    meta:
+      collection: prices
+      conditions: null
+      display: datetime
+      display_options:
+        relative: true
+      field: date_created
+      group: null
+      hidden: true
+      interface: datetime
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 2
+      special:
+        - date-created
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: timestamp with time zone
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: date_created
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: prices
+    type: timestamp
+  - collection: prices
+    field: date_updated
+    meta:
+      collection: prices
+      conditions: null
+      display: datetime
+      display_options:
+        relative: true
+      field: date_updated
+      group: null
+      hidden: true
+      interface: datetime
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 3
+      special:
+        - date-updated
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: timestamp with time zone
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: date_updated
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: prices
+    type: timestamp
+  - collection: prices
+    field: id
+    meta:
+      collection: prices
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: integer
+      default_value: nextval('prices_id_seq'::regclass)
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: true
+      is_generated: false
+      is_nullable: false
+      is_primary_key: true
+      is_unique: true
+      max_length: null
+      name: id
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: prices
+    type: integer
+  - collection: prices
+    field: name
+    meta:
+      collection: prices
+      conditions: null
+      display: null
+      display_options: null
+      field: name
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 6
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Nom
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: character varying
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: 255
+      name: name
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: prices
+    type: string
+  - collection: prices
+    field: status
+    meta:
+      collection: prices
+      conditions: null
+      display: labels
+      display_options:
+        choices:
+          - text: Actif
+            value: Actif
+          - text: Inactif
+            value: Inactif
+        showAsDot: true
+      field: status
+      group: null
+      hidden: false
+      interface: select-dropdown
+      note: null
+      options:
+        choices:
+          - text: Actif
+            value: ACTIVE
+          - text: Inactif
+            value: INACTIVE
+      readonly: false
+      required: false
+      sort: 7
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: character varying
+      default_value: ACTIVE
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: 255
+      name: status
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: prices
+    type: string
+  - collection: prices
+    field: taxable
+    meta:
+      collection: prices
+      conditions: null
+      display: null
+      display_options: null
+      field: taxable
+      group: null
+      hidden: false
+      interface: boolean
+      note: null
+      options:
+        label: Oui
+      readonly: false
+      required: true
+      sort: 8
+      special:
+        - boolean
+      translations:
+        - language: fr-CA
+          translation: Taxable
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: boolean
+      default_value: true
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: taxable
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: prices
+    type: boolean
+  - collection: prices
+    field: type
+    meta:
+      collection: prices
+      conditions: null
+      display: null
+      display_options: null
+      field: type
+      group: null
+      hidden: false
+      interface: select-dropdown
+      note: null
+      options:
+        choices:
+          - text: BASE
+            value: BASE
+          - text: PER_HOUR
+            value: PER_HOUR
+          - text: PER_KM
+            value: PER_KM
+      readonly: false
+      required: true
+      sort: 5
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Type de prix
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: character varying
+      default_value: BASE
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: 255
+      name: type
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: prices
+    type: string
+  - collection: prices
+    field: value
+    meta:
+      collection: prices
+      conditions: null
+      display: null
+      display_options: null
+      field: value
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options:
+        min: 0
+      readonly: false
+      required: true
+      sort: 9
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Prix de base
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: real
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: value
+      numeric_precision: 24
+      numeric_scale: null
+      schema: public
+      table: prices
+    type: float
+  - collection: services
+    field: company
+    meta:
+      collection: services
+      conditions: null
+      display: null
+      display_options: null
+      field: company
+      group: null
+      hidden: false
+      interface: select-dropdown-m2o
+      note: null
+      options:
+        template: '{{name}}'
+      readonly: false
+      required: false
+      sort: 5
+      special:
+        - m2o
+      translations:
+        - language: fr-CA
+          translation: Entreprise associée
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: integer
+      default_value: null
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: companies
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: company
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: services
+    type: integer
+  - collection: services
+    field: date_created
+    meta:
+      collection: services
+      conditions: null
+      display: datetime
+      display_options:
+        relative: true
+      field: date_created
+      group: null
+      hidden: true
+      interface: datetime
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 3
+      special:
+        - date-created
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: timestamp with time zone
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: date_created
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: services
+    type: timestamp
+  - collection: services
+    field: date_updated
+    meta:
+      collection: services
+      conditions: null
+      display: datetime
+      display_options:
+        relative: true
+      field: date_updated
+      group: null
+      hidden: true
+      interface: datetime
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 4
+      special:
+        - date-updated
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: timestamp with time zone
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: date_updated
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: services
+    type: timestamp
+  - collection: services
+    field: id
+    meta:
+      collection: services
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: integer
+      default_value: nextval('services_id_seq'::regclass)
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: true
+      is_generated: false
+      is_nullable: false
+      is_primary_key: true
+      is_unique: true
+      max_length: null
+      name: id
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: services
+    type: integer
+  - collection: services
+    field: name
+    meta:
+      collection: services
+      conditions: null
+      display: null
+      display_options: null
+      field: name
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options:
+        trim: true
+      readonly: false
+      required: true
+      sort: 7
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Nom du code de service
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: character varying
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: 255
+      name: name
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: services
+    type: string
+  - collection: services
+    field: prices
+    meta:
+      collection: services
+      conditions: null
+      display: null
+      display_options: null
+      field: prices
+      group: null
+      hidden: false
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: null
+      special:
+        - m2m
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema: null
+    type: alias
+  - collection: services
+    field: sort
+    meta:
+      collection: services
+      conditions: null
+      display: null
+      display_options: null
+      field: sort
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 2
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: integer
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: sort
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: services
+    type: integer
+  - collection: services
+    field: status
+    meta:
+      collection: services
+      conditions: null
+      display: labels
+      display_options:
+        choices:
+          - background: '#00C897'
+            value: Actif
+            text: Actif
+          - text: Inactif
+            value: Inactif
+            background: '#C81919'
+        showAsDot: true
+      field: status
+      group: null
+      hidden: false
+      interface: select-dropdown
+      note: null
+      options:
+        choices:
+          - text: Actif
+            value: ACTIVE
+          - text: Inactif
+            value: INACTIVE
+      readonly: false
+      required: false
+      sort: 6
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: character varying
+      default_value: ACTIVE
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: 255
+      name: status
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: services
+    type: string
+  - collection: services_prices
+    field: id
+    meta:
+      collection: services_prices
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: null
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: integer
+      default_value: nextval('services_prices_id_seq'::regclass)
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: true
+      is_generated: false
+      is_nullable: false
+      is_primary_key: true
+      is_unique: true
+      max_length: null
+      name: id
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: services_prices
+    type: integer
+  - collection: services_prices
+    field: prices_id
+    meta:
+      collection: services_prices
+      conditions: null
+      display: null
+      display_options: null
+      field: prices_id
+      group: null
+      hidden: true
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: null
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: integer
+      default_value: null
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: prices
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: prices_id
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: services_prices
+    type: integer
+  - collection: services_prices
+    field: services_id
+    meta:
+      collection: services_prices
+      conditions: null
+      display: null
+      display_options: null
+      field: services_id
+      group: null
+      hidden: true
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: null
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: integer
+      default_value: null
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: services
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: services_id
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: services_prices
+    type: integer
+  - collection: towed_vehicles
+    field: date_created
+    meta:
+      collection: towed_vehicles
+      conditions: null
+      display: datetime
+      display_options:
+        relative: true
+      field: date_created
+      group: null
+      hidden: true
+      interface: datetime
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: null
+      special:
+        - date-created
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: timestamp with time zone
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: date_created
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: towed_vehicles
+    type: timestamp
+  - collection: towed_vehicles
+    field: date_updated
+    meta:
+      collection: towed_vehicles
+      conditions: null
+      display: datetime
+      display_options:
+        relative: true
+      field: date_updated
+      group: null
+      hidden: true
+      interface: datetime
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: null
+      special:
+        - date-updated
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: timestamp with time zone
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: date_updated
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: towed_vehicles
+    type: timestamp
+  - collection: towed_vehicles
+    field: height
+    meta:
+      collection: towed_vehicles
+      conditions: null
+      display: null
+      display_options: null
+      field: height
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options:
+        min: 0
+      readonly: false
+      required: false
+      sort: null
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Hauteur
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: real
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: height
+      numeric_precision: 24
+      numeric_scale: null
+      schema: public
+      table: towed_vehicles
+    type: float
+  - collection: towed_vehicles
+    field: id
+    meta:
+      collection: towed_vehicles
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: null
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: integer
+      default_value: nextval('towed_vehicles_id_seq'::regclass)
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: true
+      is_generated: false
+      is_nullable: false
+      is_primary_key: true
+      is_unique: true
+      max_length: null
+      name: id
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: towed_vehicles
+    type: integer
+  - collection: towed_vehicles
+    field: lengthh
+    meta:
+      collection: towed_vehicles
+      conditions: null
+      display: null
+      display_options: null
+      field: lengthh
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options:
+        min: 0
+      readonly: false
+      required: false
+      sort: null
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Longueur
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: real
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: lengthh
+      numeric_precision: 24
+      numeric_scale: null
+      schema: public
+      table: towed_vehicles
+    type: float
+  - collection: towed_vehicles
+    field: license
+    meta:
+      collection: towed_vehicles
+      conditions: null
+      display: null
+      display_options: null
+      field: license
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options:
+        trim: true
+      readonly: false
+      required: false
+      sort: null
+      special: null
+      translations:
+        - language: fr-CA
+          translation: License
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: character varying
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: 255
+      name: license
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: towed_vehicles
+    type: string
+  - collection: towed_vehicles
+    field: model
+    meta:
+      collection: towed_vehicles
+      conditions: null
+      display: null
+      display_options: null
+      field: model
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options:
+        trim: true
+      readonly: false
+      required: true
+      sort: null
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Marque/Modèle/Année
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: character varying
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: 255
+      name: model
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: towed_vehicles
+    type: string
+  - collection: towed_vehicles
+    field: serial_number
+    meta:
+      collection: towed_vehicles
+      conditions: null
+      display: null
+      display_options: null
+      field: serial_number
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options:
+        trim: true
+      readonly: false
+      required: false
+      sort: null
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Numéro de série
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: character varying
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: 255
+      name: serial_number
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: towed_vehicles
+    type: string
+  - collection: towed_vehicles
+    field: weight
+    meta:
+      collection: towed_vehicles
+      conditions: null
+      display: null
+      display_options: null
+      field: weight
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options:
+        min: 0
+      readonly: false
+      required: false
+      sort: null
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Poids
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: real
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: weight
+      numeric_precision: 24
+      numeric_scale: null
+      schema: public
+      table: towed_vehicles
+    type: float
+  - collection: towed_vehicles
+    field: width
+    meta:
+      collection: towed_vehicles
+      conditions: null
+      display: null
+      display_options: null
+      field: width
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options:
+        min: 0
+      readonly: false
+      required: false
+      sort: null
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Largeur
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: real
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: width
+      numeric_precision: 24
+      numeric_scale: null
+      schema: public
+      table: towed_vehicles
+    type: float
+  - collection: trailers
+    field: belongs_to
+    meta:
+      collection: trailers
+      conditions: null
+      display: null
+      display_options: null
+      field: belongs_to
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options:
+        placeholder: John Doe
+        trim: true
+      readonly: false
+      required: false
+      sort: 8
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Appartient à
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: character varying
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: 255
+      name: belongs_to
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: trailers
+    type: string
+  - collection: trailers
+    field: brake_type
+    meta:
+      collection: trailers
+      conditions: null
+      display: null
+      display_options: null
+      field: brake_type
+      group: other
+      hidden: false
+      interface: input
+      note: null
+      options:
+        trim: true
+      readonly: false
+      required: false
+      sort: 1
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Type de frein
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: character varying
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: 255
+      name: brake_type
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: trailers
+    type: string
+  - collection: trailers
+    field: capacity
+    meta:
+      collection: trailers
+      conditions: null
+      display: null
+      display_options: null
+      field: capacity
+      group: measures
+      hidden: false
+      interface: input
+      note: null
+      options:
+        min: 0
+      readonly: false
+      required: false
+      sort: 5
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Capacité poids
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: real
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: capacity
+      numeric_precision: 24
+      numeric_scale: null
+      schema: public
+      table: trailers
+    type: float
+  - collection: trailers
+    field: capacity_back
+    meta:
+      collection: trailers
+      conditions: null
+      display: null
+      display_options: null
+      field: capacity_back
+      group: wheel
+      hidden: false
+      interface: input
+      note: null
+      options:
+        min: 0
+      readonly: false
+      required: false
+      sort: 5
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Capacityé pneu arrière
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: real
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: capacity_back
+      numeric_precision: 24
+      numeric_scale: null
+      schema: public
+      table: trailers
+    type: float
+  - collection: trailers
+    field: capacity_front
+    meta:
+      collection: trailers
+      conditions: null
+      display: null
+      display_options: null
+      field: capacity_front
+      group: wheel
+      hidden: false
+      interface: input
+      note: null
+      options:
+        min: 0
+      readonly: false
+      required: false
+      sort: 4
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Capacité pneu avant
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: real
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: capacity_front
+      numeric_precision: 24
+      numeric_scale: null
+      schema: public
+      table: trailers
+    type: float
+  - collection: trailers
+    field: capacity_thaw
+    meta:
+      collection: trailers
+      conditions: null
+      display: null
+      display_options: null
+      field: capacity_thaw
+      group: measures
+      hidden: false
+      interface: input
+      note: null
+      options:
+        min: 0
+      readonly: false
+      required: false
+      sort: 6
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Capacité poids dégel
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: real
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: capacity_thaw
+      numeric_precision: 24
+      numeric_scale: null
+      schema: public
+      table: trailers
+    type: float
+  - collection: trailers
+    field: company
+    meta:
+      collection: trailers
+      conditions: null
+      display: null
+      display_options: null
+      field: company
+      group: null
+      hidden: false
+      interface: select-dropdown-m2o
+      note: null
+      options: null
+      readonly: false
+      required: true
+      sort: 5
+      special:
+        - m2o
+      translations:
+        - language: fr-CA
+          translation: Entreprise associée
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: integer
+      default_value: null
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: companies
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: company
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: trailers
+    type: integer
+  - collection: trailers
+    field: container
+    meta:
+      collection: trailers
+      conditions: null
+      display: null
+      display_options: null
+      field: container
+      group: other
+      hidden: false
+      interface: boolean
+      note: null
+      options:
+        label: Oui
+      readonly: false
+      required: false
+      sort: 2
+      special:
+        - boolean
+      translations:
+        - language: fr-CA
+          translation: Conteneur
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: boolean
+      default_value: false
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: container
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: trailers
+    type: boolean
+  - collection: trailers
+    field: date_created
+    meta:
+      collection: trailers
+      conditions: null
+      display: datetime
+      display_options:
+        relative: true
+      field: date_created
+      group: null
+      hidden: true
+      interface: datetime
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 3
+      special:
+        - date-created
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: timestamp with time zone
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: date_created
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: trailers
+    type: timestamp
+  - collection: trailers
+    field: date_updated
+    meta:
+      collection: trailers
+      conditions: null
+      display: datetime
+      display_options:
+        relative: true
+      field: date_updated
+      group: null
+      hidden: true
+      interface: datetime
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 4
+      special:
+        - date-updated
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: timestamp with time zone
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: date_updated
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: trailers
+    type: timestamp
+  - collection: trailers
+    field: gps
+    meta:
+      collection: trailers
+      conditions: null
+      display: null
+      display_options: null
+      field: gps
+      group: other
+      hidden: false
+      interface: boolean
+      note: null
+      options:
+        label: Oui
+      readonly: false
+      required: false
+      sort: 3
+      special:
+        - boolean
+      translations:
+        - language: fr-CA
+          translation: GPS
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: boolean
+      default_value: false
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: gps
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: trailers
+    type: boolean
+  - collection: trailers
+    field: id
+    meta:
+      collection: trailers
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: integer
+      default_value: nextval('trailers_id_seq'::regclass)
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: true
+      is_generated: false
+      is_nullable: false
+      is_primary_key: true
+      is_unique: true
+      max_length: null
+      name: id
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: trailers
+    type: integer
+  - collection: trailers
+    field: ifta
+    meta:
+      collection: trailers
+      conditions: null
+      display: null
+      display_options: null
+      field: ifta
+      group: other
+      hidden: false
+      interface: boolean
+      note: null
+      options:
+        label: Oui
+      readonly: false
+      required: false
+      sort: 5
+      special:
+        - boolean
+      translations:
+        - language: fr-CA
+          translation: IFTA (ontario)
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: boolean
+      default_value: false
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: ifta
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: trailers
+    type: boolean
+  - collection: trailers
+    field: in_service
+    meta:
+      collection: trailers
+      conditions: null
+      display: null
+      display_options: null
+      field: in_service
+      group: null
+      hidden: false
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: true
+      sort: 7
+      special:
+        - boolean
+      translations:
+        - language: fr-CA
+          translation: En service
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: boolean
+      default_value: true
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: in_service
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: trailers
+    type: boolean
+  - collection: trailers
+    field: measures
+    meta:
+      collection: trailers
+      conditions: null
+      display: null
+      display_options: null
+      field: measures
+      group: null
+      hidden: false
+      interface: group-detail
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 15
+      special:
+        - alias
+        - group
+        - no-data
+      translations:
+        - language: fr-CA
+          translation: Mesures
+      validation: null
+      validation_message: null
+      width: full
+    schema: null
+    type: alias
+  - collection: trailers
+    field: model
+    meta:
+      collection: trailers
+      conditions: null
+      display: null
+      display_options: null
+      field: model
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options:
+        placeholder: Marque/Model/Année
+        trim: true
+      readonly: false
+      required: false
+      sort: 9
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Model
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: character varying
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: 255
+      name: model
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: trailers
+    type: string
+  - collection: trailers
+    field: name
+    meta:
+      collection: trailers
+      conditions: null
+      display: null
+      display_options: null
+      field: name
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options:
+        placeholder: null
+        trim: true
+      readonly: false
+      required: true
+      sort: 6
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Nom de la remorque
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: character varying
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: 255
+      name: name
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: trailers
+    type: string
+  - collection: trailers
+    field: nb
+    meta:
+      collection: trailers
+      conditions: null
+      display: null
+      display_options: null
+      field: nb
+      group: wheel
+      hidden: false
+      interface: input
+      note: null
+      options:
+        min: 2
+      readonly: false
+      required: false
+      sort: 1
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Nombre de roues
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: integer
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: nb
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: trailers
+    type: integer
+  - collection: trailers
+    field: note
+    meta:
+      collection: trailers
+      conditions: null
+      display: null
+      display_options: null
+      field: note
+      group: other
+      hidden: false
+      interface: input-multiline
+      note: null
+      options:
+        trim: true
+      readonly: false
+      required: false
+      sort: 6
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Notes
+      validation: null
+      validation_message: null
+      width: fill
+    schema:
+      comment: null
+      data_type: text
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: note
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: trailers
+    type: text
+  - collection: trailers
+    field: other
+    meta:
+      collection: trailers
+      conditions: null
+      display: null
+      display_options: null
+      field: other
+      group: null
+      hidden: false
+      interface: group-detail
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 16
+      special:
+        - alias
+        - group
+        - no-data
+      translations:
+        - language: fr-CA
+          translation: Autre
+      validation: null
+      validation_message: null
+      width: full
+    schema: null
+    type: alias
+  - collection: trailers
+    field: plate_height
+    meta:
+      collection: trailers
+      conditions: null
+      display: null
+      display_options: null
+      field: plate_height
+      group: measures
+      hidden: false
+      interface: input
+      note: null
+      options:
+        min: 0
+      readonly: false
+      required: false
+      sort: 2
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Hauteur plate
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: real
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: plate_height
+      numeric_precision: 24
+      numeric_scale: null
+      schema: public
+      table: trailers
+    type: float
+  - collection: trailers
+    field: plate_length
+    meta:
+      collection: trailers
+      conditions: null
+      display: null
+      display_options: null
+      field: plate_length
+      group: measures
+      hidden: false
+      interface: input
+      note: null
+      options:
+        min: 0
+      readonly: false
+      required: false
+      sort: 1
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Longueur plate
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: real
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: plate_length
+      numeric_precision: 24
+      numeric_scale: null
+      schema: public
+      table: trailers
+    type: float
+  - collection: trailers
+    field: plate_nb
+    meta:
+      collection: trailers
+      conditions: null
+      display: null
+      display_options: null
+      field: plate_nb
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options:
+        trim: true
+      readonly: false
+      required: false
+      sort: 13
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Numéro de plaque
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: character varying
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: 255
+      name: plate_nb
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: trailers
+    type: string
+  - collection: trailers
+    field: radius_back
+    meta:
+      collection: trailers
+      conditions: null
+      display: null
+      display_options: null
+      field: radius_back
+      group: wheel
+      hidden: false
+      interface: input
+      note: null
+      options:
+        min: 0
+      readonly: false
+      required: false
+      sort: 3
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Dimension pneu arrière
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: real
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: radius_back
+      numeric_precision: 24
+      numeric_scale: null
+      schema: public
+      table: trailers
+    type: float
+  - collection: trailers
+    field: radius_front
+    meta:
+      collection: trailers
+      conditions: null
+      display: null
+      display_options: null
+      field: radius_front
+      group: wheel
+      hidden: false
+      interface: input
+      note: null
+      options:
+        min: 0
+      readonly: false
+      required: false
+      sort: 2
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Dimension pneu avant
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: real
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: radius_front
+      numeric_precision: 24
+      numeric_scale: null
+      schema: public
+      table: trailers
+    type: float
+  - collection: trailers
+    field: serial_nb
+    meta:
+      collection: trailers
+      conditions: null
+      display: null
+      display_options: null
+      field: serial_nb
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options:
+        trim: true
+      readonly: false
+      required: false
+      sort: 12
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Numéro de série
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: character varying
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: 255
+      name: serial_nb
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: trailers
+    type: string
+  - collection: trailers
+    field: sort
+    meta:
+      collection: trailers
+      conditions: null
+      display: null
+      display_options: null
+      field: sort
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 2
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: integer
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: sort
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: trailers
+    type: integer
+  - collection: trailers
+    field: total_height
+    meta:
+      collection: trailers
+      conditions: null
+      display: null
+      display_options: null
+      field: total_height
+      group: measures
+      hidden: false
+      interface: input
+      note: null
+      options:
+        min: 0
+      readonly: false
+      required: false
+      sort: 4
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Hauteur totale
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: real
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: total_height
+      numeric_precision: 24
+      numeric_scale: null
+      schema: public
+      table: trailers
+    type: float
+  - collection: trailers
+    field: total_length
+    meta:
+      collection: trailers
+      conditions: null
+      display: null
+      display_options: null
+      field: total_length
+      group: measures
+      hidden: false
+      interface: input
+      note: null
+      options:
+        min: 0
+      readonly: false
+      required: false
+      sort: 3
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Longueur totale
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: real
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: total_length
+      numeric_precision: 24
+      numeric_scale: null
+      schema: public
+      table: trailers
+    type: float
+  - collection: trailers
+    field: type
+    meta:
+      collection: trailers
+      conditions: null
+      display: null
+      display_options:
+        choices: null
+      field: type
+      group: null
+      hidden: false
+      interface: select-dropdown
+      note: null
+      options:
+        allowNone: true
+        choices:
+          - text: Légé
+            value: LIGHT
+          - text: Semi Lourd
+            value: SEMI_HEAVY
+          - text: Lourd
+            value: HEAVY
+      readonly: false
+      required: false
+      sort: 10
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Type de remorque
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: character varying
+      default_value: NONE
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: 255
+      name: type
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: trailers
+    type: string
+  - collection: trailers
+    field: weight
+    meta:
+      collection: trailers
+      conditions: null
+      display: null
+      display_options: null
+      field: weight
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options:
+        min: 0
+      readonly: false
+      required: false
+      sort: 11
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Poids (kg)
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: real
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: weight
+      numeric_precision: 24
+      numeric_scale: null
+      schema: public
+      table: trailers
+    type: float
+  - collection: trailers
+    field: wheel
+    meta:
+      collection: trailers
+      conditions: null
+      display: null
+      display_options: null
+      field: wheel
+      group: null
+      hidden: false
+      interface: group-detail
+      note: null
+      options: {}
+      readonly: false
+      required: false
+      sort: 14
+      special:
+        - alias
+        - group
+        - no-data
+      translations:
+        - language: fr-CA
+          translation: Roues
+      validation: null
+      validation_message: null
+      width: full
+    schema: null
+    type: alias
+  - collection: trailers
+    field: wheel_lift
+    meta:
+      collection: trailers
+      conditions: null
+      display: null
+      display_options: null
+      field: wheel_lift
+      group: other
+      hidden: false
+      interface: boolean
+      note: null
+      options:
+        label: Oui
+      readonly: false
+      required: false
+      sort: 4
+      special:
+        - boolean
+      translations:
+        - language: fr-CA
+          translation: Wheel lift
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: boolean
+      default_value: false
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: wheel_lift
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: trailers
+    type: boolean
+  - collection: users_emergency_contacts
+    field: date_created
+    meta:
+      collection: users_emergency_contacts
+      conditions: null
+      display: datetime
+      display_options:
+        relative: true
+      field: date_created
+      group: null
+      hidden: true
+      interface: datetime
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 2
+      special:
+        - date-created
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: timestamp with time zone
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: date_created
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: users_emergency_contacts
+    type: timestamp
+  - collection: users_emergency_contacts
+    field: date_updated
+    meta:
+      collection: users_emergency_contacts
+      conditions: null
+      display: datetime
+      display_options:
+        relative: true
+      field: date_updated
+      group: null
+      hidden: true
+      interface: datetime
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 3
+      special:
+        - date-updated
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: timestamp with time zone
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: date_updated
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: users_emergency_contacts
+    type: timestamp
+  - collection: users_emergency_contacts
+    field: ext
+    meta:
+      collection: users_emergency_contacts
+      conditions: null
+      display: null
+      display_options: null
+      field: ext
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options:
+        trim: true
+      readonly: false
+      required: false
+      sort: 8
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Poste
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: character varying
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: 255
+      name: ext
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: users_emergency_contacts
+    type: string
+  - collection: users_emergency_contacts
+    field: first_name
+    meta:
+      collection: users_emergency_contacts
+      conditions: null
+      display: null
+      display_options: null
+      field: first_name
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options:
+        trim: true
+      readonly: false
+      required: true
+      sort: 4
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Prénom
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: character varying
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: 255
+      name: first_name
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: users_emergency_contacts
+    type: string
+  - collection: users_emergency_contacts
+    field: id
+    meta:
+      collection: users_emergency_contacts
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: integer
+      default_value: nextval('users_emergency_contacts_id_seq'::regclass)
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: true
+      is_generated: false
+      is_nullable: false
+      is_primary_key: true
+      is_unique: true
+      max_length: null
+      name: id
+      numeric_precision: 32
+      numeric_scale: 0
+      schema: public
+      table: users_emergency_contacts
+    type: integer
+  - collection: users_emergency_contacts
+    field: last_name
+    meta:
+      collection: users_emergency_contacts
+      conditions: null
+      display: null
+      display_options: null
+      field: last_name
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options:
+        trim: true
+      readonly: false
+      required: true
+      sort: 5
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Nom
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: character varying
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: 255
+      name: last_name
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: users_emergency_contacts
+    type: string
+  - collection: users_emergency_contacts
+    field: note
+    meta:
+      collection: users_emergency_contacts
+      conditions: null
+      display: null
+      display_options: null
+      field: note
+      group: null
+      hidden: false
+      interface: input-multiline
+      note: null
+      options:
+        trim: true
+      readonly: false
+      required: false
+      sort: 9
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Note
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      comment: null
+      data_type: text
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: true
+      is_primary_key: false
+      is_unique: false
+      max_length: null
+      name: note
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: users_emergency_contacts
+    type: text
+  - collection: users_emergency_contacts
+    field: phone
+    meta:
+      collection: users_emergency_contacts
+      conditions: null
+      display: null
+      display_options: null
+      field: phone
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options:
+        trim: true
+      readonly: false
+      required: true
+      sort: 7
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Téléphone
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: character varying
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: 255
+      name: phone
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: users_emergency_contacts
+    type: string
+  - collection: users_emergency_contacts
+    field: relation
+    meta:
+      collection: users_emergency_contacts
+      conditions: null
+      display: null
+      display_options: null
+      field: relation
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options:
+        trim: true
+      readonly: false
+      required: true
+      sort: 6
+      special: null
+      translations:
+        - language: fr-CA
+          translation: Relation
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      comment: null
+      data_type: character varying
+      default_value: null
+      foreign_key_column: null
+      foreign_key_schema: null
+      foreign_key_table: null
+      generation_expression: null
+      has_auto_increment: false
+      is_generated: false
+      is_nullable: false
+      is_primary_key: false
+      is_unique: false
+      max_length: 255
+      name: relation
+      numeric_precision: null
+      numeric_scale: null
+      schema: public
+      table: users_emergency_contacts
+    type: string
+relations:
+  - collection: bills
+    field: call
+    meta:
+      junction_field: null
+      many_collection: bills
+      many_field: call
+      one_allowed_collections: null
+      one_collection: calls
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    related_collection: calls
+    schema:
+      column: call
+      constraint_name: bills_call_foreign
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: calls
+      on_delete: CASCADE
+      on_update: NO ACTION
+      table: bills
+  - collection: bills
+    field: client
+    meta:
+      junction_field: null
+      many_collection: bills
+      many_field: client
+      one_allowed_collections: null
+      one_collection: clients
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    related_collection: clients
+    schema:
+      column: client
+      constraint_name: bills_client_foreign
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: clients
+      on_delete: CASCADE
+      on_update: NO ACTION
+      table: bills
+  - collection: bills
+    field: company
+    meta:
+      junction_field: null
+      many_collection: bills
+      many_field: company
+      one_allowed_collections: null
+      one_collection: companies
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    related_collection: companies
+    schema:
+      column: company
+      constraint_name: bills_company_foreign
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: companies
+      on_delete: CASCADE
+      on_update: NO ACTION
+      table: bills
+  - collection: bills
+    field: price
+    meta:
+      junction_field: null
+      many_collection: bills
+      many_field: price
+      one_allowed_collections: null
+      one_collection: prices
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    related_collection: prices
+    schema:
+      column: price
+      constraint_name: bills_price_foreign
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: prices
+      on_delete: CASCADE
+      on_update: NO ACTION
+      table: bills
+  - collection: calendar
+    field: user
+    meta:
+      junction_field: null
+      many_collection: calendar
+      many_field: user
+      one_allowed_collections: null
+      one_collection: directus_users
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    related_collection: directus_users
+    schema:
+      column: user
+      constraint_name: calendar_user_foreign
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: directus_users
+      on_delete: CASCADE
+      on_update: NO ACTION
+      table: calendar
+  - collection: calls
+    field: company
+    meta:
+      junction_field: null
+      many_collection: calls
+      many_field: company
+      one_allowed_collections: null
+      one_collection: companies
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    related_collection: companies
+    schema:
+      column: company
+      constraint_name: calls_company_foreign
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: companies
+      on_delete: CASCADE
+      on_update: NO ACTION
+      table: calls
+  - collection: calls
+    field: driver
+    meta:
+      junction_field: null
+      many_collection: calls
+      many_field: driver
+      one_allowed_collections: null
+      one_collection: directus_users
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    related_collection: directus_users
+    schema:
+      column: driver
+      constraint_name: calls_driver_foreign
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: directus_users
+      on_delete: CASCADE
+      on_update: NO ACTION
+      table: calls
+  - collection: calls
+    field: driver_truck
+    meta:
+      junction_field: null
+      many_collection: calls
+      many_field: driver_truck
+      one_allowed_collections: null
+      one_collection: trailers
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    related_collection: trailers
+    schema:
+      column: driver_truck
+      constraint_name: calls_driver_truck_foreign
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: trailers
+      on_delete: CASCADE
+      on_update: NO ACTION
+      table: calls
+  - collection: calls
+    field: service
+    meta:
+      junction_field: null
+      many_collection: calls
+      many_field: service
+      one_allowed_collections: null
+      one_collection: services
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    related_collection: services
+    schema:
+      column: service
+      constraint_name: calls_service_foreign
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: services
+      on_delete: CASCADE
+      on_update: NO ACTION
+      table: calls
+  - collection: calls
+    field: vehicle
+    meta:
+      junction_field: null
+      many_collection: calls
+      many_field: vehicle
+      one_allowed_collections: null
+      one_collection: towed_vehicles
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    related_collection: towed_vehicles
+    schema:
+      column: vehicle
+      constraint_name: calls_vehicle_foreign
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: towed_vehicles
+      on_delete: CASCADE
+      on_update: NO ACTION
+      table: calls
+  - collection: clients
+    field: company
+    meta:
+      junction_field: null
+      many_collection: clients
+      many_field: company
+      one_allowed_collections: null
+      one_collection: companies
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    related_collection: companies
+    schema:
+      column: company
+      constraint_name: clients_company_foreign
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: companies
+      on_delete: CASCADE
+      on_update: NO ACTION
+      table: clients
+  - collection: companies
+    field: admin
+    meta:
+      junction_field: null
+      many_collection: companies
+      many_field: admin
+      one_allowed_collections: null
+      one_collection: directus_users
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    related_collection: directus_users
+    schema:
+      column: admin
+      constraint_name: companies_admin_foreign
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: directus_users
+      on_delete: CASCADE
+      on_update: NO ACTION
+      table: companies
+  - collection: directus_users
+    field: company
+    meta:
+      junction_field: null
+      many_collection: directus_users
+      many_field: company
+      one_allowed_collections: null
+      one_collection: companies
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    related_collection: companies
+    schema:
+      column: company
+      constraint_name: directus_users_company_foreign
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: companies
+      on_delete: NO ACTION
+      on_update: NO ACTION
+      table: directus_users
+  - collection: directus_users
+    field: driver_license
+    meta:
+      junction_field: null
+      many_collection: directus_users
+      many_field: driver_license
+      one_allowed_collections: null
+      one_collection: driver_licenses
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    related_collection: driver_licenses
+    schema:
+      column: driver_license
+      constraint_name: directus_users_driver_license_foreign
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: driver_licenses
+      on_delete: CASCADE
+      on_update: NO ACTION
+      table: directus_users
+  - collection: directus_users
+    field: emergency_contact
+    meta:
+      junction_field: null
+      many_collection: directus_users
+      many_field: emergency_contact
+      one_allowed_collections: null
+      one_collection: users_emergency_contacts
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    related_collection: users_emergency_contacts
+    schema:
+      column: emergency_contact
+      constraint_name: directus_users_emergency_contact_foreign
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: users_emergency_contacts
+      on_delete: CASCADE
+      on_update: NO ACTION
+      table: directus_users
+  - collection: junction_directus_users_custom_permissions
+    field: custom_permissions_id
+    meta:
+      junction_field: directus_users_id
+      many_collection: junction_directus_users_custom_permissions
+      many_field: custom_permissions_id
+      one_allowed_collections: null
+      one_collection: custom_permissions
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    related_collection: custom_permissions
+    schema:
+      column: custom_permissions_id
+      constraint_name: junction_directus_users_custom_permissions___a7c558c_foreign
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: custom_permissions
+      on_delete: SET NULL
+      on_update: NO ACTION
+      table: junction_directus_users_custom_permissions
+  - collection: junction_directus_users_custom_permissions
+    field: directus_users_id
+    meta:
+      junction_field: custom_permissions_id
+      many_collection: junction_directus_users_custom_permissions
+      many_field: directus_users_id
+      one_allowed_collections: null
+      one_collection: directus_users
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: permissions
+      sort_field: null
+    related_collection: directus_users
+    schema:
+      column: directus_users_id
+      constraint_name: junction_directus_users_custom_permissions__484503a6_foreign
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: directus_users
+      on_delete: SET NULL
+      on_update: NO ACTION
+      table: junction_directus_users_custom_permissions
+  - collection: messages
+    field: file
+    meta:
+      junction_field: null
+      many_collection: messages
+      many_field: file
+      one_allowed_collections: null
+      one_collection: directus_files
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    related_collection: directus_files
+    schema:
+      column: file
+      constraint_name: messages_file_foreign
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: directus_files
+      on_delete: SET NULL
+      on_update: NO ACTION
+      table: messages
+  - collection: messages
+    field: receiver
+    meta:
+      junction_field: null
+      many_collection: messages
+      many_field: receiver
+      one_allowed_collections: null
+      one_collection: directus_users
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    related_collection: directus_users
+    schema:
+      column: receiver
+      constraint_name: messages_receiver_foreign
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: directus_users
+      on_delete: CASCADE
+      on_update: NO ACTION
+      table: messages
+  - collection: messages
+    field: sender
+    meta:
+      junction_field: null
+      many_collection: messages
+      many_field: sender
+      one_allowed_collections: null
+      one_collection: directus_users
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    related_collection: directus_users
+    schema:
+      column: sender
+      constraint_name: messages_sender_foreign
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: directus_users
+      on_delete: CASCADE
+      on_update: NO ACTION
+      table: messages
+  - collection: prices
+    field: company
+    meta:
+      junction_field: null
+      many_collection: prices
+      many_field: company
+      one_allowed_collections: null
+      one_collection: companies
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    related_collection: companies
+    schema:
+      column: company
+      constraint_name: prices_company_foreign
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: companies
+      on_delete: CASCADE
+      on_update: NO ACTION
+      table: prices
+  - collection: services
+    field: company
+    meta:
+      junction_field: null
+      many_collection: services
+      many_field: company
+      one_allowed_collections: null
+      one_collection: companies
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    related_collection: companies
+    schema:
+      column: company
+      constraint_name: services_company_foreign
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: companies
+      on_delete: CASCADE
+      on_update: NO ACTION
+      table: services
+  - collection: services_prices
+    field: prices_id
+    meta:
+      junction_field: services_id
+      many_collection: services_prices
+      many_field: prices_id
+      one_allowed_collections: null
+      one_collection: prices
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    related_collection: prices
+    schema:
+      column: prices_id
+      constraint_name: services_prices_prices_id_foreign
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: prices
+      on_delete: SET NULL
+      on_update: NO ACTION
+      table: services_prices
+  - collection: services_prices
+    field: services_id
+    meta:
+      junction_field: prices_id
+      many_collection: services_prices
+      many_field: services_id
+      one_allowed_collections: null
+      one_collection: services
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: prices
+      sort_field: null
+    related_collection: services
+    schema:
+      column: services_id
+      constraint_name: services_prices_services_id_foreign
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: services
+      on_delete: SET NULL
+      on_update: NO ACTION
+      table: services_prices
+  - collection: trailers
+    field: company
+    meta:
+      junction_field: null
+      many_collection: trailers
+      many_field: company
+      one_allowed_collections: null
+      one_collection: companies
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    related_collection: companies
+    schema:
+      column: company
+      constraint_name: trailers_company_foreign
+      foreign_key_column: id
+      foreign_key_schema: public
+      foreign_key_table: companies
+      on_delete: CASCADE
+      on_update: NO ACTION
+      table: trailers
